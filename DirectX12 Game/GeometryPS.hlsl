@@ -53,14 +53,14 @@ float Shadow(PS_INPUT input) {
 
 		float depth = shadowTexture.Sample(sampler0, pos.xy+ uv).r;
 
-		if (depth < input.LightPosition.z - 0.2) {
+		if (depth < input.LightPosition.z - 0.15) {
 			shadow -= 1 / loop * 0.4;
 		}
 	}
 	return shadow;
 }
 
-PS_OUTPUT Main(PS_INPUT input)
+PS_OUTPUT main(PS_INPUT input)
 {
 	PS_OUTPUT output;
 

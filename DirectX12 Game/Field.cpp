@@ -34,22 +34,22 @@ void Field::Draw() {
 		XMFLOAT3 scale = XMFLOAT3(1.7f, 1.7f, 1.7f);
 		XMFLOAT3 position = XMFLOAT3(-WIDTH / 2 + x * 2 + scale.x / 2, scale.y / 2, HEIGHT / 2 - scale.z / 2);
 		m_cubeX[0][x]->SetColor(XMFLOAT4(1, 0, 0, 1));
-		m_cubeX[0][x]->Draw(position, scale, XMFLOAT3(0,0,0), XMFLOAT4(0,0,0,0), 0.5f);
+		m_cubeX[0][x]->Draw(position, scale, XMFLOAT3(0,0,0), XMFLOAT4(0,0,0,0), 0.05f);
 
 		position.z = -HEIGHT / 2 + scale.z / 2;
 		m_cubeX[1][x]->SetColor(XMFLOAT4(0, 1, 0, 1));
-		m_cubeX[1][x]->Draw(position, scale, XMFLOAT3(0, 0, 0), XMFLOAT4(0, 0, 0, 0), 0.5f);
+		m_cubeX[1][x]->Draw(position, scale, XMFLOAT3(0, 0, 0), XMFLOAT4(0, 0, 0, 0), 0.05f);
 	}
 
 	for (int y = 1; y < 10 - 1; y++) {
 		XMFLOAT3 scale = XMFLOAT3(1.7f, 1.7f, 1.7f);
 		XMFLOAT3 position = XMFLOAT3(WIDTH / 2 - scale.x / 2, scale.y / 2, -HEIGHT / 2 + y * 2+scale.z/2);
 		m_cubeY[0][y-1]->SetColor(XMFLOAT4(0, 1, 1, 1));
-		m_cubeY[0][y-1]->Draw(position, scale, XMFLOAT3(0, 0, 0), XMFLOAT4(0, 0, 0, 0), 0.5f);
+		m_cubeY[0][y-1]->Draw(position, scale, XMFLOAT3(0, 0, 0), XMFLOAT4(0, 0, 0, 0), 0.05f);
 
 		position.x = -HEIGHT / 2 + scale.x / 2;
 		m_cubeY[1][y - 1]->SetColor(XMFLOAT4(0, 0, 1, 1));
-		m_cubeY[1][y-1]->Draw(position, scale, XMFLOAT3(0, 0, 0), XMFLOAT4(0, 0, 0, 0), 0.5f);
+		m_cubeY[1][y-1]->Draw(position, scale, XMFLOAT3(0, 0, 0), XMFLOAT4(0, 0, 0, 0), 0.05f);
 	}
 }
 void Field::Finalize() {

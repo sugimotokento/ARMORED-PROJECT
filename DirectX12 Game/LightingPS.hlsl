@@ -129,7 +129,7 @@ float4 Bloom(PS_INPUT input) {
 }
 
 
-float4 Main(PS_INPUT input) : SV_TARGET
+float4 main(PS_INPUT input) : SV_TARGET
 {
 
 	float4 normal = normalTexture.Sample(sampler0, input.TexCoord);

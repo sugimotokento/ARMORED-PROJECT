@@ -27,7 +27,7 @@ struct PS_INPUT
 
 
 
-float4 Main(PS_INPUT input) : SV_TARGET
+float4 main(PS_INPUT input) : SV_TARGET
 {
 
 	float4 color = mainTexture.Sample(sampler0, 1-input.TexCoord);

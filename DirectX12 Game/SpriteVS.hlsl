@@ -28,7 +28,7 @@ struct PS_INPUT
 };
 
 
-PS_INPUT Main(VS_INPUT input)
+PS_INPUT main(VS_INPUT input)
 {
     PS_INPUT output;
 

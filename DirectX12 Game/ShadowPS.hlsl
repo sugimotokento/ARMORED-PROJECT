@@ -30,7 +30,7 @@ struct PS_OUTPUT
 };
 
 
-PS_OUTPUT Main(PS_INPUT input)
+PS_OUTPUT main(PS_INPUT input)
 {
     PS_OUTPUT output;
 
