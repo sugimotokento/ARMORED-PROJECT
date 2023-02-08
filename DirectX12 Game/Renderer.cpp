@@ -338,7 +338,7 @@ void Renderer::CreatePipelineState(Index::PipelineStateID id) {
 
 	pipelineStateDesc.NumRenderTargets = Index::GetResourceNum(id);
 	for (int i = 0; i < static_cast<int>(pipelineStateDesc.NumRenderTargets); i++) {
-		pipelineStateDesc.RTVFormats[i] = DXGI_FORMAT_R16G16B16A16_UNORM;
+		pipelineStateDesc.RTVFormats[i] = DXGI_FORMAT_R32G32B32A32_FLOAT;
 	}
 
 	pipelineStateDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;

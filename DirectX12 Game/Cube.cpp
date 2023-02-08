@@ -164,7 +164,7 @@ Cube::Cube() {
 }
 
 
-void Cube::Draw(XMFLOAT3 position, XMFLOAT3 scale, XMFLOAT3 rotation, XMFLOAT4 bloomColor, float reflectRate) {
+void Cube::Draw(XMFLOAT3 position, XMFLOAT3 scale, XMFLOAT3 rotation, float reflectRate) {
 	m_position = position;
 	m_scale = scale;
 	m_rotation = rotation;
@@ -198,7 +198,6 @@ void Cube::Draw(XMFLOAT3 position, XMFLOAT3 scale, XMFLOAT3 rotation, XMFLOAT4 b
 	XMStoreFloat4x4(&matrix, XMMatrixTranspose(world));
 	constant->world = matrix;
 
-	constant->bloomColor = bloomColor;
 	constant->reflectRate = XMFLOAT4(reflectRate, reflectRate, reflectRate, reflectRate);
 
 	m_constantBuffer->Unmap(0, nullptr);

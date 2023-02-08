@@ -1,5 +1,4 @@
 #include"Common.hlsl"
-
 PS_INPUT main(VS_INPUT input)
 {
     PS_INPUT output;

@@ -1,5 +1,4 @@
 #include"Common.hlsl"
-
 Texture2D<float4> normalTexture : register(t0);
 Texture2D<float4> colorTexture : register(t1);
 Texture2D<float4> positionTexture : register(t2);
@@ -9,6 +8,7 @@ Texture2D<float4> metallicTexture : register(t4);
 
 SamplerState sampler0 : register(s0);
 
+ 
 float Random(float2 uv)
 {
     return frac(sin(dot(uv, float2(12.9898, 78.233))) * 43758.5453);
@@ -124,30 +124,22 @@ float4 main(PS_INPUT input) : SV_TARGET
     normal = normalize(normal);
 
     float4 color = baseColor;
-    float lambert = 1;
-    float specular = 0;
+
     float ssao = 1;
     float3 lightDir = float3(1, -0.5, 1);
     float3 viewDir = position - cameraPosition;
     viewDir = normalize(viewDir);
     lightDir = normalize(lightDir);
 
-    lambert = -dot(lightDir, normal);
-    lambert = saturate(lambert) * 0.5 + 0.5;
 
-    float3 refv = reflect(lightDir.xyz, normal.xyz);
-    refv = normalize(refv);
-
-    specular = -dot(viewDir, refv);
-    specular = saturate(specular);
-    specular = pow(specular, 50);
-
+    
     ssao = ScreenSpaceAnbientOcclusion(input);
 	
-
     float4 bloom = Bloom(input);
-    color = (baseColor * lambert + specular) * ssao;
+    color = (baseColor) * ssao;
     float4 reflectColor = ScreenSpaceReflection(input, color);
+    
+    
     color = reflectColor * metallicRate + color * (1 - metallicRate);
 
 	

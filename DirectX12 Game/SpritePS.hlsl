@@ -1,30 +1,8 @@
+#include"Common.hlsl"
+
 Texture2D<float4> mainTexture : register(t0);
 
-
-
 SamplerState sampler0 : register(s0);
-
-cbuffer CBuffer : register(b0)
-{
-	float4x4 WVP;
-	float4x4 WVPLight;
-	float4x4 VP;
-	float4x4 World;
-
-}
-
-
-struct PS_INPUT
-{
-	float4 Position : SV_POSITION;
-	float4 WorldPosition : POSITION0;
-	float4 Normal : NORMAL;
-	float4 Diffuse : COLOR;
-	float4 Depth : DEPTH;
-	float2 TexCoord : TEXCOORD;
-};
-
-
 
 
 float4 main(PS_INPUT input) : SV_TARGET

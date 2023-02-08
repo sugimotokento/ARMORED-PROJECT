@@ -17,7 +17,7 @@ Bullet::Bullet() {
 	m_speed = 1;
 
 	m_cube = new Cube();
-	m_cube->SetColor(XMFLOAT4(1, 0.65f, 0, 1.0f));
+	m_cube->SetColor(XMFLOAT4(1*1.2f, 0.65f* 1.2f, 0.2f* 1.2f, 1.0f));
 }
 void Bullet::Update() {
 	m_position.x += m_moveDir.x * m_speed;
@@ -30,7 +30,7 @@ void Bullet::Update() {
 
 }
 void Bullet::Draw() {
-	m_cube->Draw(m_position, m_scale, m_rotation, XMFLOAT4(1, 0.65f, 0.2f, 1.0f));
+	m_cube->Draw(m_position, m_scale, m_rotation);
 }
 void Bullet::Finalize() {
 	m_cube->Finalize();

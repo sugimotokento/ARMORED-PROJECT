@@ -46,7 +46,7 @@ void Player::Update() {
 void Player::Draw() {
 	if (m_isDie)return;
 	
-	m_cube->Draw(m_position, m_scale, m_rotation, XMFLOAT4(0, 0, 0, 0));
+	m_cube->Draw(m_position, m_scale, m_rotation);
 }
 void Player::Finalize() {
 	m_cube->Finalize();

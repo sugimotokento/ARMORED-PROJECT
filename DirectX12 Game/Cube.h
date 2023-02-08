@@ -14,7 +14,7 @@ private:
 	XMFLOAT3 m_rotation;
 public:
 	Cube();
-	void Draw(XMFLOAT3 position = XMFLOAT3(0, 0, 0), XMFLOAT3 scale=XMFLOAT3(1,1,1), XMFLOAT3 rotation=XMFLOAT3(0,0,0), XMFLOAT4 bloomColor=XMFLOAT4(0,0,0,0), float reflectRate=0);
+	void Draw(XMFLOAT3 position = XMFLOAT3(0, 0, 0), XMFLOAT3 scale=XMFLOAT3(1,1,1), XMFLOAT3 rotation=XMFLOAT3(0,0,0), float reflectRate=0);
 	void SetColor(XMFLOAT4 color);
 	void Finalize();
 

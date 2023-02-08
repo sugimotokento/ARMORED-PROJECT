@@ -22,7 +22,6 @@ struct ConstantBuffer
 	XMFLOAT4X4 wvpLight;
 	XMFLOAT4X4 vp;
 	XMFLOAT4X4 world;
-	XMFLOAT4 bloomColor;
 	XMFLOAT4 reflectRate;
 	XMFLOAT3 cameraPosition;
 	float dammy;
@@ -38,7 +37,6 @@ private:
 			RESOURCE_INDEX_DIFFUSE,
 			RESOURCE_INDEX_POSITION,
 			RESOURCE_INDEX_DEPTH,
-			RESOURCE_INDEX_BLOOM,
 			RESOURCE_INDEX_REFLECT,
 			RESOURCE_INDEX_GEOMETRY_MAX,
 			RESOURCE_INDEX_SHADOW = RESOURCE_INDEX_GEOMETRY_MAX,
@@ -48,7 +46,7 @@ private:
 
 #define PIPELINE_STATE_ID(name, vsFileName, psFileName, resourceNum, is3D)
 #define PIPELINE_STATE_ID_TABLE\
-		PIPELINE_STATE_ID(GEOMETRY, GeometryVS.cso, GeometryPS.cso, 6, true)\
+		PIPELINE_STATE_ID(GEOMETRY, GeometryVS.cso, GeometryPS.cso, 5, true)\
 		PIPELINE_STATE_ID(SHADOW,	 ShadowVS.cso,   ShadowPS.cso,  1, true)\
 		PIPELINE_STATE_ID(LIGHTING, LightingVS.cso, LightingPS.cso, 1, true)\
 		PIPELINE_STATE_ID(SPRITE,   SpriteVS.cso,   SpritePS.cso,   1, false)\
