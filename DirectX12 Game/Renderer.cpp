@@ -154,7 +154,6 @@ void Renderer::CreateResource() {
 	clearValue.Color[3] = 1.0f;
 	clearValue.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
 
-
 	for (int i = 0; i < Index::RESOURCE_INDEX_MAX; i++) {
 		m_device->CreateCommittedResource(&heapProperties,
 			D3D12_HEAP_FLAG_NONE,
@@ -178,22 +177,31 @@ void Renderer::CreateRTVDescriptorHeap() {
 
 
 	//RTV
-	unsigned int size = m_device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
-	D3D12_CPU_DESCRIPTOR_HANDLE handle = m_rtvDescriptorHeap->GetCPUDescriptorHandleForHeapStart();
+	{
+		unsigned int size = m_device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
+		D3D12_CPU_DESCRIPTOR_HANDLE handle = m_rtvDescriptorHeap->GetCPUDescriptorHandleForHeapStart();
 
-	D3D12_RENDER_TARGET_VIEW_DESC rtvDesc = {};
-	rtvDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
-	rtvDesc.ViewDimension = D3D12_RTV_DIMENSION::D3D12_RTV_DIMENSION_TEXTURE2D;
-	rtvDesc.Texture2D.MipSlice = 0;
-	rtvDesc.Texture2D.PlaneSlice = 0;
 
-	for (int i = 0; i < Index::RESOURCE_INDEX_GEOMETRY_MAX; i++) {
-		m_device->CreateRenderTargetView(m_resource[i].Get(), &rtvDesc, handle);
-		m_rtHandleGeometry[i] = handle;
+		D3D12_RENDER_TARGET_VIEW_DESC rtvDesc = {};
+		rtvDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+		rtvDesc.ViewDimension = D3D12_RTV_DIMENSION::D3D12_RTV_DIMENSION_TEXTURE2D;
+		rtvDesc.Texture2D.MipSlice = 0;
+		rtvDesc.Texture2D.PlaneSlice = 0;
+
+		for (int i = 0; i < Index::RESOURCE_INDEX_GEOMETRY_MAX; i++) {
+			m_device->CreateRenderTargetView(m_resource[i].Get(), &rtvDesc, handle);
+			m_rtHandleGeometry[i] = handle;
+			handle.ptr += size;
+		}
+
+		m_device->CreateRenderTargetView(m_resource[Index::RESOURCE_INDEX_SHADOW].Get(), &rtvDesc, handle);
+		m_rtHandleShadow = handle;
+		handle.ptr += size;
+
+		m_device->CreateRenderTargetView(m_resource[Index::RESOURCE_INDEX_ALPHA].Get(), &rtvDesc, handle);
+		m_rtHandleGeometryAlpha = handle;
 		handle.ptr += size;
 	}
-	m_device->CreateRenderTargetView(m_resource[Index::RESOURCE_INDEX_SHADOW].Get(), &rtvDesc, handle);
-	m_rtHandleShadow = handle;
 
 }
 void Renderer::CreateSRVDescriptorHeap() {
@@ -227,6 +235,8 @@ void Renderer::CreateSRVDescriptorHeap() {
 	m_device->CreateShaderResourceView(m_resource[Index::RESOURCE_INDEX_SHADOW].Get(), &srvDesc, handle);
 	handle.ptr += (size);
 
+	m_device->CreateShaderResourceView(m_resource[Index::RESOURCE_INDEX_ALPHA].Get(), &srvDesc, handle);
+	handle.ptr += (size);
 }
 void Renderer::CreateCommandList() {
 	m_device->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(&m_commandAllocator));
@@ -360,8 +370,21 @@ void Renderer::CreatePipelineState(Index::PipelineStateID id) {
 	//ブレンドステート
 	for (int i = 0; i < _countof(pipelineStateDesc.BlendState.RenderTarget); ++i)
 	{
-		bool is3D = Index::GetTypeIs3D(id);
-		if (is3D) {
+		std::string typeName = Index::GetName(id);
+		if (typeName == "GEOMETRY_ALPHA") {
+			pipelineStateDesc.BlendState.RenderTarget[i].BlendEnable = TRUE;
+			pipelineStateDesc.BlendState.RenderTarget[i].SrcBlend = D3D12_BLEND_SRC_ALPHA;
+			pipelineStateDesc.BlendState.RenderTarget[i].DestBlend = D3D12_BLEND_INV_SRC_ALPHA;
+			pipelineStateDesc.BlendState.RenderTarget[i].BlendOp = D3D12_BLEND_OP_ADD;
+			pipelineStateDesc.BlendState.RenderTarget[i].SrcBlendAlpha = D3D12_BLEND_SRC_ALPHA;
+			pipelineStateDesc.BlendState.RenderTarget[i].DestBlendAlpha = D3D12_BLEND_INV_SRC_ALPHA;
+			pipelineStateDesc.BlendState.RenderTarget[i].BlendOpAlpha = D3D12_BLEND_OP_ADD;
+			pipelineStateDesc.BlendState.RenderTarget[i].RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;
+			pipelineStateDesc.BlendState.RenderTarget[i].LogicOpEnable = FALSE;
+			pipelineStateDesc.BlendState.RenderTarget[i].LogicOp = D3D12_LOGIC_OP_NOOP;
+
+		}
+		else if (typeName == "GEOMETRY" || typeName == "SHADOW" || typeName == "LIGHTING") {
 			pipelineStateDesc.BlendState.RenderTarget[i].BlendEnable = FALSE;
 			pipelineStateDesc.BlendState.RenderTarget[i].SrcBlend = D3D12_BLEND_ONE;
 			pipelineStateDesc.BlendState.RenderTarget[i].DestBlend = D3D12_BLEND_ZERO;
@@ -372,7 +395,8 @@ void Renderer::CreatePipelineState(Index::PipelineStateID id) {
 			pipelineStateDesc.BlendState.RenderTarget[i].RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;
 			pipelineStateDesc.BlendState.RenderTarget[i].LogicOpEnable = FALSE;
 			pipelineStateDesc.BlendState.RenderTarget[i].LogicOp = D3D12_LOGIC_OP_CLEAR;
-		}else {
+		}
+		else if (typeName == "SPRITE") {
 			pipelineStateDesc.BlendState.RenderTarget[i].BlendEnable = TRUE;
 			pipelineStateDesc.BlendState.RenderTarget[i].SrcBlend = D3D12_BLEND_SRC_ALPHA;
 			pipelineStateDesc.BlendState.RenderTarget[i].DestBlend = D3D12_BLEND_INV_SRC_ALPHA;
@@ -483,7 +507,7 @@ Renderer::Renderer() {
 	CreateRootSignature();
 
 	//ジパイプライン
-	for(int i=0; i<Index::PIPELINE_STATE_ID_MAX; i++)
+	for (int i = 0; i < Index::PIPELINE_STATE_ID_MAX; i++)
 		CreatePipelineState(static_cast<Index::PipelineStateID>(i));
 
 #ifdef _DEBUG
@@ -497,7 +521,7 @@ Renderer::Renderer() {
 		assert(SUCCEEDED(hr));
 	}
 #endif // _DEBUG
-	
+
 	m_polygonDeferred = std::make_unique<PolygonDeferred>();
 }
 
@@ -535,6 +559,34 @@ void Renderer::GeometryPassEnd() {
 		SetResourceBarrier(m_resource[i].Get(), D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE);
 
 	}
+}
+
+void Renderer::GeometryAlphaPassStart() {
+	FLOAT clearColor[4] = { 0, 0, 0, 1.0f };
+
+	//レンダーターゲット用リソースバリア
+	SetResourceBarrier(m_resource[Index::RESOURCE_INDEX_ALPHA].Get(), D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE, D3D12_RESOURCE_STATE_RENDER_TARGET);
+
+	//デプスバッファ・レンダーターゲットのクリア
+	m_graphicsCommandList->ClearDepthStencilView(m_dsHandle, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
+	m_graphicsCommandList->ClearRenderTargetView(m_rtHandleGeometryAlpha, clearColor, 0, nullptr);
+
+
+	//ルートシグネチャとパイプラインステートジオメトリの設定
+	m_graphicsCommandList->SetGraphicsRootSignature(m_rootSignature.Get());
+	m_graphicsCommandList->SetPipelineState(m_pipelineState[Index::PIPELINE_STATE_ID_GEOMETRY_ALPHA].Get());
+
+
+	//ビューポートとシザー矩形の設定
+	m_graphicsCommandList->RSSetViewports(1, &m_viewport);
+	m_graphicsCommandList->RSSetScissorRects(1, &m_scissorRect);
+
+	//レンダーターゲットの設定
+	m_graphicsCommandList->OMSetRenderTargets(1, &m_rtHandleGeometryAlpha, TRUE, &m_dsHandle);
+}
+void Renderer::GeometryAlphaPassEnd() {
+	SetResourceBarrier(m_resource[Index::RESOURCE_INDEX_ALPHA].Get(), D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE);
+
 }
 
 void Renderer::ShadowPassStart() {

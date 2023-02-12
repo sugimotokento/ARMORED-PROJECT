@@ -18,7 +18,6 @@ public:
 	void SetColor(XMFLOAT4 color);
 	void Finalize();
 
-
 	XMFLOAT3 GetPosition() { return m_position; }
 	XMFLOAT3 GetScale() { return m_scale; }
 	XMFLOAT3 GetRotation() { return m_rotation; }

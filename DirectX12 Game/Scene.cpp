@@ -24,6 +24,7 @@ void Scene::DrawGeometry() {
 		obj->Draw();
 	}
 }
+
 void Scene::DrawSprite() {
 	for (GameObject* obj : m_gameObject[Layer::SPRITE]) {
 		obj->Draw();

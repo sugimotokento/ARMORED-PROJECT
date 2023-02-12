@@ -6,7 +6,7 @@ cbuffer CBuffer : register(b0)
     float4x4 World;
     float4 ReflectRate;
     float3 cameraPosition;
-    float dammy;
+    bool dammy;
 }
 
 

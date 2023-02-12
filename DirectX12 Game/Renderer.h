@@ -2,6 +2,7 @@
 #include"Camera.h"
 #include"PolygonDeferred.h"
 #include"Cube.h"
+#include<string>
 
 using namespace DirectX;
 using namespace Microsoft::WRL;
@@ -24,13 +25,13 @@ struct ConstantBuffer
 	XMFLOAT4X4 world;
 	XMFLOAT4 reflectRate;
 	XMFLOAT3 cameraPosition;
-	float dammy;
+	bool dammy;
 };
 
 
 class Renderer
 {
-private:
+public:
 	struct Index {
 		enum ResourceIndex {
 			RESOURCE_INDEX_NORMAL,
@@ -39,30 +40,32 @@ private:
 			RESOURCE_INDEX_DEPTH,
 			RESOURCE_INDEX_REFLECT,
 			RESOURCE_INDEX_GEOMETRY_MAX,
-			RESOURCE_INDEX_SHADOW = RESOURCE_INDEX_GEOMETRY_MAX,
+			RESOURCE_INDEX_SHADOW = RESOURCE_INDEX_GEOMETRY_MAX,//GEOMETRY_MAXは最大値取得用なので1つずらす感じ
+			RESOURCE_INDEX_ALPHA,
 			RESOURCE_INDEX_MAX
 		};
 
 
-#define PIPELINE_STATE_ID(name, vsFileName, psFileName, resourceNum, is3D)
+		//ここを増やすとパイプラインステートが増える
+#define PIPELINE_STATE_ID(name, vsFileName, psFileName, resourceNum)
 #define PIPELINE_STATE_ID_TABLE\
-		PIPELINE_STATE_ID(GEOMETRY, GeometryVS.cso, GeometryPS.cso, 5, true)\
-		PIPELINE_STATE_ID(SHADOW,	 ShadowVS.cso,   ShadowPS.cso,  1, true)\
-		PIPELINE_STATE_ID(LIGHTING, LightingVS.cso, LightingPS.cso, 1, true)\
-		PIPELINE_STATE_ID(SPRITE,   SpriteVS.cso,   SpritePS.cso,   1, false)\
+		PIPELINE_STATE_ID(GEOMETRY,			GeometryVS.cso,		 GeometryPS.cso,		RESOURCE_INDEX_GEOMETRY_MAX)\
+		PIPELINE_STATE_ID(GEOMETRY_ALPHA,	GeometryAlphaVS.cso, GeometryAlphaPS.cso,	1)\
+		PIPELINE_STATE_ID(SHADOW,			ShadowVS.cso,		 ShadowPS.cso,			1)\
+		PIPELINE_STATE_ID(LIGHTING,			LightingVS.cso,		 LightingPS.cso,		1)\
+		PIPELINE_STATE_ID(SPRITE,			SpriteVS.cso,		 SpritePS.cso,			1)\
 
 		enum PipelineStateID {
 #undef PIPELINE_STATE_ID
-#define PIPELINE_STATE_ID(name, vsFileName, psFileName, resourceNum, is3D) PIPELINE_STATE_ID_##name,
+#define PIPELINE_STATE_ID(name, vsFileName, psFileName, resourceNum) PIPELINE_STATE_ID_##name,
 			PIPELINE_STATE_ID_TABLE
 			PIPELINE_STATE_ID_MAX
 		};
 
 
-
 		static inline const char* GetVSFileName(PipelineStateID id) {
 #undef PIPELINE_STATE_ID
-#define PIPELINE_STATE_ID(name, vsFileName, psFileName, resourceNum, is3D)\
+#define PIPELINE_STATE_ID(name, vsFileName, psFileName, resourceNum)\
 		case PIPELINE_STATE_ID_##name:\
 				return #vsFileName;
 
@@ -73,7 +76,7 @@ private:
 		}
 		static inline const char* GetPSFileName(PipelineStateID id) {
 #undef PIPELINE_STATE_ID
-#define PIPELINE_STATE_ID(name, vsFileName, psFileName, resourceNum, is3D)\
+#define PIPELINE_STATE_ID(name, vsFileName, psFileName, resourceNum)\
 		case PIPELINE_STATE_ID_##name:\
 				return #psFileName;
 
@@ -84,7 +87,7 @@ private:
 		}
 		static const int GetResourceNum(PipelineStateID id) {
 #undef PIPELINE_STATE_ID
-#define PIPELINE_STATE_ID(name, vsFileName, psFileName, resourceNum, is3D)\
+#define PIPELINE_STATE_ID(name, vsFileName, psFileName, resourceNum)\
 			case PIPELINE_STATE_ID_##name:\
 			return resourceNum;
 
@@ -93,24 +96,23 @@ private:
 			}
 			return -1;
 		}
-		static const int GetResourceMax() {
+		static const int GetAllResourceMax() {
 			int resourceMax = 0;
 			for (int i = 0; i < Index::PIPELINE_STATE_ID_MAX; i++)
 				resourceMax += Index::GetResourceNum(static_cast<Index::PipelineStateID>(i));
 
 			return resourceMax;
 		}
-		static const bool GetTypeIs3D(PipelineStateID id) {
+		static inline const std::string GetName(PipelineStateID id) {
 #undef PIPELINE_STATE_ID
-#define PIPELINE_STATE_ID(name, vsFileName, psFileName, resourceNum, is3D)\
-			case PIPELINE_STATE_ID_##name:\
-				return is3D;
+#define PIPELINE_STATE_ID(name, vsFileName, psFileName, resourceNum)\
+		case PIPELINE_STATE_ID_##name:\
+				return #name;
 
-			switch (id){
+			switch (id) {
 				PIPELINE_STATE_ID_TABLE
 			}
-
-			return true;
+			return "";
 		}
 	};
 private:
@@ -158,6 +160,9 @@ private:
 
 	D3D12_CPU_DESCRIPTOR_HANDLE			m_rtHandleGeometry[Index::RESOURCE_INDEX_GEOMETRY_MAX];
 	D3D12_CPU_DESCRIPTOR_HANDLE			m_rtHandleShadow;
+	D3D12_CPU_DESCRIPTOR_HANDLE			m_rtHandleGeometryAlpha;
+
+
 	ComPtr<ID3D12DescriptorHeap>		m_rtvDescriptorHeap;
 	ComPtr<ID3D12DescriptorHeap>		m_srvDescriptorHeap;
 
@@ -185,6 +190,8 @@ public:
 
 	void GeometryPassStart();
 	void GeometryPassEnd();
+	void GeometryAlphaPassStart();
+	void GeometryAlphaPassEnd();
 	void ShadowPassStart();
 	void ShadowPassEnd();
 	void Draw2DStart();

@@ -1,7 +1,7 @@
 #include"Common.hlsl"
 
 Texture2D<float4> normalTexture : register(t0);
-Texture2D<float4> colorTexture : register(t1);
+Texture2D<float4> colorTexture : register(t6);
 Texture2D<float4> positionTexture : register(t2);
 Texture2D<float4> depthTexture : register(t3);
 Texture2D<float4> metallicTexture : register(t4);
@@ -94,15 +94,15 @@ float4 Bloom(PS_INPUT input)
             {
                 bloom += color / (x * x + y * y);
             }
-            else if (color.r > 1 && (x != 0 || y != 0))
+            else if (color.r > 1.1 && (x != 0 || y != 0))
             {
                 bloom += color / (x * x + y * y);
             }
-            else if (color.g > 1 && (x != 0 || y != 0))
+            else if (color.g > 1.1 && (x != 0 || y != 0))
             {
                 bloom += color / (x * x + y * y);
             }
-            else if (color.b > 1 && (x != 0 || y != 0))
+            else if (color.b > 1.1 && (x != 0 || y != 0))
             {
                 bloom += color / (x * x + y * y);
             }
@@ -150,6 +150,6 @@ float4 main(PS_INPUT input) : SV_TARGET
     float4 reflectColor = ScreenSpaceReflection(input, color);
     color = reflectColor * metallicRate + color * (1 - metallicRate);
 
-	
-    return (color + bloom) * 1.3;
+
+    return float4(((color + bloom)).rgb, 1);
 }

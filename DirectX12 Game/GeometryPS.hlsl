@@ -41,10 +41,13 @@ PS_OUTPUT main(PS_INPUT input)
 	PS_OUTPUT output;
 
 	output.Normal = input.Normal;
-	output.Diffuse = input.Diffuse * Shadow(input);
+    output.Diffuse.rgb = input.Diffuse.rgb;
+    output.Diffuse.a = 1;
 	output.Position = input.WorldPosition;
 	output.Depth = input.Depth;
 	output.ReflectRate = ReflectRate;
+	
+
 	return output;
 
 }

@@ -5,14 +5,6 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="ヘッダー ファイル">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="リソース ファイル">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
     <Filter Include="ソース ファイル\Scene">
       <UniqueIdentifier>{184e49b9-26f7-4dfb-9a54-a996899355ea}</UniqueIdentifier>
     </Filter>
@@ -60,6 +52,18 @@
     </Filter>
     <Filter Include="ソース ファイル\Imgui">
       <UniqueIdentifier>{0188db80-0d82-4dcf-be09-b67b50d2d7f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader">
+      <UniqueIdentifier>{f2e4ffdb-7ce5-4f9c-b188-e661d8697253}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\Sprite">
+      <UniqueIdentifier>{73b53e0d-f8de-49cc-9ac8-330bbe93a760}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\Lighting">
+      <UniqueIdentifier>{cf30cdd8-c431-4e3b-8087-61a5c18977bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\Geometry">
+      <UniqueIdentifier>{4a45caa8-da6b-4acc-a01a-a4a475015b77}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -146,6 +150,9 @@
     </ClCompile>
     <ClCompile Include="ImguiRenderer.cpp">
       <Filter>ソース ファイル\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="TestObj.cpp">
+      <Filter>ソース ファイル\Object\GameObject\Object3D</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -248,46 +255,55 @@
     <ClInclude Include="Bullet.h">
       <Filter>ソース ファイル\Object\GameObject\Object3D\Gun</Filter>
     </ClInclude>
+    <ClInclude Include="TestObj.h">
+      <Filter>ソース ファイル\Object\GameObject\Object3D</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <FxCompile Include="GeometryVS.hlsl">
-      <Filter>リソース ファイル</Filter>
-    </FxCompile>
     <FxCompile Include="GeometryPS.hlsl">
-      <Filter>リソース ファイル</Filter>
+      <Filter>Shader\Geometry</Filter>
     </FxCompile>
-    <FxCompile Include="LightingVS.hlsl">
-      <Filter>リソース ファイル</Filter>
-    </FxCompile>
-    <FxCompile Include="LightingPS.hlsl">
-      <Filter>リソース ファイル</Filter>
-    </FxCompile>
-    <FxCompile Include="SpriteVS.hlsl">
-      <Filter>リソース ファイル</Filter>
-    </FxCompile>
-    <FxCompile Include="SpritePS.hlsl">
-      <Filter>リソース ファイル</Filter>
+    <FxCompile Include="GeometryVS.hlsl">
+      <Filter>Shader\Geometry</Filter>
     </FxCompile>
     <FxCompile Include="ShadowPS.hlsl">
-      <Filter>リソース ファイル</Filter>
+      <Filter>Shader\Geometry</Filter>
     </FxCompile>
     <FxCompile Include="ShadowVS.hlsl">
-      <Filter>リソース ファイル</Filter>
+      <Filter>Shader\Geometry</Filter>
     </FxCompile>
-    <FxCompile Include="WaterVS.hlsl">
-      <Filter>リソース ファイル</Filter>
+    <FxCompile Include="LightingPS.hlsl">
+      <Filter>Shader\Lighting</Filter>
     </FxCompile>
-    <FxCompile Include="WaterPS.hlsl">
-      <Filter>リソース ファイル</Filter>
+    <FxCompile Include="LightingVS.hlsl">
+      <Filter>Shader\Lighting</Filter>
     </FxCompile>
     <FxCompile Include="PostProcessPS.hlsl">
-      <Filter>リソース ファイル</Filter>
+      <Filter>Shader\Lighting</Filter>
     </FxCompile>
     <FxCompile Include="PostProcessVS.hlsl">
-      <Filter>リソース ファイル</Filter>
+      <Filter>Shader\Lighting</Filter>
+    </FxCompile>
+    <FxCompile Include="WaterVS.hlsl">
+      <Filter>Shader\Geometry</Filter>
+    </FxCompile>
+    <FxCompile Include="WaterPS.hlsl">
+      <Filter>Shader\Geometry</Filter>
+    </FxCompile>
+    <FxCompile Include="SpritePS.hlsl">
+      <Filter>Shader\Sprite</Filter>
+    </FxCompile>
+    <FxCompile Include="SpriteVS.hlsl">
+      <Filter>Shader\Sprite</Filter>
     </FxCompile>
     <FxCompile Include="Common.hlsl">
-      <Filter>リソース ファイル</Filter>
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="GeometryAlphaVS.hlsl">
+      <Filter>Shader\Geometry</Filter>
+    </FxCompile>
+    <FxCompile Include="GeometryAlphaPS.hlsl">
+      <Filter>Shader\Geometry</Filter>
     </FxCompile>
   </ItemGroup>
 </Project>

@@ -200,6 +200,7 @@ void Cube::Draw(XMFLOAT3 position, XMFLOAT3 scale, XMFLOAT3 rotation, float refl
 
 	constant->reflectRate = XMFLOAT4(reflectRate, reflectRate, reflectRate, reflectRate);
 
+
 	m_constantBuffer->Unmap(0, nullptr);
 
 	Renderer::GetInstance()->GetCommandList().Get()->SetGraphicsRootConstantBufferView(0,
@@ -216,7 +217,9 @@ void Cube::Draw(XMFLOAT3 position, XMFLOAT3 scale, XMFLOAT3 rotation, float refl
 	//テクスチャ設定
 	ID3D12DescriptorHeap* dh[] = { Renderer::GetInstance()->GetSRVDescriptorHeap().Get()};
 	Renderer::GetInstance()->GetCommandList().Get()->SetDescriptorHeaps(_countof(dh), dh);
-	Renderer::GetInstance()->GetCommandList().Get()->SetGraphicsRootDescriptorTable(1, Renderer::GetInstance()->GetSRVDescriptorHeap().Get()->GetGPUDescriptorHandleForHeapStart());
+	Renderer::GetInstance()->GetCommandList().Get()->SetGraphicsRootDescriptorTable(1,
+		Renderer::GetInstance()->GetSRVDescriptorHeap().Get()->GetGPUDescriptorHandleForHeapStart()
+	);
 
 
 	//トポロジ設定
