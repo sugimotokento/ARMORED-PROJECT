@@ -121,10 +121,10 @@ void Player::Rotation() {
 }
  
 void Player::Shot() {
-	for (Gun* gun : m_guns) {
+	/*for (Gun* gun : m_guns) {
 		gun->Update();
 
-	}
+	}*/
 }
 void Player::FieldCollision() {
 	Field* field = SceneManager::GetInstance()->GetScene()->GetGameObject<Field>();

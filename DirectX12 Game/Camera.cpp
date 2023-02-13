@@ -56,5 +56,6 @@ void Camera::UpdateMainCamera() {
 
 }
 void Camera::UpdateShadowCamera() {
-
+	m_position[Index::CAMERA_SHADOW] = XMFLOAT3(-15, 20, -15);
+	m_target[Index::CAMERA_SHADOW] = XMFLOAT3(0.0f, -0.5f, 0.0f);
 }

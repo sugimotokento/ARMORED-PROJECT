@@ -10,7 +10,6 @@ public:
 	GameScene();
 	~GameScene() {}
 	void Update()final override;
-	void DrawGeometry()final override;
-	void DrawSprite()final override;
+	void Draw(Layer layer)final override;
 	void Finalize()final override;
 };

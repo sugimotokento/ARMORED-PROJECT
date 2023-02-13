@@ -149,7 +149,5 @@ float4 main(PS_INPUT input) : SV_TARGET
     color = (baseColor * lambert + specular) * ssao;
     float4 reflectColor = ScreenSpaceReflection(input, color);
     color = reflectColor * metallicRate + color * (1 - metallicRate);
-
-
     return float4(((color + bloom)).rgb, 1);
 }

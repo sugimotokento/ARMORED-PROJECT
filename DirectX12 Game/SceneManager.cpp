@@ -1,4 +1,5 @@
 #include"SceneManager.h"
+#include"Scene.h"
 #include"Camera.h"
 #include"GameScene.h"
 #include"Renderer.h"
@@ -25,24 +26,23 @@ void SceneManager::Draw() {
 	Camera::GetInstance()->Draw();
 	//シャドウ用深度を書き込む用
 	Renderer::GetInstance()->ShadowPassStart();
-	m_scene->DrawGeometry();
-	//m_scene->DrawGeometryAlpha();
+	m_scene->Draw(Scene::Layer::GEOMETRY);
 	Renderer::GetInstance()->ShadowPassEnd();
 
 	//ジオメトリの色んな情報を書き込む用
 	Renderer::GetInstance()->GeometryPassStart();
-	m_scene->DrawGeometry();
+	m_scene->Draw(Scene::Layer::GEOMETRY);
 	Renderer::GetInstance()->GeometryPassEnd();
 
 	////ジオメトリの色んな情報を書き込む用
 	Renderer::GetInstance()->GeometryAlphaPassStart();
-	m_scene->DrawGeometry();
+	m_scene->Draw(Scene::Layer::GEOMETRY);
 	Renderer::GetInstance()->GeometryAlphaPassEnd();
 
 
 	//最終描画
 	Renderer::GetInstance()->Draw2DStart();
-	m_scene->DrawSprite();
+	m_scene->Draw(Scene::Layer::SPRITE);
 	Renderer::GetInstance()->Draw2DEnd();
 
 	Renderer::GetInstance()->DrawEnd();

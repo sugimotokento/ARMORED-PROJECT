@@ -5,8 +5,10 @@
 #include"PlayerUI.h"
 #include"SceneManager.h"
 #include"TestObj.h"
+#include"Ocean.h"
 GameScene::GameScene() {
 	AddGameObject<Field>(Layer::GEOMETRY);
+	AddGameObject<Ocean>(Layer::GEOMETRY);
 	AddGameObject<Player>(Layer::GEOMETRY)->SetPosition(XMFLOAT3(0, 0, -5));
 
 	AddGameObject<TestObj>(Layer::GEOMETRY);
@@ -19,13 +21,10 @@ void GameScene::Update() {
 	Scene::Update();
 	ChangeScene();
 }
-void GameScene::DrawGeometry() {
-	Scene::DrawGeometry();
+void GameScene::Draw(Layer layer) {
+	Scene::Draw(layer);
 }
 
-void GameScene::DrawSprite() {
-	Scene::DrawSprite();
-}
 void GameScene::Finalize() {
 	Scene::Finalize();
 }

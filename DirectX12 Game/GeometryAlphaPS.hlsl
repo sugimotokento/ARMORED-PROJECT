@@ -1,10 +1,6 @@
 #include"Common.hlsl"
 
-Texture2D<float4> normalTexture : register(t0);
-Texture2D<float4> colorTexture : register(t1);
-Texture2D<float4> positionTexture : register(t2);
-Texture2D<float4> depthTexture : register(t3);
-Texture2D<float4> metallicTexture : register(t4);
+
 Texture2D<float4> shadowTexture : register(t5);
 SamplerState sampler0 : register(s0);
 
@@ -28,9 +24,9 @@ float Shadow(PS_INPUT input)
         float2 uv = 0;
         uv.x = cos(angle * 3.14 / 180);
         uv.y = sin(angle * 3.14 / 180);
-        uv *= 0.001;
+        uv *= 0.0009;
 
-        float depth = shadowTexture.Sample(sampler0, pos.xy + uv).r;
+        float depth = shadowTexture.Sample(sampler0, pos.xy + uv).z;
 
         if (depth < input.LightPosition.z - 0.15)
         {
@@ -45,22 +41,6 @@ PS_OUTPUT main(PS_INPUT input)
 {
     PS_OUTPUT output;
     
-    float4 pos = input.WorldPosition;
-    pos.w = 1;
-    
-    pos.w = 1;
-    float4 uv = mul(pos, VP);
-    uv.xy /= uv.w;
-    uv.x = uv.x * 0.5 + 0.5;
-    uv.y = -uv.y * 0.5 + 0.5;
-    
-    float4 normal = normalTexture.Sample(sampler0, uv.xy);
-    float4 color = colorTexture.Sample(sampler0, uv.xy);
-    float4 position = positionTexture.Sample(sampler0, uv.xy);
-    float4 depth = depthTexture.Sample(sampler0, uv.xy);
-    float4 metallicRate = metallicTexture.Sample(sampler0, uv.xy);
-
-
     output.Diffuse.rgb = input.Diffuse * Shadow(input);
     output.Diffuse.a = input.Diffuse.a;
     return output;

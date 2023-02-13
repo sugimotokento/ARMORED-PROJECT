@@ -19,17 +19,12 @@ void Scene::Update() {
 	}
 }
 
-void Scene::DrawGeometry() {
-	for (GameObject* obj : m_gameObject[Layer::GEOMETRY]) {
+void Scene::Draw(Layer layer) {
+	for (GameObject* obj : m_gameObject[layer]) {
 		obj->Draw();
 	}
 }
 
-void Scene::DrawSprite() {
-	for (GameObject* obj : m_gameObject[Layer::SPRITE]) {
-		obj->Draw();
-	}
-}
 
 void Scene::Finalize() {
 	for (int i = 0; i < Layer::COUNT; i++) {

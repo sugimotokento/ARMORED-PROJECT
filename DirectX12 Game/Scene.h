@@ -20,8 +20,7 @@ public:
 	Scene(){}
 	~Scene(){}
 	virtual void Update();
-	virtual void DrawGeometry();
-	virtual void DrawSprite();
+	virtual void Draw(Layer layer);
 	virtual void Finalize();
 
 

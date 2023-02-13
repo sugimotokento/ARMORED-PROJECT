@@ -2,7 +2,7 @@
 
 #include "main.h"
 
-using namespace Microsoft::WRL;
+
 
 class Cube{
 private:

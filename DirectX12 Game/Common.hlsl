@@ -28,6 +28,7 @@ struct PS_INPUT
     float2 TexCoord : TEXCOORD;
 
     float4 LightPosition : POSITION1;
+    float4 LightDepth : DEPTH2;
 };
 
 

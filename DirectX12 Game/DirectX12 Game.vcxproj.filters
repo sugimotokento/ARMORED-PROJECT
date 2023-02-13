@@ -65,6 +65,12 @@
     <Filter Include="Shader\Geometry">
       <UniqueIdentifier>{4a45caa8-da6b-4acc-a01a-a4a475015b77}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Object\GameObject\Object3D\Field">
+      <UniqueIdentifier>{d71210e3-ef9c-431f-ba2e-9a11da4f103d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\GameObject\Object3D\Player">
+      <UniqueIdentifier>{5b5196dc-bd4d-4f47-8f90-02f93b887c4b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -109,12 +115,6 @@
     <ClCompile Include="Sprite.cpp">
       <Filter>ソース ファイル\Object\Polygon</Filter>
     </ClCompile>
-    <ClCompile Include="Field.cpp">
-      <Filter>ソース ファイル\Object\GameObject\Object3D</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>ソース ファイル\Object\GameObject\Object3D</Filter>
-    </ClCompile>
     <ClCompile Include="PlayerUI.cpp">
       <Filter>ソース ファイル\Object\GameObject\Object2D</Filter>
     </ClCompile>
@@ -153,6 +153,15 @@
     </ClCompile>
     <ClCompile Include="TestObj.cpp">
       <Filter>ソース ファイル\Object\GameObject\Object3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Field.cpp">
+      <Filter>ソース ファイル\Object\GameObject\Object3D\Field</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>ソース ファイル\Object\GameObject\Object3D\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Ocean.cpp">
+      <Filter>ソース ファイル\Object\GameObject\Object3D\Field</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -200,12 +209,6 @@
     </ClInclude>
     <ClInclude Include="Sprite.h">
       <Filter>ソース ファイル\Object\Polygon</Filter>
-    </ClInclude>
-    <ClInclude Include="Field.h">
-      <Filter>ソース ファイル\Object\GameObject\Object3D</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>ソース ファイル\Object\GameObject\Object3D</Filter>
     </ClInclude>
     <ClInclude Include="PlayerUI.h">
       <Filter>ソース ファイル\Object\GameObject\Object2D</Filter>
@@ -258,6 +261,15 @@
     <ClInclude Include="TestObj.h">
       <Filter>ソース ファイル\Object\GameObject\Object3D</Filter>
     </ClInclude>
+    <ClInclude Include="Field.h">
+      <Filter>ソース ファイル\Object\GameObject\Object3D\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>ソース ファイル\Object\GameObject\Object3D\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Ocean.h">
+      <Filter>ソース ファイル\Object\GameObject\Object3D\Field</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="GeometryPS.hlsl">
@@ -277,12 +289,6 @@
     </FxCompile>
     <FxCompile Include="LightingVS.hlsl">
       <Filter>Shader\Lighting</Filter>
-    </FxCompile>
-    <FxCompile Include="WaterVS.hlsl">
-      <Filter>Shader\Geometry</Filter>
-    </FxCompile>
-    <FxCompile Include="WaterPS.hlsl">
-      <Filter>Shader\Geometry</Filter>
     </FxCompile>
     <FxCompile Include="SpritePS.hlsl">
       <Filter>Shader\Sprite</Filter>

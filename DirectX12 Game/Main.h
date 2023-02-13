@@ -13,7 +13,7 @@
 #include <wrl/client.h>
 #include <DirectXMath.h>
 using namespace DirectX;
-
+using namespace Microsoft::WRL;
 
 #pragma comment( lib, "winmm.lib" )
 #pragma comment( lib, "d3d12.lib" )
