@@ -1,11 +1,11 @@
 #include"Common.hlsl"
 
 Texture2D<float4> normalTexture : register(t0);
-Texture2D<float4> colorTexture : register(t6);
+Texture2D<float4> unlitColorTexture : register(t1);
 Texture2D<float4> positionTexture : register(t2);
 Texture2D<float4> depthTexture : register(t3);
 Texture2D<float4> metallicTexture : register(t4);
-
+Texture2D<float4> colorTexture : register(t6);
 
 SamplerState sampler0 : register(s0);
 
@@ -88,7 +88,7 @@ float4 Bloom(PS_INPUT input)
         for (int x = -loop; x < loop + 1; x++)
         {
             float2 texCoord = input.TexCoord + float2((float) x * 1.2 / 1920, (float) y * 1.2 / 1080);
-            float4 color = colorTexture.Sample(sampler0, texCoord);
+            float4 color = unlitColorTexture.Sample(sampler0, texCoord);
             float bright = color.r * 0.299 + color.g * 0.587 + color.b * 0.114;
             if (color.r >= 1 && color.g >= 1 && color.b >= 1 && (x != 0 || y != 0))
             {

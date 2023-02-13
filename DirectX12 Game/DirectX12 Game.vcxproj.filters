@@ -278,12 +278,6 @@
     <FxCompile Include="LightingVS.hlsl">
       <Filter>Shader\Lighting</Filter>
     </FxCompile>
-    <FxCompile Include="PostProcessPS.hlsl">
-      <Filter>Shader\Lighting</Filter>
-    </FxCompile>
-    <FxCompile Include="PostProcessVS.hlsl">
-      <Filter>Shader\Lighting</Filter>
-    </FxCompile>
     <FxCompile Include="WaterVS.hlsl">
       <Filter>Shader\Geometry</Filter>
     </FxCompile>
