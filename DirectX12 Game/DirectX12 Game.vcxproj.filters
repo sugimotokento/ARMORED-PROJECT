@@ -305,5 +305,11 @@
     <FxCompile Include="GeometryAlphaPS.hlsl">
       <Filter>Shader\Geometry</Filter>
     </FxCompile>
+    <FxCompile Include="Noise.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="AtmosphericScattering.hlsl">
+      <Filter>Shader</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

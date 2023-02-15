@@ -1,10 +1,19 @@
 #include"Ocean.h"
 #include"Renderer.h"
 
+#ifdef _DEBUG
+#include"ImguiRenderer.h"
+#endif // _DEBUG
+
 
 Ocean::Ocean() {
-	m_position = XMFLOAT3(0, 1, 10);
-	m_scale = XMFLOAT3(10, 1, 10);
+	m_position = XMFLOAT3(0, 0, 10);
+	m_scale = XMFLOAT3(300, 1, 300);
+
+#ifdef _DEBUG
+	std::function<bool()> f = std::bind(&Ocean::ImguiDebug, this);
+	ImguiRenderer::GetInstance()->AddFunction(f);
+#endif // _DEBUG
 }
 void Ocean::Initialize() {
 	ComPtr<ID3D12Device> device = Renderer::GetInstance()->GetDevice();
@@ -72,12 +81,13 @@ void Ocean::Initialize() {
 		}
 		////テクスチャの設定
 		{
-			buffer[0].texCoord = { 1.0f, 1.0f };
-			buffer[1].texCoord = { 0.0f, 1.0f };
-			buffer[2].texCoord = { 1.0f, 0.0f };
-			buffer[3].texCoord = { 0.0f, 1.0f };
+			const float TEX_SIZE = 500;
+			buffer[0].texCoord = { TEX_SIZE, TEX_SIZE };
+			buffer[1].texCoord = { 0.0f, TEX_SIZE };
+			buffer[2].texCoord = { TEX_SIZE, 0.0f };
+			buffer[3].texCoord = { 0.0f, TEX_SIZE };
 			buffer[4].texCoord = { 0.0f, 0.0f };
-			buffer[5].texCoord = { 1.0f, 0.0f };
+			buffer[5].texCoord = { TEX_SIZE, 0.0f };
 		}
 	}
 
@@ -119,6 +129,12 @@ void Ocean::Draw() {
 
 	constant->reflectRate = XMFLOAT4(0, 0, 0, 0);
 
+	constant->isWater = true;
+
+	constant->waterParam.x = m_waterParam.x;
+	constant->waterParam.y = m_waterParam.y;
+	constant->waterParam.z = m_waterParam.z;
+	constant->waterParam.w = m_waterParam.w;
 
 	m_constantBuffer->Unmap(0, nullptr);
 
@@ -152,3 +168,17 @@ void Ocean::Finalize() {
 	m_constantBuffer.Get()->Release();
 	m_vertexBuffer.Get()->Release();
 }
+
+
+
+#ifdef _DEBUG
+bool Ocean::ImguiDebug() {
+	ImGui::Begin("OceanParam");
+	ImGui::SliderFloat("Param1", &m_waterParam.x, 0, 2);
+	ImGui::SliderFloat("Param2", &m_waterParam.y, 0, 2);
+	ImGui::SliderFloat("Param3", &m_waterParam.z, 0, 2);
+	ImGui::SliderFloat("Param4", &m_waterParam.w, 0, 2);
+	ImGui::End();
+	return GetIsDestroy();
+}
+#endif // _DEBUG

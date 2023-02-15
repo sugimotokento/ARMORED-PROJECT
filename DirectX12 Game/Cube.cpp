@@ -200,6 +200,7 @@ void Cube::Draw(XMFLOAT3 position, XMFLOAT3 scale, XMFLOAT3 rotation, float refl
 
 	constant->reflectRate = XMFLOAT4(reflectRate, reflectRate, reflectRate, reflectRate);
 
+	constant->isWater = false;
 
 	m_constantBuffer->Unmap(0, nullptr);
 

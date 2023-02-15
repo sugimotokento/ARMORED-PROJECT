@@ -27,16 +27,21 @@ void SceneManager::Draw() {
 	//シャドウ用深度を書き込む用
 	Renderer::GetInstance()->ShadowPassStart();
 	m_scene->Draw(Scene::Layer::GEOMETRY);
+	m_scene->Draw(Scene::Layer::WATER);
+	m_scene->Draw(Scene::Layer::ALPHA);
 	Renderer::GetInstance()->ShadowPassEnd();
 
 	//ジオメトリの色んな情報を書き込む用
 	Renderer::GetInstance()->GeometryPassStart();
 	m_scene->Draw(Scene::Layer::GEOMETRY);
+	m_scene->Draw(Scene::Layer::ALPHA);
 	Renderer::GetInstance()->GeometryPassEnd();
 
 	////ジオメトリの色んな情報を書き込む用
 	Renderer::GetInstance()->GeometryAlphaPassStart();
 	m_scene->Draw(Scene::Layer::GEOMETRY);
+	m_scene->Draw(Scene::Layer::WATER);
+	m_scene->Draw(Scene::Layer::ALPHA);
 	Renderer::GetInstance()->GeometryAlphaPassEnd();
 
 

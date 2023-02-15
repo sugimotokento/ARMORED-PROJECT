@@ -25,7 +25,8 @@ struct ConstantBuffer
 	XMFLOAT4X4 world;
 	XMFLOAT4 reflectRate;
 	XMFLOAT3 cameraPosition;
-	bool dammy;
+	bool isWater=false;
+	XMFLOAT4 waterParam;
 };
 
 

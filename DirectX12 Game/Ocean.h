@@ -6,7 +6,10 @@ class Ocean :public GameObject {
 private:
 	ComPtr<ID3D12Resource> m_vertexBuffer;
 	ComPtr<ID3D12Resource> m_constantBuffer;
-
+	XMFLOAT4 m_waterParam;
+#ifdef _DEBUG
+	bool ImguiDebug();
+#endif // _DEBUG
 public:
 	Ocean();
 	void Initialize() final override;

@@ -8,6 +8,8 @@ class Scene {
 public:
 	enum Layer {
 		GEOMETRY,
+		WATER,
+		ALPHA,
 		SPRITE,
 		COUNT
 	};

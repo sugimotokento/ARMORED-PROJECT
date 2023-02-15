@@ -8,10 +8,10 @@
 #include"Ocean.h"
 GameScene::GameScene() {
 	AddGameObject<Field>(Layer::GEOMETRY);
-	AddGameObject<Ocean>(Layer::GEOMETRY);
+	AddGameObject<Ocean>(Layer::WATER);
 	AddGameObject<Player>(Layer::GEOMETRY)->SetPosition(XMFLOAT3(0, 0, -5));
 
-	AddGameObject<TestObj>(Layer::GEOMETRY);
+	AddGameObject<TestObj>(Layer::ALPHA);
 
 	Player* player = GetGameObject<Player>();
 	AddGameObject<PlayerUI>(Layer::SPRITE)->SetPlayer(player);

@@ -88,7 +88,7 @@ float4 Bloom(PS_INPUT input)
         for (int x = -loop; x < loop + 1; x++)
         {
             float2 texCoord = input.TexCoord + float2((float) x * 1.2 / 1920, (float) y * 1.2 / 1080);
-            float4 color = unlitColorTexture.Sample(sampler0, texCoord);
+            float4 color = colorTexture.Sample(sampler0, texCoord);
             float bright = color.r * 0.299 + color.g * 0.587 + color.b * 0.114;
             if (color.r >= 1 && color.g >= 1 && color.b >= 1 && (x != 0 || y != 0))
             {
@@ -123,6 +123,12 @@ float4 main(PS_INPUT input) : SV_TARGET
     float4 metallicRate = metallicTexture.Sample(sampler0, input.TexCoord);
     normal = normalize(normal);
 
+    if (position.y <= 0)
+    {
+        return float4(baseColor.rgb, 1);
+    }
+
+    
     float4 color = baseColor;
     float lambert = 1;
     float specular = 0;
@@ -149,5 +155,6 @@ float4 main(PS_INPUT input) : SV_TARGET
     color = (baseColor * lambert + specular) * ssao;
     float4 reflectColor = ScreenSpaceReflection(input, color);
     color = reflectColor * metallicRate + color * (1 - metallicRate);
+
     return float4(((color + bloom)).rgb, 1);
 }

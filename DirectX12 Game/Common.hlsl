@@ -6,7 +6,8 @@ cbuffer CBuffer : register(b0)
     float4x4 World;
     float4 ReflectRate;
     float3 cameraPosition;
-    bool dammy;
+    bool IsWater;
+    float4 WaterParam;
 }
 
 
