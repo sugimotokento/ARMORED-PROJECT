@@ -14,8 +14,8 @@
 
 
 
-const char* CLASS_NAME = "AppClass";
-const char* WINDOW_NAME = "Game";
+const LPCWSTR CLASS_NAME = L"AppClass";
+const LPCWSTR WINDOW_NAME = L"Game";
 
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
@@ -51,8 +51,8 @@ int APIENTRY WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance
 	
 	// ウィンドウの作成
 	g_window = CreateWindowEx(0,
-		(LPCWSTR)CLASS_NAME,
-		(LPCWSTR)WINDOW_NAME,
+		CLASS_NAME,
+		WINDOW_NAME,
 		WS_OVERLAPPEDWINDOW,
 		CW_USEDEFAULT,
 		CW_USEDEFAULT,

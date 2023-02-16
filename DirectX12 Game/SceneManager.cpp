@@ -37,7 +37,7 @@ void SceneManager::Draw() {
 	m_scene->Draw(Scene::Layer::ALPHA);
 	Renderer::GetInstance()->GeometryPassEnd();
 
-	////ジオメトリの色んな情報を書き込む用
+	////透過オブジェクトのColorを書き込む
 	Renderer::GetInstance()->GeometryAlphaPassStart();
 	m_scene->Draw(Scene::Layer::GEOMETRY);
 	m_scene->Draw(Scene::Layer::WATER);

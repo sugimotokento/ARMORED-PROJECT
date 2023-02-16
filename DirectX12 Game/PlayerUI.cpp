@@ -12,12 +12,12 @@ void PlayerUI::Update() {
 
 }
 void PlayerUI::Draw() {	
-	m_frame->Draw();
+	//m_frame->Draw();
 
 	int i = 0;
 	for (Sprite* sprite : m_stock) {
 		if (i < m_player->GetHP()) {
-			sprite->Draw();
+			//sprite->Draw();
 		}
 		i++;
 	}

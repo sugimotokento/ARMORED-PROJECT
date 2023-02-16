@@ -41,7 +41,7 @@ float Shadow(PS_INPUT input)
 float4 Water(PS_INPUT input)
 {
     float4 outColor = 1;
-    float speed = 1+WaterParam.w*0.05;
+    float speed = 1+WaterParam.w*0.1;
     float dx = fbm2((input.TexCoord + float2(0.001, 0.0)) * 0.05, 8, speed) * 10.0
              - fbm2((input.TexCoord - float2(0.001, 0.0)) * 0.05, 8, speed) * 10.0;
     float dz = fbm2((input.TexCoord + float2(0.0, 0.001)) * 0.05, 8, speed) * 10.0
@@ -89,15 +89,16 @@ float4 Water(PS_INPUT input)
     alpha = pow(alpha, 0.26f);
     alpha *= 0.6f;
     
-    float3 blendColor = float3(0.03, 0, 0.4);
+    float3 blendColor = float3(0.15, 0, 0.25);
+   // float3 blendColor = WaterParam.xyz;//デバッグ用
     float3 atmosphericScattering = AtmosphericScattering(input.WorldPosition, lightDir.xyz, cameraPosition.xyz);
-    float3 mainColor = lerp(atmosphericScattering, blendColor, 0.3); 
+    float3 mainColor = lerp(atmosphericScattering, blendColor, 0.5); 
     
     float3 upColor = mainColor ;
-    float3 underColor = float3(0.05, 0.1, 0.15);
+    float3 underColor = float3(0.05, 0.08, 0.15);
     outColor.rgb = lerp(upColor, underColor, alpha+0.1);
-    outColor.rgb = outColor.rgb * (1.0 - fresnel) + outColor.rgb * fresnel*1.25 + specular;
-    
+    outColor.rgb = outColor.rgb * (1.0 - fresnel) + outColor.rgb * fresnel*1.3 + specular;
+    outColor.rgb *= 1.3;
     alpha =  alpha;
     alpha = max(0, alpha);
     alpha = min(1, alpha);

@@ -14,7 +14,7 @@ float3 AtmosphericScattering(float4 worldPos, float3 lightDir, float3 cameraPos)
     m = saturate(-dot(lightDir, eye));
     m = pow(m, 50);
     
-    float a = 0.0005;
+    float a = 0.005;
     diffuse += m * dist * a;
     
     //ƒŒƒCƒŠ[U—
