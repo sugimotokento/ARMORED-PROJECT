@@ -22,7 +22,7 @@ Field::Field() {
 	}
 
 
-	m_field->SetColor(XMFLOAT4(1, 0.7f, 0, 1));
+	m_field->SetColor(XMFLOAT4(0, 0, 0, 1));
 }
 void Field::Update() {
 

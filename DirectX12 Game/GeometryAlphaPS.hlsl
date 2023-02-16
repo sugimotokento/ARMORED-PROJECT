@@ -71,7 +71,7 @@ float4 Water(PS_INPUT input)
 
     float specular = -dot(eyev, refv);
     specular = saturate(specular);
-    specular = pow(specular, 50);
+    specular = pow(specular, 80);
    // outDiffuse.rgb = spec * 1.0;
     
     //ƒtƒŒƒlƒ‹‹ßŽ—Ž®
@@ -102,7 +102,7 @@ float4 Water(PS_INPUT input)
     alpha =  alpha;
     alpha = max(0, alpha);
     alpha = min(1, alpha);
-    outColor.a = alpha;
+    outColor.rgb = lerp(unlitColorTexture.Sample(sampler0, uv.xy).rgb, outColor.rgb, alpha);
     
     return outColor;
 }
@@ -115,7 +115,7 @@ PS_OUTPUT main(PS_INPUT input)
     {
         float4 color = Water(input);
         output.Diffuse.rgb = color.rgb;
-        output.Diffuse.a = color.a;
+        output.Diffuse.a = 1;
     }
     else
     {
