@@ -1,5 +1,3 @@
-#pragma once
-
 #include"Common.hlsl"
 #include"Noise.hlsl"
 #include"AtmosphericScattering.hlsl"
@@ -43,7 +41,7 @@ float Shadow(PS_INPUT input)
 float4 Water(PS_INPUT input)
 {
     float4 outColor = 1;
-    float speed = 1;
+    float speed = 1+WaterParam.w*0.05;
     float dx = fbm2((input.TexCoord + float2(0.001, 0.0)) * 0.05, 8, speed) * 10.0
              - fbm2((input.TexCoord - float2(0.001, 0.0)) * 0.05, 8, speed) * 10.0;
     float dz = fbm2((input.TexCoord + float2(0.0, 0.001)) * 0.05, 8, speed) * 10.0
@@ -96,9 +94,9 @@ float4 Water(PS_INPUT input)
     float3 mainColor = lerp(atmosphericScattering, blendColor, 0.3); 
     
     float3 upColor = mainColor ;
-    float3 underColor = float3(0, 0.1, 0.15);
-    outColor.rgb = lerp(upColor, underColor, alpha+0.1);;
-    outColor.rgb = outColor.rgb * (1.0 - fresnel) + outColor.rgb * fresnel + specular;
+    float3 underColor = float3(0.05, 0.1, 0.15);
+    outColor.rgb = lerp(upColor, underColor, alpha+0.1);
+    outColor.rgb = outColor.rgb * (1.0 - fresnel) + outColor.rgb * fresnel*1.25 + specular;
     
     alpha =  alpha;
     alpha = max(0, alpha);

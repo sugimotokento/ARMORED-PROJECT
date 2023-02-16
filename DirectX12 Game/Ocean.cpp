@@ -110,6 +110,9 @@ void Ocean::Draw() {
 	XMMATRIX size = XMMatrixScaling(m_scale.x, m_scale.y, m_scale.z);
 	XMMATRIX world = size * rot * trans;
 
+	static float waterParamW = 0;
+	waterParamW += 0.1f;
+
 	//定数バッファ設定
 	ConstantBuffer* constant;
 	m_constantBuffer->Map(0, nullptr, (void**)&constant);
@@ -134,7 +137,7 @@ void Ocean::Draw() {
 	constant->waterParam.x = m_waterParam.x;
 	constant->waterParam.y = m_waterParam.y;
 	constant->waterParam.z = m_waterParam.z;
-	constant->waterParam.w = m_waterParam.w;
+	constant->waterParam.w = waterParamW;
 
 	m_constantBuffer->Unmap(0, nullptr);
 

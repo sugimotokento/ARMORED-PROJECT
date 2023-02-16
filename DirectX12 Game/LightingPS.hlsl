@@ -123,11 +123,7 @@ float4 main(PS_INPUT input) : SV_TARGET
     float4 metallicRate = metallicTexture.Sample(sampler0, input.TexCoord);
     normal = normalize(normal);
 
-    if (position.y <= 0)
-    {
-        return float4(baseColor.rgb, 1);
-    }
-
+   
     
     float4 color = baseColor;
     float lambert = 1;
@@ -155,6 +151,11 @@ float4 main(PS_INPUT input) : SV_TARGET
     color = (baseColor * lambert + specular) * ssao;
     float4 reflectColor = ScreenSpaceReflection(input, color);
     color = reflectColor * metallicRate + color * (1 - metallicRate);
+
+    if (position.y < 0)
+    {
+        return float4((baseColor + bloom).rgb, 1);
+    }
 
     return float4(((color + bloom)).rgb, 1);
 }
