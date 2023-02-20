@@ -27,7 +27,7 @@ Player::Player() {
 	AddGun<NormalGun>();
 
 	m_cube = new Cube();
-	m_cube->SetColor(XMFLOAT4(0.9, 0.5f, 0.5f, 1.0f));
+	m_cube->SetColor(XMFLOAT4(0.9f, 0.5f, 0.5f, 1.0f));
 
 #ifdef _DEBUG
 	std::function<bool()> f = std::bind(&Player::ImguiDebug, this);

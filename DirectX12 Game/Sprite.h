@@ -16,7 +16,7 @@ private:
 	XMFLOAT3 m_scale;
 public:
 	Sprite() = delete;
-	Sprite(const wchar_t* textureName);
+	Sprite(std::wstring textureName);
 
 	void Draw();
 	void Finalize();

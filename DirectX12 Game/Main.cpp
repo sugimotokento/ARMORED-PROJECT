@@ -13,7 +13,6 @@
 #endif // _DEBUG
 
 
-
 const LPCWSTR CLASS_NAME = L"AppClass";
 const LPCWSTR WINDOW_NAME = L"Game";
 
@@ -30,6 +29,12 @@ void GameEnd() {
 	g_isGame = false;
 }
 int APIENTRY WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nCmdShow){
+
+	//// WICファイル読込のため、COMを初期化しておく
+	HRESULT hr = CoInitializeEx(nullptr, COINIT_MULTITHREADED);
+	if (FAILED(hr)){}
+		// error
+
 	WNDCLASSEX wcex =
 	{
 		sizeof(WNDCLASSEX),

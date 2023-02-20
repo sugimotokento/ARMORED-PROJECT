@@ -4,7 +4,7 @@
 #include "Sprite.h"
 #include"texture.h"
 
-Sprite::Sprite(const wchar_t* textureName) {
+Sprite::Sprite(std::wstring textureName) {
 	ComPtr<ID3D12Device> device = Renderer::GetInstance()->GetDevice();
 
 	D3D12_HEAP_PROPERTIES heapProperties{};

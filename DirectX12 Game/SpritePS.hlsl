@@ -13,6 +13,6 @@ float4 main(PS_INPUT input) : SV_TARGET
 		color.a = 1 - color.g;//—ÎF‚ğ“§‰ß‚·‚é
 	}
 	color = color * input.Diffuse;
-
+	
 	return color;
 }
