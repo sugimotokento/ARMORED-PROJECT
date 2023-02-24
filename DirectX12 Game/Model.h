@@ -18,14 +18,23 @@ struct ModelResource{
 
 class Model {
 private:
-	std::vector<ModelResource> m_moldeResource;
+	std::vector<ModelResource> m_modelResource;
 	ComPtr<ID3D12Resource> m_constantBuffer;
 	XMFLOAT3 m_position;
-	XMFLOAT3 m_scale;
+	XMFLOAT3 m_scale=XMFLOAT3(1,1,1);
 	XMFLOAT3 m_rotation;
 
 	unsigned int m_meshNum = 0;
 public:
 	void LoadMesh(const char* fileName);
 	void Draw();
+
+	XMFLOAT3 GetPosition() { return m_position; }
+	XMFLOAT3 GetScale() { return m_scale; }
+	XMFLOAT3 GetRotation() { return m_rotation; }
+
+	void SetPosition(XMFLOAT3 position) { m_position = position; }
+	void SetScale(XMFLOAT3 scale) { m_scale = scale; }
+	void SetRotation(XMFLOAT3 rotation) { m_rotation = rotation; }
+
 };

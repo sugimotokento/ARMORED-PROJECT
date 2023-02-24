@@ -44,9 +44,6 @@
     <Filter Include="ソース ファイル\Object\GameObject\Object2D">
       <UniqueIdentifier>{1c503c15-9ec3-4d70-8333-b16eb1ad7b60}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Texture">
-      <UniqueIdentifier>{8e4240a3-ca16-445f-a474-f1378a8df803}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Renderer">
       <UniqueIdentifier>{fe800535-2dc8-4776-8be3-bcb922204cea}</UniqueIdentifier>
     </Filter>
@@ -70,6 +67,9 @@
     </Filter>
     <Filter Include="ソース ファイル\Object\GameObject\Object3D\Player">
       <UniqueIdentifier>{5b5196dc-bd4d-4f47-8f90-02f93b887c4b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\FileLoad">
+      <UniqueIdentifier>{8e4240a3-ca16-445f-a474-f1378a8df803}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -119,7 +119,7 @@
       <Filter>ソース ファイル\Object\GameObject\Object2D</Filter>
     </ClCompile>
     <ClCompile Include="texture.cpp">
-      <Filter>ソース ファイル\Texture</Filter>
+      <Filter>ソース ファイル\FileLoad</Filter>
     </ClCompile>
     <ClCompile Include="Renderer.cpp">
       <Filter>ソース ファイル\Renderer</Filter>
@@ -161,7 +161,7 @@
       <Filter>ソース ファイル\Object\GameObject\Object3D\Field</Filter>
     </ClCompile>
     <ClCompile Include="Model.cpp">
-      <Filter>ソース ファイル\Texture</Filter>
+      <Filter>ソース ファイル\FileLoad</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -217,7 +217,7 @@
       <Filter>ソース ファイル</Filter>
     </ClInclude>
     <ClInclude Include="texture.h">
-      <Filter>ソース ファイル\Texture</Filter>
+      <Filter>ソース ファイル\FileLoad</Filter>
     </ClInclude>
     <ClInclude Include="Renderer.h">
       <Filter>ソース ファイル\Renderer</Filter>
@@ -268,7 +268,7 @@
       <Filter>ソース ファイル\Object\GameObject\Object3D\Field</Filter>
     </ClInclude>
     <ClInclude Include="Model.h">
-      <Filter>ソース ファイル\Texture</Filter>
+      <Filter>ソース ファイル\FileLoad</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

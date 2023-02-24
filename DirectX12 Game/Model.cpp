@@ -43,14 +43,14 @@ void Model::LoadMesh(const char* fileName) {
 		aiMesh* mesh = scene->mMeshes[i];
 
 
-		m_moldeResource.push_back(ModelResource());
+		m_modelResource.push_back(ModelResource());
 
 		//頂点バッファの生成
 		{
-			m_moldeResource[i].m_vertexNum = mesh->mNumVertices;
-			Vertex3DBuffer* tempVertex = new Vertex3DBuffer[m_moldeResource[i].m_vertexNum];
+			m_modelResource[i].m_vertexNum = mesh->mNumVertices;
+			Vertex3DBuffer* tempVertex = new Vertex3DBuffer[m_modelResource[i].m_vertexNum];
 
-			for (unsigned int v = 0; v < m_moldeResource[i].m_vertexNum; v++) {
+			for (unsigned int v = 0; v < m_modelResource[i].m_vertexNum; v++) {
 				tempVertex[v].position = XMFLOAT3(mesh->mVertices[v].x, mesh->mVertices[v].y, mesh->mVertices[v].z);
 				tempVertex[v].normal = XMFLOAT3(mesh->mNormals[v].x, mesh->mNormals[v].y, mesh->mNormals[v].z);
 				tempVertex[v].diffuse = XMFLOAT4(0.9f, 0.9f, 0.9f, 1);
@@ -59,13 +59,13 @@ void Model::LoadMesh(const char* fileName) {
 
 
 			//頂点バッファの作成
-			resourceDesc.Width = sizeof(Vertex3DBuffer) * m_moldeResource[i].m_vertexNum;
-			device->CreateCommittedResource(&heapProperties, D3D12_HEAP_FLAG_NONE, &resourceDesc, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr, IID_PPV_ARGS(&m_moldeResource[i].m_vertexBuffer));
+			resourceDesc.Width = sizeof(Vertex3DBuffer) * m_modelResource[i].m_vertexNum;
+			device->CreateCommittedResource(&heapProperties, D3D12_HEAP_FLAG_NONE, &resourceDesc, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr, IID_PPV_ARGS(&m_modelResource[i].m_vertexBuffer));
 
 			Vertex3DBuffer* vertex;
-			m_moldeResource[i].m_vertexBuffer->Map(0, nullptr, (void**)&vertex);
-			memcpy(vertex, tempVertex, sizeof(Vertex3DBuffer) * m_moldeResource[i].m_vertexNum);
-			m_moldeResource[i].m_vertexBuffer->Unmap(0, nullptr);
+			m_modelResource[i].m_vertexBuffer->Map(0, nullptr, (void**)&vertex);
+			memcpy(vertex, tempVertex, sizeof(Vertex3DBuffer) * m_modelResource[i].m_vertexNum);
+			m_modelResource[i].m_vertexBuffer->Unmap(0, nullptr);
 
 			delete[] tempVertex;
 		}
@@ -73,10 +73,10 @@ void Model::LoadMesh(const char* fileName) {
 
 		//インデックスバッファの生成
 		{
-			m_moldeResource[i].m_indexNum = mesh->mNumFaces;
-			unsigned int* tempIndex = new unsigned int[m_moldeResource[i].m_indexNum * 3];
+			m_modelResource[i].m_indexNum = mesh->mNumFaces;
+			unsigned int* tempIndex = new unsigned int[m_modelResource[i].m_indexNum * 3];
 
-			for (unsigned int f = 0; f < m_moldeResource[i].m_indexNum; f++) {
+			for (unsigned int f = 0; f < m_modelResource[i].m_indexNum; f++) {
 				const aiFace* face = &mesh->mFaces[f];
 
 				tempIndex[f * 3 + 0] = face->mIndices[0];
@@ -85,15 +85,15 @@ void Model::LoadMesh(const char* fileName) {
 			}
 
 			//インデックスバッファの作成
-			resourceDesc.Width = sizeof(unsigned int) * m_moldeResource[i].m_indexNum*3;
-			device->CreateCommittedResource(&heapProperties, D3D12_HEAP_FLAG_NONE, &resourceDesc, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr, IID_PPV_ARGS(&m_moldeResource[i].m_IndexBuffer));
+			resourceDesc.Width = sizeof(unsigned int) * m_modelResource[i].m_indexNum*3;
+			device->CreateCommittedResource(&heapProperties, D3D12_HEAP_FLAG_NONE, &resourceDesc, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr, IID_PPV_ARGS(&m_modelResource[i].m_IndexBuffer));
 
 			unsigned int* index;
-			m_moldeResource[i].m_IndexBuffer->Map(0, nullptr, (void**)&index);
+			m_modelResource[i].m_IndexBuffer->Map(0, nullptr, (void**)&index);
 
-			memcpy(index, tempIndex, sizeof(unsigned int) * m_moldeResource[i].m_indexNum*3);
+			memcpy(index, tempIndex, sizeof(unsigned int) * m_modelResource[i].m_indexNum*3);
 
-			m_moldeResource[i].m_IndexBuffer->Unmap(0, nullptr);
+			m_modelResource[i].m_IndexBuffer->Unmap(0, nullptr);
 
 			delete[] tempIndex;
 		}
@@ -106,7 +106,7 @@ void Model::LoadMesh(const char* fileName) {
 		IID_PPV_ARGS(&m_constantBuffer));
 
 
-	m_scale = XMFLOAT3(0.01f, 0.01f, 0.01f);
+	m_scale = XMFLOAT3(10, 10, 10);
 	m_position = XMFLOAT3(2, 0.01f, 0.01f);
 }
 
@@ -154,16 +154,16 @@ void Model::Draw() {
 	for (unsigned int i = 0; i < m_meshNum; i++) {
 		//頂点バッファ設定
 		D3D12_VERTEX_BUFFER_VIEW vertexView{};
-		vertexView.BufferLocation = m_moldeResource[i].m_vertexBuffer->GetGPUVirtualAddress();
+		vertexView.BufferLocation = m_modelResource[i].m_vertexBuffer->GetGPUVirtualAddress();
 		vertexView.StrideInBytes = sizeof(Vertex3DBuffer);
-		vertexView.SizeInBytes = sizeof(Vertex3DBuffer) * m_moldeResource[i].m_vertexNum;
+		vertexView.SizeInBytes = sizeof(Vertex3DBuffer) * m_modelResource[i].m_vertexNum;
 		Renderer::GetInstance()->GetCommandList().Get()->IASetVertexBuffers(0, 1, &vertexView);
 
 
 		//インデックスバッファ設定
 		D3D12_INDEX_BUFFER_VIEW indexView{};
-		indexView.BufferLocation = m_moldeResource[i].m_IndexBuffer->GetGPUVirtualAddress();
-		indexView.SizeInBytes = sizeof(unsigned int) * m_moldeResource[i].m_vertexNum*3;
+		indexView.BufferLocation = m_modelResource[i].m_IndexBuffer->GetGPUVirtualAddress();
+		indexView.SizeInBytes = sizeof(unsigned int) * m_modelResource[i].m_vertexNum*3;
 		indexView.Format = DXGI_FORMAT_R32_UINT;
 		Renderer::GetInstance()->GetCommandList().Get()->IASetIndexBuffer(&indexView);
 
@@ -181,6 +181,6 @@ void Model::Draw() {
 		Renderer::GetInstance()->GetCommandList().Get()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 		//描画
-		Renderer::GetInstance()->GetCommandList().Get()->DrawIndexedInstanced(m_moldeResource[i].m_indexNum*3, 1, 0, 0, 0);
+		Renderer::GetInstance()->GetCommandList().Get()->DrawIndexedInstanced(m_modelResource[i].m_indexNum*3, 1, 0, 0, 0);
 	}
 }

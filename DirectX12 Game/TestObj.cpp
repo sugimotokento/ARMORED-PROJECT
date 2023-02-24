@@ -16,6 +16,7 @@ void TestObj::Initialize() {
 	model = new Model();
 
 	model->LoadMesh("asset/model/Akai_Idle.fbx");
+	model->SetScale(XMFLOAT3(0.01f, 0.01f, 0.01f));
 }
 void TestObj::Update() {
 
