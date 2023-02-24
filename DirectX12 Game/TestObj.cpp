@@ -1,4 +1,7 @@
+#include"Model.h"
+
 #include"TestObj.h"
+
 
 #include"Scene.h"
 #include"Renderer.h"
@@ -10,6 +13,9 @@ void TestObj::Initialize() {
 	cube = new Cube();
 	cube2 = new Cube();
 	cube3 = new Cube();
+	model = new Model();
+
+	model->LoadMesh("asset/model/Akai_Idle.fbx");
 }
 void TestObj::Update() {
 
@@ -23,9 +29,12 @@ void TestObj::Draw() {
 
 	cube3->SetColor(XMFLOAT4(1.2f, 0.2f, 0.2f, 1));
 	cube3->Draw(XMFLOAT3(4, 0.5f, 0));
+
+	model->Draw();
 }
 void TestObj::Finalize() {
 	delete cube;
 	delete cube2;
 	delete cube3;
+	delete model;
 }

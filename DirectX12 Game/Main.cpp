@@ -14,7 +14,7 @@
 
 
 const LPCWSTR CLASS_NAME = L"AppClass";
-const LPCWSTR WINDOW_NAME = L"Game";
+const LPCWSTR WINDOW_NAME = L"DX12Game";
 
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam);

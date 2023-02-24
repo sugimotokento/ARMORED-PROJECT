@@ -118,9 +118,6 @@
     <ClCompile Include="PlayerUI.cpp">
       <Filter>ソース ファイル\Object\GameObject\Object2D</Filter>
     </ClCompile>
-    <ClCompile Include="DDSTextureLoader12.cpp">
-      <Filter>ソース ファイル\Texture</Filter>
-    </ClCompile>
     <ClCompile Include="texture.cpp">
       <Filter>ソース ファイル\Texture</Filter>
     </ClCompile>
@@ -162,6 +159,9 @@
     </ClCompile>
     <ClCompile Include="Ocean.cpp">
       <Filter>ソース ファイル\Object\GameObject\Object3D\Field</Filter>
+    </ClCompile>
+    <ClCompile Include="Model.cpp">
+      <Filter>ソース ファイル\Texture</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -216,9 +216,6 @@
     <ClInclude Include="d3dx12.h">
       <Filter>ソース ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="DDSTextureLoader12.h">
-      <Filter>ソース ファイル\Texture</Filter>
-    </ClInclude>
     <ClInclude Include="texture.h">
       <Filter>ソース ファイル\Texture</Filter>
     </ClInclude>
@@ -270,6 +267,9 @@
     <ClInclude Include="Ocean.h">
       <Filter>ソース ファイル\Object\GameObject\Object3D\Field</Filter>
     </ClInclude>
+    <ClInclude Include="Model.h">
+      <Filter>ソース ファイル\Texture</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="GeometryPS.hlsl">
@@ -311,5 +311,8 @@
     <FxCompile Include="AtmosphericScattering.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>

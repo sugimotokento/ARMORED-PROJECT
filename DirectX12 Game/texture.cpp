@@ -38,8 +38,8 @@ void Texture::LoadDDSTexture(std::wstring fileName)
 	const DirectX::Image* img = scratch.GetImage(0, 0, 0);
 	auto prop = CD3DX12_HEAP_PROPERTIES(D3D12_CPU_PAGE_PROPERTY_WRITE_BACK, D3D12_MEMORY_POOL_L0);
 	auto desc = CD3DX12_RESOURCE_DESC::Tex2D(meta.format,
-		meta.width,
-		meta.height,
+		(UINT)meta.width,
+		(UINT)meta.height,
 		static_cast<UINT>(meta.arraySize),
 		static_cast<UINT>(meta.mipLevels));
 
