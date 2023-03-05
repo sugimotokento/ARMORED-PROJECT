@@ -23,7 +23,7 @@ void Camera::Update() {
 void Camera::Draw() {
 	for (int i = 0; i < Index::CAMERA_MAX; i++) {
 		m_viewMatrix[i] = XMMatrixLookAtLH({ m_position[i].x,m_position[i].y,m_position[i].z}, {m_target[i].x,m_target[i].y,m_target[i].z}, {0,1,0});
-		m_projectionMatrix[i] = XMMatrixPerspectiveFovLH(1.0f, (float)SCREEN_WIDTH / SCREEN_HEIGHT, 1.0f, 5000);
+		m_projectionMatrix[i] = XMMatrixPerspectiveFovLH(1.0f, (float)SCREEN_WIDTH / SCREEN_HEIGHT, 1.0f, 50000);
 	}
 }
 

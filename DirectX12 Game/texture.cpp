@@ -13,7 +13,7 @@ std::wstring Texture::FileExtension(std::wstring path)
 	return path.substr(idx + 1, path.length() - idx - 1);
 }
 
-void Texture::LoadDDSTexture(std::wstring fileName)
+void Texture::LoadTexture(std::wstring fileName)
 {
 	ComPtr<ID3D12Device> device = Renderer::GetInstance()->GetDevice();
 	HRESULT hr{};
@@ -88,6 +88,7 @@ void Texture::LoadDDSTexture(std::wstring fileName)
 	resourceViewDesc.Texture2D.ResourceMinLODClamp = 0.0F;
 	resourceViewDesc.Shader4ComponentMapping =
 		D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
+
 
 	handleSrv = m_descriptorHeap->GetCPUDescriptorHandleForHeapStart();
 	device->CreateShaderResourceView(m_resource.Get(),

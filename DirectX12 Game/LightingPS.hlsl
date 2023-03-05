@@ -7,6 +7,11 @@ Texture2D<float4> depthTexture : register(t3);
 Texture2D<float4> metallicTexture : register(t4);
 Texture2D<float4> colorTexture : register(t6);
 
+
+
+
+
+
 SamplerState sampler0 : register(s0);
 
 float Random(float2 uv)
@@ -157,5 +162,5 @@ float4 main(PS_INPUT input) : SV_TARGET
         return float4((baseColor + bloom).rgb, 1);
     }
 
-    return float4(((color + bloom)).rgb, 1);
+    return float4(((colorTexture.Sample(sampler0, input.TexCoord))).rgb, 1);
 }

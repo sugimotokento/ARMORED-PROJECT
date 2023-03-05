@@ -1,5 +1,8 @@
 #include"Common.hlsl"
-
+Texture2D<float4> modelAlbedTexture : register(t7);
+Texture2D<float4> modelNormalTexture : register(t8);
+Texture2D<float4> modelMetalTexture : register(t9);
+Texture2D<float4> modelEmmisionTexture : register(t10);
 SamplerState sampler0 : register(s0);
 
 struct PS_OUTPUT
@@ -15,9 +18,9 @@ struct PS_OUTPUT
 PS_OUTPUT main(PS_INPUT input)
 {
 	PS_OUTPUT output;
-
+    
 	output.Normal = input.Normal;
-    output.Diffuse.rgb = input.Diffuse.rgb;
+    output.Diffuse.rgb = modelAlbedTexture.Sample(sampler0, input.TexCoord).rgb * input.Diffuse.rgb;
     output.Diffuse.a = 1;
 	output.Position = input.WorldPosition;
 	output.Depth = input.Depth;

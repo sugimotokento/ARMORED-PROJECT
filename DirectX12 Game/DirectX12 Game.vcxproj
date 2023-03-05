@@ -150,7 +150,6 @@
     <ClCompile Include="Cube.cpp" />
     <ClCompile Include="CubeParticle.cpp" />
     <ClCompile Include="DestroyEffect.cpp" />
-    <ClCompile Include="Field.cpp" />
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="ImguiRenderer.cpp" />
     <ClCompile Include="Imgui\imgui.cpp" />
@@ -170,9 +169,11 @@
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="SkyDome.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="TestObj.cpp" />
     <ClCompile Include="texture.cpp" />
+    <ClCompile Include="TextureGeometry.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bullet.h" />
@@ -183,7 +184,6 @@
     <ClInclude Include="CubeParticle.h" />
     <ClInclude Include="d3dx12.h" />
     <ClInclude Include="DestroyEffect.h" />
-    <ClInclude Include="Field.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="Gun.h" />
@@ -207,9 +207,11 @@
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
+    <ClInclude Include="SkyDome.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="TestObj.h" />
     <ClInclude Include="texture.h" />
+    <ClInclude Include="TextureGeometry.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="AtmosphericScattering.hlsl">

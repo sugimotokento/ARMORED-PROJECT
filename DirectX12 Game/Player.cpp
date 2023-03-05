@@ -4,8 +4,7 @@
 #include"NormalGun.h"
 #include"SceneManager.h"
 #include"Scene.h"
-#include"Field.h"
-#include"Collision.h"
+ #include"Collision.h"
 #include"PlayerUI.h"
 #include"DestroyEffect.h"
 #include"Call.h"
@@ -127,25 +126,25 @@ void Player::Shot() {
 	}*/
 }
 void Player::FieldCollision() {
-	Field* field = SceneManager::GetInstance()->GetScene()->GetGameObject<Field>();
-	for (int i = 0; i < 2; i++) {
-		for (int j = 0; j < Field::Size::WIDTH / 2; j++) {
-			if (Collision::Box(m_cube, field->GetCubeX(i, j))) {
-				XMFLOAT3 pushVec = Collision::GetBoxPushVec(m_cube, field->GetCubeX(i, j));
-				m_position.x += pushVec.x;
-				m_position.z += pushVec.z;
-			}
-		}
-	}
-	for (int i = 0; i < 2; i++) {
-		for (int j = 0; j < Field::Size::WIDTH / 2 - 2; j++) {
-			if (Collision::Box(m_cube, field->GetCubeY(i, j))) {
-				XMFLOAT3 pushVec = Collision::GetBoxPushVec(m_cube, field->GetCubeY(i, j));
-				m_position.x += pushVec.x;
-				m_position.z += pushVec.z;
-			}
-		}
-	}
+	//Field* field = SceneManager::GetInstance()->GetScene()->GetGameObject<Field>();
+	//for (int i = 0; i < 2; i++) {
+	//	for (int j = 0; j < Field::Size::WIDTH / 2; j++) {
+	//		if (Collision::Box(m_cube, field->GetCubeX(i, j))) {
+	//			XMFLOAT3 pushVec = Collision::GetBoxPushVec(m_cube, field->GetCubeX(i, j));
+	//			m_position.x += pushVec.x;
+	//			m_position.z += pushVec.z;
+	//		}
+	//	}
+	//}
+	//for (int i = 0; i < 2; i++) {
+	//	for (int j = 0; j < Field::Size::WIDTH / 2 - 2; j++) {
+	//		if (Collision::Box(m_cube, field->GetCubeY(i, j))) {
+	//			XMFLOAT3 pushVec = Collision::GetBoxPushVec(m_cube, field->GetCubeY(i, j));
+	//			m_position.x += pushVec.x;
+	//			m_position.z += pushVec.z;
+	//		}
+	//	}
+	//}
 }
 
 

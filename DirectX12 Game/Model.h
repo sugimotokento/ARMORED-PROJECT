@@ -1,6 +1,8 @@
 #pragma once
 #include"Renderer.h"
 #include<vector>
+#include<list>
+#include<string>
 #include "assimp/cimport.h"
 #include "assimp/scene.h"
 #include "assimp/postprocess.h"
@@ -20,6 +22,8 @@ class Model {
 private:
 	std::vector<ModelResource> m_modelResource;
 	ComPtr<ID3D12Resource> m_constantBuffer;
+
+
 	XMFLOAT3 m_position;
 	XMFLOAT3 m_scale=XMFLOAT3(1,1,1);
 	XMFLOAT3 m_rotation;

@@ -63,7 +63,7 @@ Sprite::Sprite(std::wstring textureName) {
 
 
 	m_texture = new Texture();
-	m_texture->LoadDDSTexture(textureName);
+	m_texture->LoadTexture(textureName);
 }
 
 
@@ -109,10 +109,10 @@ void Sprite::Draw() {
 	Renderer::GetInstance()->GetCommandList().Get()->IASetVertexBuffers(0, 1, &vertexView);
 
 	//////テクスチャ設定
-	ID3D12DescriptorHeap* dh[] = { m_texture->m_descriptorHeap.Get()};
+	ID3D12DescriptorHeap* dh[] = { m_texture->GetDescriptorHeap().Get()};
 
 	Renderer::GetInstance()->GetCommandList().Get()->SetDescriptorHeaps(_countof(dh), dh);
-	Renderer::GetInstance()->GetCommandList().Get()->SetGraphicsRootDescriptorTable(1, m_texture->m_descriptorHeap->GetGPUDescriptorHandleForHeapStart());
+	Renderer::GetInstance()->GetCommandList().Get()->SetGraphicsRootDescriptorTable(1, m_texture->GetDescriptorHeap()->GetGPUDescriptorHandleForHeapStart());
 	
 	//トポロジ設定
 	Renderer::GetInstance()->GetCommandList().Get()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLESTRIP);

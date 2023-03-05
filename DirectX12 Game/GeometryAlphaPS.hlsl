@@ -4,6 +4,12 @@
 Texture2D<float4> unlitColorTexture : register(t1);
 Texture2D<float4> positionTexture : register(t2);
 Texture2D<float4> shadowTexture : register(t5);
+
+Texture2D<float4> modelAlbedTexture : register(t7);
+Texture2D<float4> modelNormalTexture : register(t8);
+Texture2D<float4> modelMetalTexture : register(t9);
+Texture2D<float4> modelEmmisionTexture : register(t10);
+
 SamplerState sampler0 : register(s0);
 
 struct PS_OUTPUT
@@ -42,15 +48,16 @@ float4 Water(PS_INPUT input)
 {
     float4 outColor = 1;
     float speed = 1+WaterParam.w*0.1;
-    float dx = fbm2((input.TexCoord + float2(0.001, 0.0)) * 0.05, 8, speed) * 10.0
-             - fbm2((input.TexCoord - float2(0.001, 0.0)) * 0.05, 8, speed) * 10.0;
-    float dz = fbm2((input.TexCoord + float2(0.0, 0.001)) * 0.05, 8, speed) * 10.0
-             - fbm2((input.TexCoord - float2(0.0, 0.001)) * 0.05, 8, speed) * 10.0;
+    float texRatio = 1;
+    float dx = fbm2((input.TexCoord * texRatio + float2(0.001, 0.0)) * 0.05, 8, speed) * 10.0
+             - fbm2((input.TexCoord * texRatio - float2(0.001, 0.0)) * 0.05, 8, speed) * 10.0;
+    float dz = fbm2((input.TexCoord * texRatio + float2(0.0, 0.001)) * 0.05, 8, speed) * 10.0
+             - fbm2((input.TexCoord * texRatio - float2(0.0, 0.001)) * 0.05, 8, speed) * 10.0;
     
-    float dx2 = fbm2((input.TexCoord + float2(0.001, 0.0)) * 0.02, 8, -speed) * 10.0
-             - fbm2((input.TexCoord - float2(0.001, 0.0)) * 0.02, 8, -speed) * 10.0;
-    float dz2 = fbm2((input.TexCoord + float2(0.0, 0.001)) * 0.02, 8, -speed) * 10.0
-             - fbm2((input.TexCoord - float2(0.0, 0.001)) * 0.02, 8, -speed) * 10.0;
+    float dx2 = fbm2((input.TexCoord * texRatio + float2(0.001, 0.0)) * 0.02, 8, -speed) * 10.0
+             - fbm2((input.TexCoord * texRatio - float2(0.001, 0.0)) * 0.02, 8, -speed) * 10.0;
+    float dz2 = fbm2((input.TexCoord * texRatio + float2(0.0, 0.001)) * 0.02, 8, -speed) * 10.0
+             - fbm2((input.TexCoord * texRatio - float2(0.0, 0.001)) * 0.02, 8, -speed) * 10.0;
     
     float3 normal = float3(-dx, 0.001, -dz);
     float3 normal2 = float3(-dx2, 0.001, -dz2);
@@ -119,7 +126,7 @@ PS_OUTPUT main(PS_INPUT input)
     }
     else
     {
-        output.Diffuse.rgb = input.Diffuse.rgb ;
+        output.Diffuse.rgb = modelAlbedTexture.Sample(sampler0, input.TexCoord).rgb * input.Diffuse.rgb;
         output.Diffuse.a = input.Diffuse.a;
     }
 

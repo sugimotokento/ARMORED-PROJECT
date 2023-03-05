@@ -157,7 +157,7 @@ void Renderer::CreateResource() {
 	clearValue.Color[3] = 1.0f;
 	clearValue.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
 
-	for (int i = 0; i < Index::RESOURCE_INDEX_MAX; i++) {
+	for (int i = 0; i < Index::RTV_RESOURCE_INDEX_MAX; i++) {
 		m_device->CreateCommittedResource(&heapProperties,
 			D3D12_HEAP_FLAG_NONE,
 			&resourceDesc,
@@ -171,7 +171,7 @@ void Renderer::CreateResource() {
 void Renderer::CreateRTVDescriptorHeap() {
 	D3D12_DESCRIPTOR_HEAP_DESC desc;
 	desc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_NONE;
-	desc.NumDescriptors = Index::RESOURCE_INDEX_MAX;
+	desc.NumDescriptors = Index::RTV_RESOURCE_INDEX_MAX;
 	desc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;
 	desc.NodeMask = 0;
 
@@ -191,17 +191,17 @@ void Renderer::CreateRTVDescriptorHeap() {
 		rtvDesc.Texture2D.MipSlice = 0;
 		rtvDesc.Texture2D.PlaneSlice = 0;
 
-		for (int i = 0; i < Index::RESOURCE_INDEX_GEOMETRY_MAX; i++) {
+		for (int i = 0; i < Index::RTV_RESOURCE_INDEX_GEOMETRY_MAX; i++) {
 			m_device->CreateRenderTargetView(m_resource[i].Get(), &rtvDesc, handle);
 			m_rtHandleGeometry[i] = handle;
 			handle.ptr += size;
 		}
 
-		m_device->CreateRenderTargetView(m_resource[Index::RESOURCE_INDEX_SHADOW].Get(), &rtvDesc, handle);
+		m_device->CreateRenderTargetView(m_resource[Index::RTV_RESOURCE_INDEX_SHADOW].Get(), &rtvDesc, handle);
 		m_rtHandleShadow = handle;
 		handle.ptr += size;
 
-		m_device->CreateRenderTargetView(m_resource[Index::RESOURCE_INDEX_ALPHA].Get(), &rtvDesc, handle);
+		m_device->CreateRenderTargetView(m_resource[Index::RTV_RESOURCE_INDEX_ALPHA].Get(), &rtvDesc, handle);
 		m_rtHandleGeometryAlpha = handle;
 		handle.ptr += size;
 	}
@@ -211,7 +211,7 @@ void Renderer::CreateSRVDescriptorHeap() {
 
 	D3D12_DESCRIPTOR_HEAP_DESC desc;
 	desc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
-	desc.NumDescriptors = Index::RESOURCE_INDEX_MAX;
+	desc.NumDescriptors = Index::RTV_RESOURCE_INDEX_MAX;
 	desc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
 	desc.NodeMask = 0;
 
@@ -230,16 +230,18 @@ void Renderer::CreateSRVDescriptorHeap() {
 	srvDesc.Texture2D.ResourceMinLODClamp = 0.0f;
 	srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
 
-	for (int i = 0; i < Index::RESOURCE_INDEX_GEOMETRY_MAX; i++) {
+	for (int i = 0; i < Index::RTV_RESOURCE_INDEX_GEOMETRY_MAX; i++) {
 		m_device->CreateShaderResourceView(m_resource[i].Get(), &srvDesc, handle);
 		handle.ptr += (size);
 	}
 
-	m_device->CreateShaderResourceView(m_resource[Index::RESOURCE_INDEX_SHADOW].Get(), &srvDesc, handle);
+	m_device->CreateShaderResourceView(m_resource[Index::RTV_RESOURCE_INDEX_SHADOW].Get(), &srvDesc, handle);
 	handle.ptr += (size);
 
-	m_device->CreateShaderResourceView(m_resource[Index::RESOURCE_INDEX_ALPHA].Get(), &srvDesc, handle);
+	m_device->CreateShaderResourceView(m_resource[Index::RTV_RESOURCE_INDEX_ALPHA].Get(), &srvDesc, handle);
 	handle.ptr += (size);
+
+	ptrSize = handle.ptr;
 }
 void Renderer::CreateCommandList() {
 	m_device->CreateCommandAllocator(D3D12_COMMAND_LIST_TYPE_DIRECT, IID_PPV_ARGS(&m_commandAllocator));
@@ -253,7 +255,7 @@ void Renderer::CreateRootSignature() {
 	rootParameters[0].Descriptor.RegisterSpace = 0;
 
 	D3D12_DESCRIPTOR_RANGE range[1]{};
-	range[0].NumDescriptors = Index::RESOURCE_INDEX_MAX;
+	range[0].NumDescriptors = Index::RTV_RESOURCE_INDEX_MAX+ Index::MODEL_TEX_RESOURCE_NUM;
 	range[0].BaseShaderRegister = 0;
 	range[0].RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
 	range[0].OffsetInDescriptorsFromTableStart = D3D12_DESCRIPTOR_RANGE_OFFSET_APPEND;
@@ -533,13 +535,13 @@ void Renderer::GeometryPassStart() {
 	FLOAT clearColor[4] = { 0, 0, 0, 1.0f };
 
 	//レンダーターゲット用リソースバリア
-	for (int i = 0; i < Index::RESOURCE_INDEX_GEOMETRY_MAX; i++) {
+	for (int i = 0; i < Index::RTV_RESOURCE_INDEX_GEOMETRY_MAX; i++) {
 		SetResourceBarrier(m_resource[i].Get(), D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE, D3D12_RESOURCE_STATE_RENDER_TARGET);
 	}
 
 	//デプスバッファ・レンダーターゲットのクリア
 	m_graphicsCommandList->ClearDepthStencilView(m_dsHandle, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
-	for (int i = 0; i < Index::RESOURCE_INDEX_GEOMETRY_MAX; i++) {
+	for (int i = 0; i < Index::RTV_RESOURCE_INDEX_GEOMETRY_MAX; i++) {
 		m_graphicsCommandList->ClearRenderTargetView(m_rtHandleGeometry[i], clearColor, 0, nullptr);
 	}
 
@@ -554,11 +556,11 @@ void Renderer::GeometryPassStart() {
 	m_graphicsCommandList->RSSetScissorRects(1, &m_scissorRect);
 
 	//レンダーターゲットの設定
-	m_graphicsCommandList->OMSetRenderTargets(Index::RESOURCE_INDEX_GEOMETRY_MAX, m_rtHandleGeometry, TRUE, &m_dsHandle);
+	m_graphicsCommandList->OMSetRenderTargets(Index::RTV_RESOURCE_INDEX_GEOMETRY_MAX, m_rtHandleGeometry, TRUE, &m_dsHandle);
 }
 void Renderer::GeometryPassEnd() {
 	//シェーダーリソース用リソースバリア
-	for (int i = 0; i < Index::RESOURCE_INDEX_GEOMETRY_MAX; i++) {
+	for (int i = 0; i < Index::RTV_RESOURCE_INDEX_GEOMETRY_MAX; i++) {
 		SetResourceBarrier(m_resource[i].Get(), D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE);
 
 	}
@@ -568,7 +570,7 @@ void Renderer::GeometryAlphaPassStart() {
 	FLOAT clearColor[4] = { 0, 0, 0, 1.0f };
 
 	//レンダーターゲット用リソースバリア
-	SetResourceBarrier(m_resource[Index::RESOURCE_INDEX_ALPHA].Get(), D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE, D3D12_RESOURCE_STATE_RENDER_TARGET);
+	SetResourceBarrier(m_resource[Index::RTV_RESOURCE_INDEX_ALPHA].Get(), D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE, D3D12_RESOURCE_STATE_RENDER_TARGET);
 
 	//デプスバッファ・レンダーターゲットのクリア
 	m_graphicsCommandList->ClearDepthStencilView(m_dsHandle, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
@@ -588,7 +590,7 @@ void Renderer::GeometryAlphaPassStart() {
 	m_graphicsCommandList->OMSetRenderTargets(1, &m_rtHandleGeometryAlpha, TRUE, &m_dsHandle);
 }
 void Renderer::GeometryAlphaPassEnd() {
-	SetResourceBarrier(m_resource[Index::RESOURCE_INDEX_ALPHA].Get(), D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE);
+	SetResourceBarrier(m_resource[Index::RTV_RESOURCE_INDEX_ALPHA].Get(), D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE);
 
 }
 
@@ -596,7 +598,7 @@ void Renderer::ShadowPassStart() {
 	FLOAT clearColor[4] = { 0, 0, 0, 1.0f };
 
 	//レンダーターゲット用リソースバリア
-	SetResourceBarrier(m_resource[Index::RESOURCE_INDEX_SHADOW].Get(), D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE, D3D12_RESOURCE_STATE_RENDER_TARGET);
+	SetResourceBarrier(m_resource[Index::RTV_RESOURCE_INDEX_SHADOW].Get(), D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE, D3D12_RESOURCE_STATE_RENDER_TARGET);
 
 	//デプスバッファ・レンダーターゲットのクリア
 	m_graphicsCommandList->ClearDepthStencilView(m_dsHandle, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
@@ -616,7 +618,7 @@ void Renderer::ShadowPassStart() {
 	m_graphicsCommandList->OMSetRenderTargets(1, &m_rtHandleShadow, TRUE, &m_dsHandle);
 }
 void Renderer::ShadowPassEnd() {
-	SetResourceBarrier(m_resource[Index::RESOURCE_INDEX_SHADOW].Get(), D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE);
+	SetResourceBarrier(m_resource[Index::RTV_RESOURCE_INDEX_SHADOW].Get(), D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE);
 }
 
 

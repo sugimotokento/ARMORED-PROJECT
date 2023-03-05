@@ -3,6 +3,7 @@
 #include"PolygonDeferred.h"
 #include"Cube.h"
 #include<string>
+#include <memory>
 
 using namespace DirectX;
 using namespace Microsoft::WRL;
@@ -34,23 +35,27 @@ class Renderer
 {
 public:
 	struct Index {
-		enum ResourceIndex {
-			RESOURCE_INDEX_NORMAL,
-			RESOURCE_INDEX_DIFFUSE,
-			RESOURCE_INDEX_POSITION,
-			RESOURCE_INDEX_DEPTH,
-			RESOURCE_INDEX_REFLECT,
-			RESOURCE_INDEX_GEOMETRY_MAX,
-			RESOURCE_INDEX_SHADOW = RESOURCE_INDEX_GEOMETRY_MAX,//GEOMETRY_MAXは最大値取得用なので1つずらす感じ
-			RESOURCE_INDEX_ALPHA,
-			RESOURCE_INDEX_MAX
+		enum MODEL_TEX_RESOURCE_NUM {
+			MODEL_TEX_RESOURCE_NUM = 4
+		};
+		enum RtvResourceIndex {
+			RTV_RESOURCE_INDEX_NORMAL,
+			RTV_RESOURCE_INDEX_DIFFUSE,
+			RTV_RESOURCE_INDEX_POSITION,
+			RTV_RESOURCE_INDEX_DEPTH,
+			RTV_RESOURCE_INDEX_REFLECT,
+			RTV_RESOURCE_INDEX_GEOMETRY_MAX,
+			RTV_RESOURCE_INDEX_SHADOW = RTV_RESOURCE_INDEX_GEOMETRY_MAX,//GEOMETRY_MAXは最大値取得用なので1つずらす感じ
+			RTV_RESOURCE_INDEX_ALPHA,
+
+			RTV_RESOURCE_INDEX_MAX
 		};
 
 
 		//ここを増やすとパイプラインステートが増える
 #define PIPELINE_STATE_ID(name, vsFileName, psFileName, resourceNum)
 #define PIPELINE_STATE_ID_TABLE\
-		PIPELINE_STATE_ID(GEOMETRY,			GeometryVS.cso,		 GeometryPS.cso,		RESOURCE_INDEX_GEOMETRY_MAX)\
+		PIPELINE_STATE_ID(GEOMETRY,			GeometryVS.cso,		 GeometryPS.cso,		RTV_RESOURCE_INDEX_GEOMETRY_MAX)\
 		PIPELINE_STATE_ID(GEOMETRY_ALPHA,	GeometryAlphaVS.cso, GeometryAlphaPS.cso,	1)\
 		PIPELINE_STATE_ID(SHADOW,			ShadowVS.cso,		 ShadowPS.cso,			1)\
 		PIPELINE_STATE_ID(LIGHTING,			LightingVS.cso,		 LightingPS.cso,		1)\
@@ -157,9 +162,9 @@ private:
 	D3D12_VIEWPORT						m_viewport;
 
 
-	ComPtr<ID3D12Resource>				m_resource[Index::RESOURCE_INDEX_MAX];
+	ComPtr<ID3D12Resource>				m_resource[Index::RTV_RESOURCE_INDEX_MAX];
 
-	D3D12_CPU_DESCRIPTOR_HANDLE			m_rtHandleGeometry[Index::RESOURCE_INDEX_GEOMETRY_MAX];
+	D3D12_CPU_DESCRIPTOR_HANDLE			m_rtHandleGeometry[Index::RTV_RESOURCE_INDEX_GEOMETRY_MAX];
 	D3D12_CPU_DESCRIPTOR_HANDLE			m_rtHandleShadow;
 	D3D12_CPU_DESCRIPTOR_HANDLE			m_rtHandleGeometryAlpha;
 
@@ -186,7 +191,7 @@ private:
 	void SetResourceBarrier(ID3D12Resource* Resource, D3D12_RESOURCE_STATES BeforeState, D3D12_RESOURCE_STATES AfterState);
 
 public:
-
+	SIZE_T ptrSize = 0;
 	Renderer();
 
 	void GeometryPassStart();
@@ -204,6 +209,37 @@ public:
 	ComPtr<ID3D12DescriptorHeap> GetDescriptorHeap() { return m_descriptorHeap; }
 	ComPtr<ID3D12GraphicsCommandList> GetCommandList() { return m_graphicsCommandList; }
 	ComPtr<ID3D12DescriptorHeap> GetSRVDescriptorHeap() { return m_srvDescriptorHeap; }
+	ComPtr<ID3D12Resource>GetResource(Index::RtvResourceIndex index) { return m_resource[index]; }
+	void CreateConstantBuffer(ComPtr<ID3D12Resource> & constantBuffer) {
+		ComPtr<ID3D12Device> device = Renderer::GetInstance()->GetDevice();
+		D3D12_HEAP_PROPERTIES heapProperties{};
+		D3D12_RESOURCE_DESC   resourceDesc{};
+
+		heapProperties.Type = D3D12_HEAP_TYPE_UPLOAD;
+		heapProperties.CPUPageProperty = D3D12_CPU_PAGE_PROPERTY_UNKNOWN;
+		heapProperties.MemoryPoolPreference = D3D12_MEMORY_POOL_UNKNOWN;
+		heapProperties.CreationNodeMask = 0;
+		heapProperties.VisibleNodeMask = 0;
+
+		resourceDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
+		resourceDesc.Height = 1;
+		resourceDesc.DepthOrArraySize = 1;
+		resourceDesc.MipLevels = 1;
+		resourceDesc.Format = DXGI_FORMAT_UNKNOWN;
+		resourceDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
+		resourceDesc.SampleDesc.Count = 1;
+		resourceDesc.SampleDesc.Quality = 0;
+
+		//定数バッファの作成
+		resourceDesc.Width = 256;
+		device->CreateCommittedResource(&heapProperties, D3D12_HEAP_FLAG_NONE,
+			&resourceDesc, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr,
+			IID_PPV_ARGS(&constantBuffer));
+	}
+
+	void SetPipeline() {
+		m_graphicsCommandList->SetPipelineState(m_pipelineState[Index::PIPELINE_STATE_ID_GEOMETRY_ALPHA].Get());
+	}
 
 #ifdef _DEBUG
 private:

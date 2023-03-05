@@ -30,7 +30,7 @@ void Bullet::Update() {
 
 }
 void Bullet::Draw() {
-	m_cube->Draw(m_position, m_scale, m_rotation);
+	m_cube->Draw();
 }
 void Bullet::Finalize() {
 	m_cube->Finalize();

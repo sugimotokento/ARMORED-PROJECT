@@ -2,7 +2,7 @@
 #include"GameObject.h"
 #include<stdio.h>
 #include"Call.h"
-
+#include"Renderer.h"
 
 void Scene::Update() {
 	for (int i = 0; i < Layer::COUNT; i++) {

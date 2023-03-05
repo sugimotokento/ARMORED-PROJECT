@@ -3,12 +3,16 @@
 #include "main.h"
 
 class Texture{
-public:
+private :
 	ComPtr<ID3D12Resource>			m_resource;
 	ComPtr<ID3D12DescriptorHeap>	m_descriptorHeap;
 
+	//Šg’£Žq‚ðŽæ“¾‚·‚é
 	std::wstring FileExtension(std::wstring path);
-	void LoadDDSTexture(std::wstring fileName);
+
+public:
+
+	void LoadTexture(std::wstring fileName);
 	void Finalize();
 
 	ComPtr<ID3D12Resource> GetResource() { return m_resource; };

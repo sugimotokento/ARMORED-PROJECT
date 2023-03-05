@@ -1,9 +1,6 @@
 #include"Model.h"
 
 
-
-
-
 void Model::LoadMesh(const char* fileName) {
 
 	Assimp::Importer importer;
@@ -17,7 +14,7 @@ void Model::LoadMesh(const char* fileName) {
 	flag |= aiProcess_OptimizeMeshes;
 
 	const aiScene* scene = importer.ReadFile(fileName, flag);
-
+	aiVector3D zero3D(0.0f, 0.0f, 0.0f);
 
 	ComPtr<ID3D12Device> device = Renderer::GetInstance()->GetDevice();
 	D3D12_HEAP_PROPERTIES heapProperties{};
@@ -51,10 +48,12 @@ void Model::LoadMesh(const char* fileName) {
 			Vertex3DBuffer* tempVertex = new Vertex3DBuffer[m_modelResource[i].m_vertexNum];
 
 			for (unsigned int v = 0; v < m_modelResource[i].m_vertexNum; v++) {
+				auto uv = (mesh->HasTextureCoords(0)) ? &(mesh->mTextureCoords[0][v]) : &zero3D;
+
 				tempVertex[v].position = XMFLOAT3(mesh->mVertices[v].x, mesh->mVertices[v].y, mesh->mVertices[v].z);
 				tempVertex[v].normal = XMFLOAT3(mesh->mNormals[v].x, mesh->mNormals[v].y, mesh->mNormals[v].z);
-				tempVertex[v].diffuse = XMFLOAT4(0.9f, 0.9f, 0.9f, 1);
-				tempVertex[v].texCoord = XMFLOAT2(mesh->mTextureCoords[0][v].x, mesh->mTextureCoords[0][v].y);
+				tempVertex[v].diffuse = XMFLOAT4(0.98f, 0.98f, 0.98f, 1.0f);
+				tempVertex[v].texCoord = XMFLOAT2(uv->x, 1-uv->y);
 			}
 
 
@@ -99,57 +98,26 @@ void Model::LoadMesh(const char* fileName) {
 		}
 	}
 
-	//定数バッファの作成
-	resourceDesc.Width = 256;
-	device->CreateCommittedResource(&heapProperties, D3D12_HEAP_FLAG_NONE,
-		&resourceDesc, D3D12_RESOURCE_STATE_GENERIC_READ, nullptr,
-		IID_PPV_ARGS(&m_constantBuffer));
 
 
-	m_scale = XMFLOAT3(10, 10, 10);
-	m_position = XMFLOAT3(2, 0.01f, 0.01f);
+
+	////テクスチャのファイルパスを取得
+	//for (unsigned int i = 0; i < scene->mNumMaterials; i++) {
+	//	aiString path;
+
+	//	if (scene->mMaterials[i]->GetTexture(aiTextureType_DIFFUSE, 0, &path) == AI_SUCCESS) {
+
+	//		if (path.data[0] == '*') {
+	//			m_texFileNames.push_back(path.C_Str());
+	//		}
+	//	}
+	//}
+
 }
 
 void Model::Draw() {
-	m_rotation.y += 0.01f;
 
-	////マトリクス設定
-	XMMATRIX lightView = Camera::GetInstance()->GetViewMatrix(Camera::Index::CAMERA_SHADOW);
-	XMMATRIX lightProjection = Camera::GetInstance()->GetProjectionMatrix(Camera::Index::CAMERA_SHADOW);
 
-	XMMATRIX view = Camera::GetInstance()->GetViewMatrix(Camera::Index::CAMERA_MAIN);
-	XMMATRIX projection = Camera::GetInstance()->GetProjectionMatrix(Camera::Index::CAMERA_MAIN);
-
-	XMMATRIX trans = XMMatrixTranslation(m_position.x, m_position.y, m_position.z);
-	XMMATRIX rot = XMMatrixRotationRollPitchYaw(m_rotation.x, m_rotation.y, m_rotation.z);
-	XMMATRIX size = XMMatrixScaling(m_scale.x, m_scale.y, m_scale.z);
-	XMMATRIX world = size * rot * trans;
-
-	//定数バッファ設定
-	ConstantBuffer* constant;
-	m_constantBuffer->Map(0, nullptr, (void**)&constant);
-
-	XMFLOAT4X4 matrix;
-	XMStoreFloat4x4(&matrix, XMMatrixTranspose(world * view * projection));
-	constant->wvp = matrix;
-
-	XMStoreFloat4x4(&matrix, XMMatrixTranspose(world * lightView * lightProjection));
-	constant->wvpLight = matrix;
-
-	XMStoreFloat4x4(&matrix, XMMatrixTranspose(view * projection));
-	constant->vp = matrix;
-
-	XMStoreFloat4x4(&matrix, XMMatrixTranspose(world));
-	constant->world = matrix;
-
-	constant->reflectRate = XMFLOAT4(0,0,0,0);
-
-	constant->isWater = false;
-
-	m_constantBuffer->Unmap(0, nullptr);
-
-	Renderer::GetInstance()->GetCommandList().Get()->SetGraphicsRootConstantBufferView(0,
-		m_constantBuffer->GetGPUVirtualAddress());
 
 	for (unsigned int i = 0; i < m_meshNum; i++) {
 		//頂点バッファ設定
@@ -169,13 +137,7 @@ void Model::Draw() {
 
 
 
-		//テクスチャ設定
-		ID3D12DescriptorHeap* dh[] = { Renderer::GetInstance()->GetSRVDescriptorHeap().Get() };
-		Renderer::GetInstance()->GetCommandList().Get()->SetDescriptorHeaps(_countof(dh), dh);
-		Renderer::GetInstance()->GetCommandList().Get()->SetGraphicsRootDescriptorTable(1,
-			Renderer::GetInstance()->GetSRVDescriptorHeap().Get()->GetGPUDescriptorHandleForHeapStart()
-		);
-
+	
 
 		//トポロジ設定
 		Renderer::GetInstance()->GetCommandList().Get()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);

@@ -1,14 +1,14 @@
 #pragma once
 #include "GameObject.h"
 
-class Cube;
 class Model;
+class TextureGeometry;
 class TestObj :public GameObject {
 private:
-	Cube* cube;
-	Cube* cube2;
-	Cube* cube3;
-	Model* model;
+	Model* model[5];
+	TextureGeometry* texture[5];
+	ComPtr<ID3D12Resource> m_constantBuffer;
+
 public:
 	TestObj();
 	void Initialize() final override;

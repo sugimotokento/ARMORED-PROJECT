@@ -151,9 +151,6 @@
     <ClCompile Include="TestObj.cpp">
       <Filter>ソース ファイル\Object\GameObject\Object3D</Filter>
     </ClCompile>
-    <ClCompile Include="Field.cpp">
-      <Filter>ソース ファイル\Object\GameObject\Object3D\Field</Filter>
-    </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>ソース ファイル\Object\GameObject\Object3D\Player</Filter>
     </ClCompile>
@@ -161,6 +158,12 @@
       <Filter>ソース ファイル\Object\GameObject\Object3D\Field</Filter>
     </ClCompile>
     <ClCompile Include="Model.cpp">
+      <Filter>ソース ファイル\FileLoad</Filter>
+    </ClCompile>
+    <ClCompile Include="SkyDome.cpp">
+      <Filter>ソース ファイル\Object\GameObject\Object3D\Field</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureGeometry.cpp">
       <Filter>ソース ファイル\FileLoad</Filter>
     </ClCompile>
   </ItemGroup>
@@ -258,9 +261,6 @@
     <ClInclude Include="TestObj.h">
       <Filter>ソース ファイル\Object\GameObject\Object3D</Filter>
     </ClInclude>
-    <ClInclude Include="Field.h">
-      <Filter>ソース ファイル\Object\GameObject\Object3D\Field</Filter>
-    </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>ソース ファイル\Object\GameObject\Object3D\Player</Filter>
     </ClInclude>
@@ -268,6 +268,12 @@
       <Filter>ソース ファイル\Object\GameObject\Object3D\Field</Filter>
     </ClInclude>
     <ClInclude Include="Model.h">
+      <Filter>ソース ファイル\FileLoad</Filter>
+    </ClInclude>
+    <ClInclude Include="SkyDome.h">
+      <Filter>ソース ファイル\Object\GameObject\Object3D\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureGeometry.h">
       <Filter>ソース ファイル\FileLoad</Filter>
     </ClInclude>
   </ItemGroup>

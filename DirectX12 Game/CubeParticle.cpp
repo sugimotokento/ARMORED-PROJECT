@@ -29,7 +29,7 @@ void CubeParticle::Update() {
 	m_destroyIntervalCount++;
 }
 void CubeParticle::Draw() {
-	m_cube->Draw(m_position, m_scale, m_rotation);
+	m_cube->Draw();
 }
 void CubeParticle::Finalize() {
 	m_cube->Finalize();
