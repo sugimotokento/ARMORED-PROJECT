@@ -38,4 +38,18 @@ struct PS_INPUT
 
 
 
+float GetMetalRatio(float4 metalMap)
+{
+    float specularRatio = 1;
+    
+    metalMap.r = min(1, metalMap.r);
+    metalMap.g = min(1, metalMap.g);
+    metalMap.b = min(1, metalMap.b);
+    metalMap.r = max(0, metalMap.r);
+    metalMap.g = max(0, metalMap.g);
+    metalMap.b = max(0, metalMap.b);
+    specularRatio = (metalMap.r - (metalMap.g + metalMap.b) * 0.5);
+    
+    return specularRatio  * specularRatio*0.8;
 
+}

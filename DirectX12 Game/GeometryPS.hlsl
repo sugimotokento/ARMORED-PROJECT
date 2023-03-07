@@ -1,8 +1,8 @@
 #include"Common.hlsl"
 Texture2D<float4> modelAlbedTexture : register(t7);
 Texture2D<float4> modelNormalTexture : register(t8);
-Texture2D<float4> modelMetalTexture : register(t9);
-Texture2D<float4> modelEmmisionTexture : register(t10);
+Texture2D<float4> modelOcclusionTexture : register(t9);
+Texture2D<float4> modelMetalTexture : register(t10);
 SamplerState sampler0 : register(s0);
 
 struct PS_OUTPUT
@@ -20,11 +20,15 @@ PS_OUTPUT main(PS_INPUT input)
 	PS_OUTPUT output;
     
     output.Normal = input.Normal;
-    output.Diffuse.rgb = modelAlbedTexture.Sample(sampler0, input.TexCoord).rgb * input.Diffuse.rgb;
+    float3 albed = modelAlbedTexture.Sample(sampler0, input.TexCoord).rgb;
+    float3 occlusion = modelOcclusionTexture.Sample(sampler0, input.TexCoord).rgb;
+    output.Diffuse.rgb = albed * occlusion * input.Diffuse.rgb;
     output.Diffuse.a = 1;
 	output.Position = input.WorldPosition;
 	output.Depth = input.Depth;
-	output.ReflectRate = ReflectRate;
+    
+    float4 metalMap = modelMetalTexture.Sample(sampler0, input.TexCoord);
+    output.ReflectRate = GetMetalRatio(metalMap)*0.5;
 	
 
 	return output;

@@ -13,9 +13,9 @@ void TestObj::Initialize() {
 
 	for (int i = 0; i < 5; i++) {
 		model[i] = new Model();
-		m_scale   =(XMFLOAT3(0.005f, 0.005f, 0.005f));
+		m_scale   =(XMFLOAT3(0.0025f, 0.0025f, 0.0025f));
 		m_rotation=(XMFLOAT3(0, -1.57f, 0));
-		m_position=(XMFLOAT3(0, -5, 0));
+		m_position=(XMFLOAT3(0, 0, 0));
 
 		texture[i] = new TextureGeometry();
 	}
@@ -26,17 +26,17 @@ void TestObj::Initialize() {
 	model[4]->LoadMesh("asset/model/Dreadnought/Upper.fbx");
 
 	std::wstring basePath = L"asset/Texture/Dreadnought/";
-	texture[0]->LoadTexture(basePath + L"T_DN_Arm_Albedo.png", basePath + L"T_DN_Arm_NormalMap.png");
-	texture[1]->LoadTexture(basePath + L"T_DN_Head_Albedo.png", basePath + L"T_DN_Head_NormalMap.png");
-	texture[2]->LoadTexture(basePath + L"T_DN_Lower_Albedo.png", basePath + L"T_DN_Lower_NormalMap.png");
-	texture[3]->LoadTexture(basePath + L"T_DN_Shoulder_Albedo.png", basePath + L"T_DN_Shoulder_NormalMap.png");
-	texture[4]->LoadTexture(basePath + L"T_DN_Upper_Albedo.png", basePath + L"T_DN_Upper_NormalMap.png");
+	texture[0]->LoadTexture(basePath + L"T_DN_Arm_Albedo.tga", basePath + L"T_DN_Arm_NormalMap.png", basePath+L"T_DN_Arm_Occlusion.png", basePath + L"T_DN_Arm_Metallic.png");
+	texture[1]->LoadTexture(basePath + L"T_DN_Head_Albedo.tga", basePath + L"T_DN_Head_NormalMap.png", basePath + L"T_DN_Head_Occlusion.png", basePath + L"T_DN_Head_Metallic.png");
+	texture[2]->LoadTexture(basePath + L"T_DN_Lower_Albedo.tga", basePath + L"T_DN_Lower_NormalMap.png", basePath + L"T_DN_Lower_Occlusion.png", basePath + L"T_DN_Lower_Metallic.png");
+	texture[3]->LoadTexture(basePath + L"T_DN_Shoulder_Albedo.tga", basePath + L"T_DN_Shoulder_NormalMap.png", basePath + L"T_DN_Shoulder_Occlusion.png", basePath + L"T_DN_Shoulder_Metallic.png");
+	texture[4]->LoadTexture(basePath + L"T_DN_Upper_Albedo.tga", basePath + L"T_DN_Upper_NormalMap.png", basePath + L"T_DN_Upper_Occlusion.png", basePath + L"T_DN_Upper_Metallic.png");
 
 	Renderer::GetInstance()->CreateConstantBuffer(m_constantBuffer);
 
 }
 void TestObj::Update() {
-
+	m_rotation.y += 0.02f;
 }
 void TestObj::Draw() {
 	////マトリクス設定

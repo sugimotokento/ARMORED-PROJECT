@@ -7,8 +7,8 @@ Texture2D<float4> shadowTexture : register(t5);
 
 Texture2D<float4> modelAlbedTexture : register(t7);
 Texture2D<float4> modelNormalTexture : register(t8);
-Texture2D<float4> modelMetalTexture : register(t9);
-Texture2D<float4> modelEmmisionTexture : register(t10);
+Texture2D<float4> modelOcclusionTexture : register(t9);
+Texture2D<float4> modelMetalTexture : register(t10);
 
 SamplerState sampler0 : register(s0);
 
@@ -51,10 +51,33 @@ PS_OUTPUT main(PS_INPUT input)
     PS_OUTPUT output;
 
     {
-        output.Diffuse.rgb = modelAlbedTexture.Sample(sampler0, input.TexCoord).rgb * input.Diffuse.rgb;
+        float3 albed = modelAlbedTexture.Sample(sampler0, input.TexCoord).rgb;
+        float3 occlusion = modelOcclusionTexture.Sample(sampler0, input.TexCoord).rgb;
+        float4 metal = modelMetalTexture.Sample(sampler0, input.TexCoord);
+        float3 lightDir = float3(1, -0.5, 1);
+        float specular = 0;
+        float specularRatio = GetMetalRatio(metal);
+        float3 viewDir = input.WorldPosition.xyz - cameraPosition;
+        viewDir = normalize(viewDir);
+        lightDir = normalize(lightDir);
+        
+
+
+        float3 refv = reflect(input.Normal.xyz, lightDir.xyz);
+        refv = normalize(refv);
+
+        specular = -dot(viewDir, refv);
+        specular = saturate(specular);
+        specular = pow(specular, 50);
+        
+
+        specular *= specularRatio;
+        
+        output.Diffuse.rgb = albed * occlusion * input.Diffuse.rgb + specular;
         output.Diffuse.a = input.Diffuse.a;
     }
 
     return output;
 
 }
+

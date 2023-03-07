@@ -70,10 +70,10 @@ float4 ScreenSpaceReflection(PS_INPUT input, float4 color)
         uv.x = uv.x * 0.5 + 0.5;
         uv.y = -uv.y * 0.5 + 0.5;
 
-        if (uv.x > 1 || uv.x < 0 || uv.y > 1 || uv.y < 0)
-        {
-            break;
-        }
+        //if (uv.x > 1 || uv.x < 0 || uv.y > 1 || uv.y < 0)
+        //{
+        //    break;
+        //}
 
         depth = depthTexture.Sample(sampler0, uv.xy).r;
         if (uv.z > depth)
@@ -93,6 +93,10 @@ float4 Bloom(PS_INPUT input)
         for (int x = -loop; x < loop + 1; x++)
         {
             float2 texCoord = input.TexCoord + float2((float) x * 1.2 / 1920, (float) y * 1.2 / 1080);
+            if (texCoord.x > 1 || texCoord.x < 0 || texCoord.y > 1 || texCoord.y < 0)
+            {
+                break;
+            }
             float4 color = colorTexture.Sample(sampler0, texCoord);
             float bright = color.r * 0.299 + color.g * 0.587 + color.b * 0.114;
             if (color.r >= 1 && color.g >= 1 && color.b >= 1 && (x != 0 || y != 0))
@@ -157,9 +161,10 @@ float4 main(PS_INPUT input) : SV_TARGET
     float4 reflectColor = ScreenSpaceReflection(input, color);
     color = reflectColor * metallicRate + color * (1 - metallicRate);
 
-    if (position.y < 0)
+    return float4((color + bloom).rgb, 1);
+    if (position.y > 0)
     {
-        return float4((baseColor + bloom).rgb, 1);
+       
     }
 
     return float4(((colorTexture.Sample(sampler0, input.TexCoord))).rgb, 1);

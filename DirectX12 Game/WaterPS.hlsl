@@ -73,7 +73,7 @@ float4 Water(PS_INPUT input)
     outColor.rgb = light;
     
     //ƒtƒHƒ“
-    float3 refv = reflect(lightDir.xyz, normal.xyz);
+    float3 refv = reflect(normal.xyz, lightDir.xyz);
     refv = normalize(refv);
 
     float specular = -dot(eyev, refv);

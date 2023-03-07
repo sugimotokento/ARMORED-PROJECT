@@ -12,7 +12,7 @@ private:
 
 public:
 
-	void LoadTexture(std::wstring alpbedPath, std::wstring normalPath = L"asset/Texture/White.png", std::wstring metalPath = L"asset/Texture/White.png", std::wstring occlusionPath = L"asset/Texture/White.png");
+	void LoadTexture(std::wstring alpbedPath, std::wstring normalPath = L"asset/Texture/White.png", std::wstring occlusionPath = L"asset/Texture/White.png", std::wstring metalPath = L"asset/Texture/Black.png");
 	void Finalize();
 
 	ComPtr<ID3D12DescriptorHeap> GetDescriptorHeap() { return m_descriptorHeap; }
