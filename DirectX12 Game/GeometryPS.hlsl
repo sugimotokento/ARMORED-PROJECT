@@ -19,7 +19,7 @@ PS_OUTPUT main(PS_INPUT input)
 {
 	PS_OUTPUT output;
     
-	output.Normal = input.Normal;
+    output.Normal = input.Normal;
     output.Diffuse.rgb = modelAlbedTexture.Sample(sampler0, input.TexCoord).rgb * input.Diffuse.rgb;
     output.Diffuse.a = 1;
 	output.Position = input.WorldPosition;

@@ -13,6 +13,7 @@ struct Vertex3DBuffer
 {
 	XMFLOAT3 position;
 	XMFLOAT3 normal;
+	XMFLOAT3 tangent;
 	XMFLOAT4 diffuse;
 	XMFLOAT2 texCoord;
 
@@ -26,7 +27,7 @@ struct ConstantBuffer
 	XMFLOAT4X4 world;
 	XMFLOAT4 reflectRate;
 	XMFLOAT3 cameraPosition;
-	bool isWater=false;
+	bool Dammy=false;
 	XMFLOAT4 waterParam;
 };
 
@@ -57,6 +58,7 @@ public:
 #define PIPELINE_STATE_ID_TABLE\
 		PIPELINE_STATE_ID(GEOMETRY,			GeometryVS.cso,		 GeometryPS.cso,		RTV_RESOURCE_INDEX_GEOMETRY_MAX)\
 		PIPELINE_STATE_ID(GEOMETRY_ALPHA,	GeometryAlphaVS.cso, GeometryAlphaPS.cso,	1)\
+		PIPELINE_STATE_ID(WATER,			WaterVS.cso,		 WaterPS.cso,			1)\
 		PIPELINE_STATE_ID(SHADOW,			ShadowVS.cso,		 ShadowPS.cso,			1)\
 		PIPELINE_STATE_ID(LIGHTING,			LightingVS.cso,		 LightingPS.cso,		1)\
 		PIPELINE_STATE_ID(SPRITE,			SpriteVS.cso,		 SpritePS.cso,			1)\
@@ -172,7 +174,7 @@ private:
 	ComPtr<ID3D12DescriptorHeap>		m_rtvDescriptorHeap;
 	ComPtr<ID3D12DescriptorHeap>		m_srvDescriptorHeap;
 
-
+	Index::PipelineStateID m_nowBasePipelineStateID = Index::PipelineStateID::PIPELINE_STATE_ID_GEOMETRY;
 	std::unique_ptr<PolygonDeferred>   m_polygonDeferred;
 	
 	void CreateDevice();
@@ -237,9 +239,13 @@ public:
 			IID_PPV_ARGS(&constantBuffer));
 	}
 
-	void SetPipeline() {
-		m_graphicsCommandList->SetPipelineState(m_pipelineState[Index::PIPELINE_STATE_ID_GEOMETRY_ALPHA].Get());
+	void SetNowPipeline() {
+		m_graphicsCommandList->SetPipelineState(m_pipelineState[m_nowBasePipelineStateID].Get());
 	}
+	void SetPipeline(Index::PipelineStateID pipelineID){
+		m_graphicsCommandList->SetPipelineState(m_pipelineState[pipelineID].Get());
+	}
+	Index::PipelineStateID GetNowPipelineStateID() { return m_nowBasePipelineStateID; }
 
 #ifdef _DEBUG
 private:

@@ -132,7 +132,6 @@ void Ocean::Draw() {
 
 	constant->reflectRate = XMFLOAT4(0, 0, 0, 0);
 
-	constant->isWater = true;
 
 	constant->waterParam.x = m_waterParam.x;
 	constant->waterParam.y = m_waterParam.y;
@@ -161,11 +160,19 @@ void Ocean::Draw() {
 	);
 
 
+
+
 	//ƒgƒ|ƒƒWÝ’è
 	Renderer::GetInstance()->GetCommandList().Get()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 	//•`‰æ
+	if(Renderer::GetInstance()->GetNowPipelineStateID()==Renderer::Index::PIPELINE_STATE_ID_GEOMETRY_ALPHA)
+		Renderer::GetInstance()->SetPipeline(Renderer::Index::PIPELINE_STATE_ID_WATER);
 	Renderer::GetInstance()->GetCommandList().Get()->DrawInstanced(6, 1, 0, 0);
+	if (Renderer::GetInstance()->GetNowPipelineStateID() == Renderer::Index::PIPELINE_STATE_ID_GEOMETRY_ALPHA)
+		Renderer::GetInstance()->SetNowPipeline();
+
+
 }
 void Ocean::Finalize() {
 	m_constantBuffer.Get()->Release();

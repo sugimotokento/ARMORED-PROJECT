@@ -10,11 +10,14 @@ PS_INPUT main(VS_INPUT input)
 
     float4 normal = float4(input.Normal, 0.0f);
     output.Normal = mul(normal, World);
+    output.Normal = normalize(output.Normal);
 
     output.TexCoord = input.TexCoord;
 
     output.Diffuse.rgb = input.Diffuse.rgb;
     output.Diffuse.a = 1.0;
+    
+
 
     output.LightPosition = mul(position, WVPLight);
 

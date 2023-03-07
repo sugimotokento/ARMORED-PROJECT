@@ -15,7 +15,7 @@ void TestObj::Initialize() {
 		model[i] = new Model();
 		m_scale   =(XMFLOAT3(0.005f, 0.005f, 0.005f));
 		m_rotation=(XMFLOAT3(0, -1.57f, 0));
-		m_position=(XMFLOAT3(2, -5, 0));
+		m_position=(XMFLOAT3(0, -5, 0));
 
 		texture[i] = new TextureGeometry();
 	}
@@ -26,11 +26,11 @@ void TestObj::Initialize() {
 	model[4]->LoadMesh("asset/model/Dreadnought/Upper.fbx");
 
 	std::wstring basePath = L"asset/Texture/Dreadnought/";
-	texture[0]->LoadTexture(basePath + L"T_DN_Arm_Albedo.png");
-	texture[1]->LoadTexture(basePath + L"T_DN_Head_Albedo.png");
-	texture[2]->LoadTexture(basePath + L"T_DN_Lower_Albedo.png");
-	texture[3]->LoadTexture(basePath + L"T_DN_Shoulder_Albedo.png");
-	texture[4]->LoadTexture(basePath + L"T_DN_Upper_Albedo.png");
+	texture[0]->LoadTexture(basePath + L"T_DN_Arm_Albedo.png", basePath + L"T_DN_Arm_NormalMap.png");
+	texture[1]->LoadTexture(basePath + L"T_DN_Head_Albedo.png", basePath + L"T_DN_Head_NormalMap.png");
+	texture[2]->LoadTexture(basePath + L"T_DN_Lower_Albedo.png", basePath + L"T_DN_Lower_NormalMap.png");
+	texture[3]->LoadTexture(basePath + L"T_DN_Shoulder_Albedo.png", basePath + L"T_DN_Shoulder_NormalMap.png");
+	texture[4]->LoadTexture(basePath + L"T_DN_Upper_Albedo.png", basePath + L"T_DN_Upper_NormalMap.png");
 
 	Renderer::GetInstance()->CreateConstantBuffer(m_constantBuffer);
 
@@ -70,7 +70,6 @@ void TestObj::Draw() {
 	constant->world = matrix;
 	constant->reflectRate = XMFLOAT4(0, 0, 0, 0);
 
-	constant->isWater = false;
 
 	m_constantBuffer->Unmap(0, nullptr);
 

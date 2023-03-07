@@ -71,6 +71,12 @@
     <Filter Include="ソース ファイル\FileLoad">
       <UniqueIdentifier>{8e4240a3-ca16-445f-a474-f1378a8df803}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shader\Shadow">
+      <UniqueIdentifier>{490b7c77-a7b0-4d91-9912-b8bc71fb5e31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\GeometryAlpha">
+      <UniqueIdentifier>{826805c4-2edc-4de7-870d-99376332588e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -284,12 +290,6 @@
     <FxCompile Include="GeometryVS.hlsl">
       <Filter>Shader\Geometry</Filter>
     </FxCompile>
-    <FxCompile Include="ShadowPS.hlsl">
-      <Filter>Shader\Geometry</Filter>
-    </FxCompile>
-    <FxCompile Include="ShadowVS.hlsl">
-      <Filter>Shader\Geometry</Filter>
-    </FxCompile>
     <FxCompile Include="LightingPS.hlsl">
       <Filter>Shader\Lighting</Filter>
     </FxCompile>
@@ -305,17 +305,29 @@
     <FxCompile Include="Common.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
-    <FxCompile Include="GeometryAlphaVS.hlsl">
-      <Filter>Shader\Geometry</Filter>
-    </FxCompile>
-    <FxCompile Include="GeometryAlphaPS.hlsl">
-      <Filter>Shader\Geometry</Filter>
-    </FxCompile>
     <FxCompile Include="Noise.hlsl">
       <Filter>Shader</Filter>
     </FxCompile>
     <FxCompile Include="AtmosphericScattering.hlsl">
       <Filter>Shader</Filter>
+    </FxCompile>
+    <FxCompile Include="ShadowPS.hlsl">
+      <Filter>Shader\Shadow</Filter>
+    </FxCompile>
+    <FxCompile Include="ShadowVS.hlsl">
+      <Filter>Shader\Shadow</Filter>
+    </FxCompile>
+    <FxCompile Include="WaterPS.hlsl">
+      <Filter>Shader\GeometryAlpha</Filter>
+    </FxCompile>
+    <FxCompile Include="WaterVS.hlsl">
+      <Filter>Shader\GeometryAlpha</Filter>
+    </FxCompile>
+    <FxCompile Include="GeometryAlphaVS.hlsl">
+      <Filter>Shader\GeometryAlpha</Filter>
+    </FxCompile>
+    <FxCompile Include="GeometryAlphaPS.hlsl">
+      <Filter>Shader\GeometryAlpha</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>

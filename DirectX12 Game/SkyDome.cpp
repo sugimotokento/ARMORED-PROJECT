@@ -4,9 +4,13 @@
 void SkyDome::Initialize() {
 	model=std::make_unique<Model>();
 	model.get()->LoadMesh("asset/model/skydome.obj");
+	
+	texture = std::make_unique<TextureGeometry>();
+	texture.get()->LoadTexture(L"asset/Texture/Skydome.tga");
+
 	m_rotation = (XMFLOAT3(0, 0, 0));
-	m_scale = (XMFLOAT3(1000, 1000, 1000));
-	m_position=(XMFLOAT3(0, 0, 0));
+	m_scale = (XMFLOAT3(500, 500, 500));
+	m_position=(XMFLOAT3(0, -5, 0));
 
 
 	Renderer::GetInstance()->CreateConstantBuffer(m_constantBuffer);
@@ -47,15 +51,20 @@ void SkyDome::Draw() {
 
 	constant->reflectRate = XMFLOAT4(0, 0, 0, 0);
 
-	constant->isWater = false;
-
 	m_constantBuffer->Unmap(0, nullptr);
 
 	Renderer::GetInstance()->GetCommandList().Get()->SetGraphicsRootConstantBufferView(0,
 		m_constantBuffer->GetGPUVirtualAddress());
 
+	//テクスチャ設定
+	ID3D12DescriptorHeap* dh[] = { texture.get()->GetDescriptorHeap().Get()};
+	Renderer::GetInstance()->GetCommandList().Get()->SetDescriptorHeaps(1, dh);
+	Renderer::GetInstance()->GetCommandList().Get()->SetGraphicsRootDescriptorTable(1,
+		dh[0]->GetGPUDescriptorHandleForHeapStart()
+	);
+
 	model.get()->Draw();
 }
 void SkyDome::Finalize() {
-
+	texture.get()->Finalize();
 }

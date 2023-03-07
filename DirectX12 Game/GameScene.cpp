@@ -8,7 +8,7 @@
 #include"SkyDome.h"
 
 GameScene::GameScene() {
- //	AddGameObject<SkyDome>(Layer::GEOMETRY);
+ 	AddGameObject<SkyDome>(Layer::GEOMETRY);
 	AddGameObject<Ocean>(Layer::WATER);
 	AddGameObject<Player>(Layer::GEOMETRY)->SetPosition(XMFLOAT3(0, 0, -5));
 

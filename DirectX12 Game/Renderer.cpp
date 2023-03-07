@@ -338,10 +338,11 @@ void Renderer::CreatePipelineState(Index::PipelineStateID id) {
 	//インプットレイアウト
 	D3D12_INPUT_ELEMENT_DESC InputElementDesc[] =
 	{
-		{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
-		{ "NORMAL",   0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 4 * 3, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
-		{ "COLOR",    0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 4 * 6, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
-		{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 4 * 10, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 }
+		{ "POSITION",    0, DXGI_FORMAT_R32G32B32_FLOAT,    0, 0,      D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
+		{ "NORMAL",      0, DXGI_FORMAT_R32G32B32_FLOAT,    0, 4 * 3,  D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
+		{ "TANGENT",     0, DXGI_FORMAT_R32G32B32_FLOAT,    0, 4 * 6,  D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
+		{ "COLOR",       0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 4 * 9,  D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 },
+		{ "TEXCOORD",    0, DXGI_FORMAT_R32G32_FLOAT,       0, 4 * 13, D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0 }
 
 	};
 	pipelineStateDesc.InputLayout.pInputElementDescs = InputElementDesc;
@@ -389,10 +390,10 @@ void Renderer::CreatePipelineState(Index::PipelineStateID id) {
 			pipelineStateDesc.BlendState.RenderTarget[i].LogicOp = D3D12_LOGIC_OP_NOOP;
 
 		}
-		else if (typeName == "GEOMETRY" || typeName == "SHADOW" || typeName == "LIGHTING") {
-			pipelineStateDesc.BlendState.RenderTarget[i].BlendEnable = FALSE;
-			pipelineStateDesc.BlendState.RenderTarget[i].SrcBlend = D3D12_BLEND_ONE;
-			pipelineStateDesc.BlendState.RenderTarget[i].DestBlend = D3D12_BLEND_ZERO;
+		else if (typeName == "SPRITE") {
+			pipelineStateDesc.BlendState.RenderTarget[i].BlendEnable = TRUE;
+			pipelineStateDesc.BlendState.RenderTarget[i].SrcBlend = D3D12_BLEND_SRC_ALPHA;
+			pipelineStateDesc.BlendState.RenderTarget[i].DestBlend = D3D12_BLEND_INV_SRC_ALPHA;
 			pipelineStateDesc.BlendState.RenderTarget[i].BlendOp = D3D12_BLEND_OP_ADD;
 			pipelineStateDesc.BlendState.RenderTarget[i].SrcBlendAlpha = D3D12_BLEND_ONE;
 			pipelineStateDesc.BlendState.RenderTarget[i].DestBlendAlpha = D3D12_BLEND_ZERO;
@@ -401,10 +402,10 @@ void Renderer::CreatePipelineState(Index::PipelineStateID id) {
 			pipelineStateDesc.BlendState.RenderTarget[i].LogicOpEnable = FALSE;
 			pipelineStateDesc.BlendState.RenderTarget[i].LogicOp = D3D12_LOGIC_OP_CLEAR;
 		}
-		else if (typeName == "SPRITE") {
-			pipelineStateDesc.BlendState.RenderTarget[i].BlendEnable = TRUE;
-			pipelineStateDesc.BlendState.RenderTarget[i].SrcBlend = D3D12_BLEND_SRC_ALPHA;
-			pipelineStateDesc.BlendState.RenderTarget[i].DestBlend = D3D12_BLEND_INV_SRC_ALPHA;
+		else  {
+			pipelineStateDesc.BlendState.RenderTarget[i].BlendEnable = FALSE;
+			pipelineStateDesc.BlendState.RenderTarget[i].SrcBlend = D3D12_BLEND_ONE;
+			pipelineStateDesc.BlendState.RenderTarget[i].DestBlend = D3D12_BLEND_ZERO;
 			pipelineStateDesc.BlendState.RenderTarget[i].BlendOp = D3D12_BLEND_OP_ADD;
 			pipelineStateDesc.BlendState.RenderTarget[i].SrcBlendAlpha = D3D12_BLEND_ONE;
 			pipelineStateDesc.BlendState.RenderTarget[i].DestBlendAlpha = D3D12_BLEND_ZERO;
@@ -533,6 +534,7 @@ Renderer::Renderer() {
 
 void Renderer::GeometryPassStart() {
 	FLOAT clearColor[4] = { 0, 0, 0, 1.0f };
+	m_nowBasePipelineStateID = Index::PIPELINE_STATE_ID_GEOMETRY;
 
 	//レンダーターゲット用リソースバリア
 	for (int i = 0; i < Index::RTV_RESOURCE_INDEX_GEOMETRY_MAX; i++) {
@@ -568,6 +570,7 @@ void Renderer::GeometryPassEnd() {
 
 void Renderer::GeometryAlphaPassStart() {
 	FLOAT clearColor[4] = { 0, 0, 0, 1.0f };
+	m_nowBasePipelineStateID = Index::PIPELINE_STATE_ID_GEOMETRY_ALPHA;
 
 	//レンダーターゲット用リソースバリア
 	SetResourceBarrier(m_resource[Index::RTV_RESOURCE_INDEX_ALPHA].Get(), D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE, D3D12_RESOURCE_STATE_RENDER_TARGET);
@@ -596,6 +599,7 @@ void Renderer::GeometryAlphaPassEnd() {
 
 void Renderer::ShadowPassStart() {
 	FLOAT clearColor[4] = { 0, 0, 0, 1.0f };
+	m_nowBasePipelineStateID = Index::PIPELINE_STATE_ID_SHADOW;
 
 	//レンダーターゲット用リソースバリア
 	SetResourceBarrier(m_resource[Index::RTV_RESOURCE_INDEX_SHADOW].Get(), D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE, D3D12_RESOURCE_STATE_RENDER_TARGET);
@@ -625,7 +629,7 @@ void Renderer::ShadowPassEnd() {
 void Renderer::Draw2DStart() {
 
 	FLOAT clearColor[4] = { 0.7f, 0.7f, 0.7f, 1.0f };
-
+	m_nowBasePipelineStateID = Index::PIPELINE_STATE_ID_SPRITE;
 
 	//レンダーたゲット用リソースバリア
 	SetResourceBarrier(m_renderTarget[m_rtIndex].Get(), D3D12_RESOURCE_STATE_PRESENT, D3D12_RESOURCE_STATE_RENDER_TARGET);

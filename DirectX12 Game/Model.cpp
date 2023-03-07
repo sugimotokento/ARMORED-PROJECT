@@ -52,10 +52,10 @@ void Model::LoadMesh(const char* fileName) {
 
 				tempVertex[v].position = XMFLOAT3(mesh->mVertices[v].x, mesh->mVertices[v].y, mesh->mVertices[v].z);
 				tempVertex[v].normal = XMFLOAT3(mesh->mNormals[v].x, mesh->mNormals[v].y, mesh->mNormals[v].z);
+				tempVertex[v].tangent = XMFLOAT3(mesh->mTangents[v].x, mesh->mTangents[v].y, mesh->mTangents[v].z);
 				tempVertex[v].diffuse = XMFLOAT4(0.98f, 0.98f, 0.98f, 1.0f);
 				tempVertex[v].texCoord = XMFLOAT2(uv->x, 1-uv->y);
 			}
-
 
 			//頂点バッファの作成
 			resourceDesc.Width = sizeof(Vertex3DBuffer) * m_modelResource[i].m_vertexNum;

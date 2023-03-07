@@ -72,7 +72,7 @@ int APIENTRY WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance
 
 
 	// ‰Šú‰»
-	Renderer renderer;
+	Renderer* renderer=new Renderer();
 #ifdef _DEBUG
 	ImguiRenderer imguiRenderer;
 	ImguiRenderer::GetInstance()->Initiaize();
@@ -140,6 +140,7 @@ int APIENTRY WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance
 
 	Input::Destroy();
 	SceneManager::Destroy();
+	delete renderer;
 
 	return (int)msg.wParam;
 }
