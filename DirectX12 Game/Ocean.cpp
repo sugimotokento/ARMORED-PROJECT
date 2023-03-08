@@ -170,7 +170,7 @@ void Ocean::Draw() {
 		Renderer::GetInstance()->SetPipeline(Renderer::Index::PIPELINE_STATE_ID_WATER);
 	Renderer::GetInstance()->GetCommandList().Get()->DrawInstanced(6, 1, 0, 0);
 	if (Renderer::GetInstance()->GetNowPipelineStateID() == Renderer::Index::PIPELINE_STATE_ID_GEOMETRY_ALPHA)
-		Renderer::GetInstance()->SetNowPipeline();
+		Renderer::GetInstance()->SetNowBasePipeline();
 
 
 }

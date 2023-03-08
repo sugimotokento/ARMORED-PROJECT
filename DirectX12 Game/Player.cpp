@@ -8,7 +8,7 @@
 #include"PlayerUI.h"
 #include"DestroyEffect.h"
 #include"Call.h"
-
+#include"Camera.h"
 #ifdef _DEBUG
 #include"ImguiRenderer.h"
 #endif // _DEBUG
@@ -43,9 +43,18 @@ void Player::Update() {
 
 }
 void Player::Draw() {
-	if (m_isDie)return;
-	
-	//m_cube->Draw(m_position, m_scale, m_rotation);
+	////マトリクス設定
+	XMMATRIX lightView = Camera::GetInstance()->GetViewMatrix(Camera::Index::CAMERA_SHADOW);
+	XMMATRIX lightProjection = Camera::GetInstance()->GetProjectionMatrix(Camera::Index::CAMERA_SHADOW);
+
+	XMMATRIX view = Camera::GetInstance()->GetViewMatrix(Camera::Index::CAMERA_MAIN);
+	XMMATRIX projection = Camera::GetInstance()->GetProjectionMatrix(Camera::Index::CAMERA_MAIN);
+
+	XMMATRIX trans = XMMatrixTranslation(m_position.x, m_position.y, m_position.z);
+	XMMATRIX rot = XMMatrixRotationRollPitchYaw(m_rotation.x, m_rotation.y, m_rotation.z);
+	XMMATRIX size = XMMatrixScaling(m_scale.x, m_scale.y, m_scale.z);
+	XMMATRIX world = size * rot * trans;
+
 }
 void Player::Finalize() {
 	m_cube->Finalize();

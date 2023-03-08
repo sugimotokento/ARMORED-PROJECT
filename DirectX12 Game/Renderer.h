@@ -239,7 +239,7 @@ public:
 			IID_PPV_ARGS(&constantBuffer));
 	}
 
-	void SetNowPipeline() {
+	void SetNowBasePipeline() {
 		m_graphicsCommandList->SetPipelineState(m_pipelineState[m_nowBasePipelineStateID].Get());
 	}
 	void SetPipeline(Index::PipelineStateID pipelineID){
