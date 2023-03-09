@@ -9,8 +9,8 @@ void SkyDome::Initialize() {
 	texture.get()->LoadTexture(L"asset/Texture/Skydome.tga");
 
 	m_rotation = (XMFLOAT3(0, 0, 0));
-	m_scale = (XMFLOAT3(500, 500, 500));
-	m_position=(XMFLOAT3(0, -5, 0));
+	m_scale = (XMFLOAT3(85000, 85000, 85000));
+	m_position=(XMFLOAT3(0, 0, 0));
 
 
 	Renderer::GetInstance()->CreateConstantBuffer(m_constantBuffer);
@@ -63,7 +63,12 @@ void SkyDome::Draw() {
 		dh[0]->GetGPUDescriptorHandleForHeapStart()
 	);
 
+	if (Renderer::GetInstance()->GetNowPipelineStateID() == Renderer::Index::PIPELINE_STATE_ID_GEOMETRY_ALPHA)
+		Renderer::GetInstance()->SetPipeline(Renderer::Index::PIPELINE_STATE_ID_SKYDOME);
+
 	model.get()->Draw();
+
+	Renderer::GetInstance()->SetNowBasePipeline();
 }
 void SkyDome::Finalize() {
 	texture.get()->Finalize();

@@ -77,6 +77,12 @@
     <Filter Include="Shader\GeometryAlpha">
       <UniqueIdentifier>{826805c4-2edc-4de7-870d-99376332588e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shader\GeometryAlpha\Water">
+      <UniqueIdentifier>{164a62ef-ce8f-45b4-9c9f-35c84cef0364}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Shader\GeometryAlpha\Skydome">
+      <UniqueIdentifier>{ed530c3c-17b1-46f3-9778-47f02836be66}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -317,17 +323,23 @@
     <FxCompile Include="ShadowVS.hlsl">
       <Filter>Shader\Shadow</Filter>
     </FxCompile>
-    <FxCompile Include="WaterPS.hlsl">
-      <Filter>Shader\GeometryAlpha</Filter>
-    </FxCompile>
-    <FxCompile Include="WaterVS.hlsl">
-      <Filter>Shader\GeometryAlpha</Filter>
-    </FxCompile>
     <FxCompile Include="GeometryAlphaVS.hlsl">
       <Filter>Shader\GeometryAlpha</Filter>
     </FxCompile>
     <FxCompile Include="GeometryAlphaPS.hlsl">
       <Filter>Shader\GeometryAlpha</Filter>
+    </FxCompile>
+    <FxCompile Include="WaterPS.hlsl">
+      <Filter>Shader\GeometryAlpha\Water</Filter>
+    </FxCompile>
+    <FxCompile Include="WaterVS.hlsl">
+      <Filter>Shader\GeometryAlpha\Water</Filter>
+    </FxCompile>
+    <FxCompile Include="SkydomeVS.hlsl">
+      <Filter>Shader\GeometryAlpha\Skydome</Filter>
+    </FxCompile>
+    <FxCompile Include="SkydomePS.hlsl">
+      <Filter>Shader\GeometryAlpha\Skydome</Filter>
     </FxCompile>
   </ItemGroup>
   <ItemGroup>

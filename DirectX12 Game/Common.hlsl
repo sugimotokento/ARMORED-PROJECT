@@ -36,6 +36,13 @@ struct PS_INPUT
     float4 LightDepth : DEPTH2;
 };
 
+float3 GetLightDir()
+{
+    float3 dir = float3(0.3, -1, 0.3);
+    dir = normalize(dir);
+    
+    return dir;
+}
 
 
 float GetMetalRatio(float4 metalMap)

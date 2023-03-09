@@ -50,6 +50,7 @@ void TestObj::Draw() {
 	XMMATRIX rot = XMMatrixRotationRollPitchYaw(m_rotation.x, m_rotation.y, m_rotation.z);
 	XMMATRIX size = XMMatrixScaling(m_scale.x, m_scale.y, m_scale.z);
 	XMMATRIX world = size * rot * trans;
+	XMStoreFloat4x4(&m_worldMTX, world);
 
 	//定数バッファ設定
 	ConstantBuffer* constant;

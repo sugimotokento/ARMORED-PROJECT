@@ -54,7 +54,7 @@ void Player::Draw() {
 	XMMATRIX rot = XMMatrixRotationRollPitchYaw(m_rotation.x, m_rotation.y, m_rotation.z);
 	XMMATRIX size = XMMatrixScaling(m_scale.x, m_scale.y, m_scale.z);
 	XMMATRIX world = size * rot * trans;
-
+	XMStoreFloat4x4(&m_worldMTX, world);
 }
 void Player::Finalize() {
 	m_cube->Finalize();
@@ -96,36 +96,19 @@ void Player::Move() {
 void Player::Rotation() {
 	//“ü—Í‚µ‚½•ûŒü‚ÉŒü‚©‚¹‚é
 
-	bool isInput = false;
-	XMFLOAT3 inputDir;
-	inputDir.x = 0;
-	inputDir.y = 0;
-	inputDir.z = 0;
 
 	if (Input::GetInstance()->GetKeyPress(VK_UP)) {
-		inputDir.z += 1.0f;
-		isInput = true;
 	}
 	if (Input::GetInstance()->GetKeyPress(VK_DOWN)) {
-		inputDir.z -= 1.0f;
-		isInput = true;
 	}
 	if (Input::GetInstance()->GetKeyPress(VK_RIGHT)) {
-		inputDir.x += 1.0f;
-		isInput = true;
+	//	m_rotation.y += 0.02f;
 	}
 	if (Input::GetInstance()->GetKeyPress(VK_LEFT)) {
-		inputDir.x -= 1.0f;
-		isInput = true;
+		//m_rotation.y -= 0.02f;
 	}
 
-	//‰½‚à“ü—Í‚ğ‚µ‚È‚©‚Á‚½‚ç³–Ê‚ğŒü‚©‚¹‚é
-	if (isInput == false) {
-		inputDir.z += 1.0f;
-	}
 
-	float angle = atan2f(inputDir.z, inputDir.x);
-	m_rotation.y = angle;
 }
  
 void Player::Shot() {

@@ -59,6 +59,7 @@ public:
 		PIPELINE_STATE_ID(GEOMETRY,			GeometryVS.cso,		 GeometryPS.cso,		RTV_RESOURCE_INDEX_GEOMETRY_MAX)\
 		PIPELINE_STATE_ID(GEOMETRY_ALPHA,	GeometryAlphaVS.cso, GeometryAlphaPS.cso,	1)\
 		PIPELINE_STATE_ID(WATER,			WaterVS.cso,		 WaterPS.cso,			1)\
+		PIPELINE_STATE_ID(SKYDOME,			SkydomeVS.cso,		 SkydomePS.cso,			1)\
 		PIPELINE_STATE_ID(SHADOW,			ShadowVS.cso,		 ShadowPS.cso,			1)\
 		PIPELINE_STATE_ID(LIGHTING,			LightingVS.cso,		 LightingPS.cso,		1)\
 		PIPELINE_STATE_ID(SPRITE,			SpriteVS.cso,		 SpritePS.cso,			1)\
