@@ -131,13 +131,9 @@ void Model::Draw() {
 		//インデックスバッファ設定
 		D3D12_INDEX_BUFFER_VIEW indexView{};
 		indexView.BufferLocation = m_modelResource[i].m_IndexBuffer->GetGPUVirtualAddress();
-		indexView.SizeInBytes = sizeof(unsigned int) * m_modelResource[i].m_vertexNum*3;
+		indexView.SizeInBytes = sizeof(unsigned int) * m_modelResource[i].m_indexNum*3;
 		indexView.Format = DXGI_FORMAT_R32_UINT;
-		Renderer::GetInstance()->GetCommandList().Get()->IASetIndexBuffer(&indexView);
-
-
-
-	
+		Renderer::GetInstance()->GetCommandList().Get()->IASetIndexBuffer(&indexView);	
 
 		//トポロジ設定
 		Renderer::GetInstance()->GetCommandList().Get()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);

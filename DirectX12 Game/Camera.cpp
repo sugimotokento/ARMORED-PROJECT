@@ -23,7 +23,7 @@ void Camera::Update() {
 void Camera::Draw() {
 	for (int i = 0; i < Index::CAMERA_MAX; i++) {
 		m_viewMatrix[i] = XMMatrixLookAtLH({ m_position[i].x,m_position[i].y,m_position[i].z}, {m_target[i].x,m_target[i].y,m_target[i].z}, {0,1,0});
-		m_projectionMatrix[i] = XMMatrixPerspectiveFovLH(1.0f, (float)SCREEN_WIDTH / SCREEN_HEIGHT, 1.0f, 5000000);
+		m_projectionMatrix[i] = XMMatrixPerspectiveFovLH(1.0f, (float)SCREEN_WIDTH / SCREEN_HEIGHT, 1.0f, 500000);
 	}
 }
 
@@ -46,11 +46,16 @@ void Camera::UpdateMainCamera() {
 		XMFLOAT3 playerPos= player->GetPosition();
 		XMFLOAT3 cameraPos= playerPos;
 		cameraPos.y += 2;
-		cameraPos.z += -5;
+
+		cameraPos.x += -player->GetForward().x * 5;
+		cameraPos.y += -player->GetForward().y * 5;
+		cameraPos.z += -player->GetForward().z * 5;
 		m_position[Index::CAMERA_MAIN] = cameraPos;
 
 		XMFLOAT3 target = playerPos;
-		target.z += 2;
+		target.x += player->GetForward().x * 2;
+		target.y += player->GetForward().y * 2;
+		target.z += player->GetForward().z * 2;
 		m_target[Index::CAMERA_MAIN] = target;
 	}
 
