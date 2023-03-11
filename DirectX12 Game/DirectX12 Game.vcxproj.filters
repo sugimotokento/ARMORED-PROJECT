@@ -178,6 +178,9 @@
     <ClCompile Include="TextureGeometry.cpp">
       <Filter>ソース ファイル\FileLoad</Filter>
     </ClCompile>
+    <ClCompile Include="XMMath.cpp">
+      <Filter>ソース ファイル\System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main.h">
@@ -287,6 +290,9 @@
     </ClInclude>
     <ClInclude Include="TextureGeometry.h">
       <Filter>ソース ファイル\FileLoad</Filter>
+    </ClInclude>
+    <ClInclude Include="XMMath.h">
+      <Filter>ソース ファイル\System</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

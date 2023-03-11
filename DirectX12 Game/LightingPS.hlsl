@@ -138,7 +138,7 @@ float4 main(PS_INPUT input) : SV_TARGET
     float lambert = 1;
     float specular = 0;
     float ssao = 1;
-    float3 lightDir = float3(1, -0.5, 1);
+    float3 lightDir = GetLightDir();
     float3 viewDir = position - cameraPosition;
     viewDir = normalize(viewDir);
     lightDir = normalize(lightDir);

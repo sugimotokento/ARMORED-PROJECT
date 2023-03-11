@@ -80,6 +80,7 @@ int APIENTRY WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance
 	Call call;
 	SceneManager::Create();
 	Input::Create();
+	XInput::Create();
 
 
 
@@ -119,6 +120,7 @@ int APIENTRY WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance
 				dwExecLastTime = dwCurrentTime;
 				//XVˆ—
 				Input::GetInstance()->Update();
+				XInput::GetInstance()->Update();
 				SceneManager::GetInstance()->Update();
 				
 				//•`‰æˆ—
@@ -138,6 +140,7 @@ int APIENTRY WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance
 	ImguiRenderer::GetInstance()->Finalize();
 #endif // _DEBUG
 
+	XInput::Destroy();
 	Input::Destroy();
 	SceneManager::Destroy();
 	delete renderer;

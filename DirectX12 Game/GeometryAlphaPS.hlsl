@@ -54,7 +54,7 @@ PS_OUTPUT main(PS_INPUT input)
         float3 albed = modelAlbedTexture.Sample(sampler0, input.TexCoord).rgb;
         float3 occlusion = modelOcclusionTexture.Sample(sampler0, input.TexCoord).rgb;
         float4 metal = modelMetalTexture.Sample(sampler0, input.TexCoord);
-        float3 lightDir = float3(1, -0.5, 1);
+        float3 lightDir = GetLightDir();
         float specular = 0;
         float specularRatio = GetMetalRatio(metal);
         float3 viewDir = input.WorldPosition.xyz - cameraPosition;

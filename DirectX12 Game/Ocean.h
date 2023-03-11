@@ -8,8 +8,8 @@ private:
 	ComPtr<ID3D12Resource>	m_IndexBuffer;
 	ComPtr<ID3D12Resource> m_constantBuffer;
 	XMFLOAT4 m_waterParam;
-	const int FIELD_X = 256;
-	const int FIELD_Z = 256;
+ 
+
 
 public:
 	Ocean();

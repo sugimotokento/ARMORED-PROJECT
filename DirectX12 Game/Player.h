@@ -1,17 +1,20 @@
 #pragma once
+#include"Main.h"
 #include"GameObject.h"
 #include<list>
+#include"Model.h"
+#include"TextureGeometry.h"
 
-class Cube;
-class Gun;
 class Player :public GameObject {
 public:
 	const float MOVE_SPEED = 0.15f;
 	const int MAX_HP = 5;
 
 private:
-	Cube* m_cube;
-	std::list<Gun*> m_guns;
+	std::unique_ptr<TextureGeometry> m_texture[5];
+	std::unique_ptr<Model> m_model[5];
+	ComPtr<ID3D12Resource> m_constantBuffer;
+
 	int m_hp;
 	bool m_isDie;
 
@@ -25,7 +28,7 @@ private:
 #endif // _DEBUG
 public:
 	Player();
-	void Initialize() final override{}
+	void Initialize() final override;
 	void Update() final override;
 	void Draw() final override;
 	void Finalize() final override;
@@ -34,10 +37,4 @@ public:
 	int GetHP();
 	bool GetIsDie();
 
-	template <typename T>
-	void AddGun() {
-		T* gun = new T();
-		gun->SetGameObject(this);
-		m_guns.push_back(gun);
-	};
 };

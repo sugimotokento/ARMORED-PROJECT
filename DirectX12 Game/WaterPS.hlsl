@@ -48,7 +48,7 @@ float4 Water(PS_INPUT input)
 {
     float4 outColor = 1;
     float speed = 1 + WaterParam.w * 0.1;
-    float texRatio = 1;
+    float texRatio = 0.5;
     float dx = fbm2((input.TexCoord * texRatio + float2(0.001, 0.0)) * 0.05, 8, speed) * 10.0
              - fbm2((input.TexCoord * texRatio - float2(0.001, 0.0)) * 0.05, 8, speed) * 10.0;
     float dz = fbm2((input.TexCoord * texRatio + float2(0.0, 0.001)) * 0.05, 8, speed) * 10.0
@@ -59,11 +59,11 @@ float4 Water(PS_INPUT input)
     float dz2 = fbm2((input.TexCoord * texRatio + float2(0.0, 0.001)) * 0.02, 8, -speed) * 10.0
              - fbm2((input.TexCoord * texRatio - float2(0.0, 0.001)) * 0.02, 8, -speed) * 10.0;
     
-    float3 normal = float3(-dx, 0.001, -dz);
-    float3 normal2 = float3(-dx2, 0.001, -dz2);
+    float3 normal = float3(-dx, 0.001, dz);
+    float3 normal2 = float3(-dx2, 0.001, dz2);
     normal = normalize(normal + normal2);
     
-    float3 lightDir = float3(1, -0.5, 1);
+    float3 lightDir = GetLightDir();
     lightDir = normalize(lightDir);
     
     float3 eyev = input.WorldPosition.xyz - cameraPosition.xyz;
@@ -73,10 +73,10 @@ float4 Water(PS_INPUT input)
     outColor.rgb = light;
     
     //ƒtƒHƒ“
-    float3 refv = reflect(normal.xyz, lightDir.xyz);
+    float3 refv = reflect(lightDir.xyz, normal.xyz);
     refv = normalize(refv);
 
-    float specular = -dot(eyev, refv);
+    float specular = dot(eyev, refv);
     specular = saturate(specular);
     specular = pow(specular, 80);
    // outDiffuse.rgb = spec * 1.0;

@@ -9,6 +9,8 @@
 #include"DestroyEffect.h"
 #include"Call.h"
 #include"Camera.h"
+#include"XMMath.h"
+
 #ifdef _DEBUG
 #include"ImguiRenderer.h"
 #endif // _DEBUG
@@ -16,6 +18,9 @@
 
 
 Player::Player() {
+
+}
+void Player::Initialize() {
 	m_position = XMFLOAT3(0, 0.5f, 0);
 	m_scale = XMFLOAT3(1, 1, 1);
 	m_rotation = XMFLOAT3(0, 0, 0);
@@ -23,10 +28,24 @@ Player::Player() {
 	m_hp = MAX_HP;
 	m_isDie = false;
 
-	AddGun<NormalGun>();
+	for (int i = 0; i < 5; i++) {
+		m_texture[i] = std::make_unique<TextureGeometry>();
+		m_model[i] = std::make_unique<Model>();
+	}
+	m_model[0].get()->LoadMesh("asset/model/Dreadnought/Arm.fbx");
+	m_model[1].get()->LoadMesh("asset/model/Dreadnought/Head.fbx");
+	m_model[2].get()->LoadMesh("asset/model/Dreadnought/Lower.fbx");
+	m_model[3].get()->LoadMesh("asset/model/Dreadnought/Shoulder.fbx");
+	m_model[4].get()->LoadMesh("asset/model/Dreadnought/Upper.fbx");
 
-	m_cube = new Cube();
-	m_cube->SetColor(XMFLOAT4(0.9f, 0.5f, 0.5f, 1.0f));
+	std::wstring basePath = L"asset/Texture/Dreadnought/";
+	m_texture[0].get()->LoadTexture(basePath + L"T_DN_Arm_Albedo.tga", basePath + L"T_DN_Arm_NormalMap.png", basePath + L"T_DN_Arm_Occlusion.png", basePath + L"T_DN_Arm_Metallic.png");
+	m_texture[1].get()->LoadTexture(basePath + L"T_DN_Head_Albedo.tga", basePath + L"T_DN_Head_NormalMap.png", basePath + L"T_DN_Head_Occlusion.png", basePath + L"T_DN_Head_Metallic.png");
+	m_texture[2].get()->LoadTexture(basePath + L"T_DN_Lower_Albedo.tga", basePath + L"T_DN_Lower_NormalMap.png", basePath + L"T_DN_Lower_Occlusion.png", basePath + L"T_DN_Lower_Metallic.png");
+	m_texture[3].get()->LoadTexture(basePath + L"T_DN_Shoulder_Albedo.tga", basePath + L"T_DN_Shoulder_NormalMap.png", basePath + L"T_DN_Shoulder_Occlusion.png", basePath + L"T_DN_Shoulder_Metallic.png");
+	m_texture[4].get()->LoadTexture(basePath + L"T_DN_Upper_Albedo.tga", basePath + L"T_DN_Upper_NormalMap.png", basePath + L"T_DN_Upper_Occlusion.png", basePath + L"T_DN_Upper_Metallic.png");
+
+	Renderer::GetInstance()->CreateConstantBuffer(m_constantBuffer);
 
 #ifdef _DEBUG
 	std::function<bool()> f = std::bind(&Player::ImguiDebug, this);
@@ -57,41 +76,17 @@ void Player::Draw() {
 	XMStoreFloat4x4(&m_worldMTX, world);
 }
 void Player::Finalize() {
-	m_cube->Finalize();
-	delete m_cube;
-
-	for (Gun* gun : m_guns) {
-		delete gun;
-
+	for (int i = 0; i < 5; i++) {
+		m_texture[i].get()->Finalize();
 	}
-	m_guns.clear();
 }
 
 
 
 void Player::Move() {
-	XMVECTOR moveDir;
-	moveDir.m128_f32[0] = 0;
-	moveDir.m128_f32[1] = 0;
-	moveDir.m128_f32[2] = 0;
-	if (Input::GetInstance()->GetKeyPress('W')) {
-		moveDir.m128_f32[2] += 1.0f;
-	}
-	if (Input::GetInstance()->GetKeyPress('S')) {
-		moveDir.m128_f32[2] -= 1.0f;
-	}
-	if (Input::GetInstance()->GetKeyPress('D')) {
-		moveDir.m128_f32[0] += 1.0f;
-	}
-	if (Input::GetInstance()->GetKeyPress('A')) {
-		moveDir.m128_f32[0] -= 1.0f;
-	}
 
-	//normalize‚µ‚Ä‘¬‚³‚ð‹Ïˆê‚É‚·‚é
-	moveDir = XMVector3Normalize(moveDir);
-
-	m_position.x += moveDir.m128_f32[0] * MOVE_SPEED;
-	m_position.z += moveDir.m128_f32[2] * MOVE_SPEED;
+	m_position += GetRight() * MOVE_SPEED * XInput::GetInstance()->GetLeftThumb().x;
+	m_position += GetForward() * MOVE_SPEED * XInput::GetInstance()->GetLeftThumb().y;
 }
 void Player::Rotation() {
 	//“ü—Í‚µ‚½•ûŒü‚ÉŒü‚©‚¹‚é
@@ -160,7 +155,8 @@ bool Player::GetIsDie() {
 #ifdef _DEBUG
 bool Player::ImguiDebug() {
 	ImGui::Begin("Player");
-	ImGui::Text("x:%lf, y:%lf, z:%lf", m_position.x, m_position.y, m_position.z);
+	ImGui::Text("GetForward()");
+	ImGui::Text("  x:%lf, y:%lf, z:%lf", GetForward().x, GetForward().y, GetForward().z);
 	ImGui::End();
 	return GetIsDestroy();
 }
