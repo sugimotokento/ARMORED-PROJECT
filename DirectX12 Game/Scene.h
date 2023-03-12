@@ -21,6 +21,7 @@ private:
 public:
 	Scene(){}
 	~Scene(){}
+	virtual void Initialize() {};
 	virtual void Update();
 	virtual void Draw(Layer layer);
 	virtual void Finalize();
@@ -29,8 +30,8 @@ public:
 	template <typename T>
 	T* AddGameObject(Layer layer=GEOMETRY) {
 		T* gameObject = new T();
-		gameObject->Initialize();
 		m_gameObject[layer].push_back(gameObject);
+		gameObject->Initialize();
 		return (T*)gameObject;
 	}
 	template <typename T>

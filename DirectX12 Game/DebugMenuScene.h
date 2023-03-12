@@ -1,16 +1,18 @@
 #pragma once
+#ifdef _DEBUG
 #include"Scene.h"
 
-class GameScene :public Scene {
+class DebugMenuScene :public Scene {
 private:
-	const int CHANGE_SCENE_INTERVAL = 150;
-	int m_intervalCount;
-	void ChangeScene();
+	bool ImguiDebug();
+
 public:
-	GameScene();
-	~GameScene() {}
+	DebugMenuScene();
+	~DebugMenuScene() {}
 	void Initialize()final override;
 	void Update()final override;
 	void Draw(Layer layer)final override;
 	void Finalize()final override;
 };
+
+#endif

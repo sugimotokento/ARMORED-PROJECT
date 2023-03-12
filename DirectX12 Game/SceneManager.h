@@ -28,9 +28,12 @@ public:
 		if (m_scene) {
 			m_scene->Finalize();
 			delete m_scene;
+			m_scene = nullptr;
 		}
 
 		T* scene = new T();
+		m_scene = scene;
+		m_scene->Initialize();
 	}
 
 };

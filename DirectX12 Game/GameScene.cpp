@@ -1,6 +1,6 @@
 #include"Main.h"
 #include"GameScene.h"
- #include"Player.h"
+#include"Player.h"
 #include"PlayerUI.h"
 #include"SceneManager.h"
 #include"TestObj.h"
@@ -8,14 +8,14 @@
 #include"SkyDome.h"
 
 GameScene::GameScene() {
- 	AddGameObject<SkyDome>(Layer::GEOMETRY);
+
+}
+void GameScene::Initialize() {
+	AddGameObject<SkyDome>(Layer::GEOMETRY);
 	AddGameObject<Ocean>(Layer::WATER);
 	AddGameObject<Player>(Layer::GEOMETRY)->SetPosition(XMFLOAT3(0, 0, -5));
 
-	AddGameObject<TestObj>(Layer::ALPHA);
-
-	Player* player = GetGameObject<Player>();
-//	AddGameObject<PlayerUI>(Layer::SPRITE)->SetPlayer(player);
+	//AddGameObject<TestObj>(Layer::ALPHA);
 }
 void GameScene::Update() {
 	Scene::Update();

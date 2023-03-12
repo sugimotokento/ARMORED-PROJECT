@@ -66,8 +66,8 @@ PolygonDeferred::PolygonDeferred(){
 void PolygonDeferred::Draw(ID3D12DescriptorHeap* texture){
 
 	//マトリクス設定
-	XMMATRIX cameraView = Camera::GetInstance()->GetViewMatrix(Camera::Index::CAMERA_MAIN);
-	XMMATRIX cameraProjection = Camera::GetInstance()->GetProjectionMatrix(Camera::Index::CAMERA_MAIN);
+	XMMATRIX cameraView = CameraManager::GetInstance()->GetViewMatrix(CameraManager::Index::CAMERA_PLAYER);
+	XMMATRIX cameraProjection = CameraManager::GetInstance()->GetProjectionMatrix(CameraManager::Index::CAMERA_PLAYER);
 
 	XMMATRIX view = XMMatrixIdentity();
 	XMMATRIX projection = XMMatrixOrthographicOffCenterLH(0.0f, SCREEN_WIDTH,
@@ -91,7 +91,7 @@ void PolygonDeferred::Draw(ID3D12DescriptorHeap* texture){
 
 	XMStoreFloat4x4(&matrix, XMMatrixTranspose(world));
 	constant->world = matrix;
-	constant->cameraPosition = Camera::GetInstance()->GetPosition(Camera::Index::CAMERA_MAIN);
+	constant->cameraPosition = CameraManager::GetInstance()->GetPosition(CameraManager::Index::CAMERA_PLAYER);
 
 
 	m_constantBuffer->Unmap(0, nullptr);

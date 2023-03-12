@@ -93,7 +93,7 @@ void Sprite::Draw() {
 
 	XMStoreFloat4x4(&matrix, XMMatrixTranspose(world));
 	constant->world = matrix;
-	constant->cameraPosition = Camera::GetInstance()->GetPosition(Camera::Index::CAMERA_MAIN);
+	constant->cameraPosition = CameraManager::GetInstance()->GetPosition(CameraManager::Index::CAMERA_PLAYER);
 
 
 	m_constantBuffer->Unmap(0, nullptr);

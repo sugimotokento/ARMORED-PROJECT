@@ -1,16 +1,17 @@
 #pragma once
+#ifdef _DEBUG
+
 #include"Scene.h"
 
-class GameScene :public Scene {
-private:
-	const int CHANGE_SCENE_INTERVAL = 150;
-	int m_intervalCount;
-	void ChangeScene();
+class DebugWeaponViewerScene :public Scene {
 public:
-	GameScene();
-	~GameScene() {}
+	DebugWeaponViewerScene();
+	~DebugWeaponViewerScene() {}
 	void Initialize()final override;
 	void Update()final override;
 	void Draw(Layer layer)final override;
 	void Finalize()final override;
 };
+
+
+#endif

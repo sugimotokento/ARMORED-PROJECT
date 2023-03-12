@@ -1,29 +1,41 @@
 #include"SceneManager.h"
 #include"Scene.h"
-#include"Camera.h"
+#include"CameraManager.h"
 #include"GameScene.h"
 #include"Renderer.h"
+
+
+#ifdef _DEBUG
+#include"DebugMenuScene.h"
+#endif // _DEBUG
 
 SceneManager* SceneManager::instance = nullptr;
 
 SceneManager::SceneManager() {
 	isGameEnd = false;
-	Camera::Create();
+	CameraManager::Create();
+#ifdef _DEBUG
+	m_scene = new DebugMenuScene();
+#else 
 	m_scene = new GameScene();
+#endif
+	m_scene->Initialize();
 }
 SceneManager::~SceneManager() {
-	Camera::Destroy();
+	CameraManager::Destroy();
 	m_scene->Finalize();
 	delete m_scene;
 
 }
 
 void SceneManager::Update() {
+	if (!m_scene)return;
 	m_scene->Update();
-	Camera::GetInstance()->Update();
+	CameraManager::GetInstance()->Update();
 }
 void SceneManager::Draw() {
-	Camera::GetInstance()->Draw();
+	if (!m_scene)return;
+	CameraManager::GetInstance()->Draw();
 	//シャドウ用深度を書き込む用
 	Renderer::GetInstance()->ShadowPassStart();
 	m_scene->Draw(Scene::Layer::GEOMETRY);

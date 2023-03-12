@@ -1,5 +1,5 @@
 #pragma once
-#include"Camera.h"
+#include"CameraManager.h"
 #include"PolygonDeferred.h"
 #include"Cube.h"
 #include<string>

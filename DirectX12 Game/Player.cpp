@@ -6,9 +6,8 @@
 #include"Scene.h"
  #include"Collision.h"
 #include"PlayerUI.h"
-#include"DestroyEffect.h"
 #include"Call.h"
-#include"Camera.h"
+#include"CameraManager.h"
 #include"XMMath.h"
 
 #ifdef _DEBUG
@@ -63,11 +62,11 @@ void Player::Update() {
 }
 void Player::Draw() {
 	////マトリクス設定
-	XMMATRIX lightView = Camera::GetInstance()->GetViewMatrix(Camera::Index::CAMERA_SHADOW);
-	XMMATRIX lightProjection = Camera::GetInstance()->GetProjectionMatrix(Camera::Index::CAMERA_SHADOW);
+	XMMATRIX lightView = CameraManager::GetInstance()->GetViewMatrix(CameraManager::Index::CAMERA_SHADOW);
+	XMMATRIX lightProjection = CameraManager::GetInstance()->GetProjectionMatrix(CameraManager::Index::CAMERA_SHADOW);
 
-	XMMATRIX view = Camera::GetInstance()->GetViewMatrix(Camera::Index::CAMERA_MAIN);
-	XMMATRIX projection = Camera::GetInstance()->GetProjectionMatrix(Camera::Index::CAMERA_MAIN);
+	XMMATRIX view = CameraManager::GetInstance()->GetViewMatrix(CameraManager::Index::CAMERA_PLAYER);
+	XMMATRIX projection = CameraManager::GetInstance()->GetProjectionMatrix(CameraManager::Index::CAMERA_PLAYER);
 
 	XMMATRIX trans = XMMatrixTranslation(m_position.x, m_position.y, m_position.z);
 	XMMATRIX rot = XMMatrixRotationRollPitchYaw(m_rotation.x, m_rotation.y, m_rotation.z);
@@ -140,7 +139,7 @@ void Player::Damage(int damage) {
 
 	m_hp -= damage;
 	if (m_hp <= 0) {
-		SceneManager::GetInstance()->GetScene()->AddGameObject<DestroyEffect>()->AddParticle(m_position, XMFLOAT4(0, 0, 1, 1));
+	//	SceneManager::GetInstance()->GetScene()->AddGameObject<DestroyEffect>()->AddParticle(m_position, XMFLOAT4(0, 0, 1, 1));
 		m_isDie = true;
 	}
 }

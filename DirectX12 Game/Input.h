@@ -1,5 +1,6 @@
 #pragma once
 #define JYOSTHICK_LIMIT 32767
+#include"Main.h"
 #include<Windows.h>
 #include<Xinput.h>
 #pragma comment(lib, "Xinput.lib")

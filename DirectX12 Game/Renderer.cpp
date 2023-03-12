@@ -6,7 +6,7 @@
 #include "Main.h"
 #include "Renderer.h"
 
-#include"Camera.h"
+#include"CameraManager.h"
 
 
 
