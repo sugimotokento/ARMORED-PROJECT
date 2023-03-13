@@ -16,6 +16,8 @@ void GameScene::Initialize() {
 	AddGameObject<Player>(Layer::GEOMETRY)->SetPosition(XMFLOAT3(0, 0, -5));
 
 	//AddGameObject<TestObj>(Layer::ALPHA);
+
+	CameraManager::GetInstance()->SetMainCamera(CameraManager::Index::CAMERA_PLAYER);
 }
 void GameScene::Update() {
 	Scene::Update();

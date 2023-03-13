@@ -14,6 +14,7 @@ SceneManager* SceneManager::instance = nullptr;
 SceneManager::SceneManager() {
 	isGameEnd = false;
 	CameraManager::Create();
+	CameraManager::GetInstance()->Initialize();
 #ifdef _DEBUG
 	m_scene = new DebugMenuScene();
 #else 
@@ -22,6 +23,7 @@ SceneManager::SceneManager() {
 	m_scene->Initialize();
 }
 SceneManager::~SceneManager() {
+	CameraManager::GetInstance()->Finalize();
 	CameraManager::Destroy();
 	m_scene->Finalize();
 	delete m_scene;

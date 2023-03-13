@@ -1,44 +1,97 @@
 #pragma once
 #include"Main.h"
+#include<vector>
+#include<memory>
+#include"Camera.h"
+#include"PlayerCamera.h"
+#include"ShadowCamera.h"
+#include"DebugCamera.h"
+
 class  CameraManager
 {
 public:
 	struct Index {
+#define CAMERA_ID(name, className)
+#define CAMERA_ID_TABLE\
+		CAMERA_ID(PLAYER,	new PlayerCamera)\
+		CAMERA_ID(SHADOW,	new ShadowCamera)\
+
+		//デバッグ用カメラ
+#define DEBUG_CAMERA_ID(name, calssName)
+#define DEBUG_CAMERA_ID_TABLE\
+		DEBUG_CAMERA_ID(DEBUG, new DebugCamera)\
+
+
 		enum CamraIndex {
-			CAMERA_PLAYER,
-			CAMERA_SHADOW,
+#undef CAMERA_ID
+#define CAMERA_ID(name, className) CAMERA_##name,
+			CAMERA_ID_TABLE
+#undef DEBUG_CAMERA_ID
+
+		
+#ifdef _DEBUG	//デバッグ用カメラ
+#define DEBUG_CAMERA_ID(name, className) CAMERA_##name,
+			DEBUG_CAMERA_ID_TABLE
+#endif
 			CAMERA_MAX
 		};
+
+
+		static Camera* CreateCamera(CamraIndex id) {
+#undef CAMERA_ID
+#define CAMERA_ID(name, className)\
+		case CAMERA_##name:\
+				return  className();
+
+
+#ifdef _DEBUG//デバッグ用カメラ
+#undef DEBUG_CAMERA_ID
+#define DEBUG_CAMERA_ID(name, className)\
+		case CAMERA_##name:\
+				return  className();
+#endif
+			switch (id) {
+				CAMERA_ID_TABLE
+			}
+
+#ifdef _DEBUG
+			//デバッグ用カメラ
+			switch (id) {
+				DEBUG_CAMERA_ID_TABLE
+			}
+#endif
+			return nullptr;
+		}
 	};
 private:
 	static CameraManager* instance;
-	XMMATRIX m_projectionMatrix	[Index::CAMERA_MAX];    
-	XMMATRIX m_viewMatrix		[Index::CAMERA_MAX];       
-	XMFLOAT3 m_position			[Index::CAMERA_MAX];
-	XMFLOAT3 m_target			[Index::CAMERA_MAX];
+	Camera* m_camera[Index::CAMERA_MAX];
+
 
 	//カメラの切り替えタイミングを合わせつために、いったんoldに変更するカメラを入れてUpdateの最初にmainを更新する
 	Index::CamraIndex m_mainCamera = Index::CAMERA_PLAYER;
 	Index::CamraIndex m_oldMainCamera = Index::CAMERA_PLAYER;
 
-	void UpdatePlayerCamera();
-	void UpdateShadowCamera();
 public:
 	CameraManager();
 
+	void Initialize();
 	void Update();
 	void Draw();
+	void Finalize();
 
 	void SetMainCamera(Index::CamraIndex index) { m_oldMainCamera = index; }
 
 	//現在使っているカメラを取得
-	XMMATRIX GetMainViewMatrix() { return m_viewMatrix[m_mainCamera]; }
-	XMMATRIX GetMainProjectionMatrix() { return m_projectionMatrix[m_mainCamera]; }
-	XMFLOAT3 GetMainPosition() { return m_position[m_mainCamera]; }
+	XMMATRIX GetMainViewMatrix() { return m_camera[m_mainCamera]->GetViewMatrix(); }
+	XMMATRIX GetMainProjectionMatrix() { return m_camera[m_mainCamera]->GetProjectionMatrix(); }
+	XMFLOAT3 GetMainPosition() { return m_camera[m_mainCamera]->GetPosition(); }
+	XMFLOAT3 GetMainTarget() { return m_camera[m_mainCamera]->GetTarget(); }
 
-	XMMATRIX GetViewMatrix(Index::CamraIndex index)			{ return m_viewMatrix[index]; }
-	XMMATRIX GetProjectionMatrix(Index::CamraIndex index)	{ return m_projectionMatrix[index]; }
-	XMFLOAT3 GetPosition(Index::CamraIndex index)			{ return m_position[index]; }
+	XMMATRIX GetViewMatrix(Index::CamraIndex index)			{ return m_camera[index]->GetViewMatrix();}
+	XMMATRIX GetProjectionMatrix(Index::CamraIndex index)	{ return m_camera[index]->GetProjectionMatrix(); }
+	XMFLOAT3 GetPosition(Index::CamraIndex index)			{ return m_camera[index]->GetPosition(); }
+	XMFLOAT3 GetTarget(Index::CamraIndex index)				{ return m_camera[index]->GetTarget(); }
 
 	static void Create();
 	static void Destroy();

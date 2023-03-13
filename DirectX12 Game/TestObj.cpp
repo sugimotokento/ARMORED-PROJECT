@@ -43,8 +43,8 @@ void TestObj::Draw() {
 	XMMATRIX lightView = CameraManager::GetInstance()->GetViewMatrix(CameraManager::Index::CAMERA_SHADOW);
 	XMMATRIX lightProjection = CameraManager::GetInstance()->GetProjectionMatrix(CameraManager::Index::CAMERA_SHADOW);
 
-	XMMATRIX view = CameraManager::GetInstance()->GetViewMatrix(CameraManager::Index::CAMERA_PLAYER);
-	XMMATRIX projection = CameraManager::GetInstance()->GetProjectionMatrix(CameraManager::Index::CAMERA_PLAYER);
+	XMMATRIX view = CameraManager::GetInstance()->GetMainViewMatrix();
+	XMMATRIX projection = CameraManager::GetInstance()->GetMainProjectionMatrix();
 
 	XMMATRIX trans = XMMatrixTranslation(m_position.x, m_position.y, m_position.z);
 	XMMATRIX rot = XMMatrixRotationRollPitchYaw(m_rotation.x, m_rotation.y, m_rotation.z);

@@ -66,8 +66,8 @@ PolygonDeferred::PolygonDeferred(){
 void PolygonDeferred::Draw(ID3D12DescriptorHeap* texture){
 
 	//マトリクス設定
-	XMMATRIX cameraView = CameraManager::GetInstance()->GetViewMatrix(CameraManager::Index::CAMERA_PLAYER);
-	XMMATRIX cameraProjection = CameraManager::GetInstance()->GetProjectionMatrix(CameraManager::Index::CAMERA_PLAYER);
+	XMMATRIX cameraView = CameraManager::GetInstance()->GetMainViewMatrix();
+	XMMATRIX cameraProjection = CameraManager::GetInstance()->GetMainProjectionMatrix();
 
 	XMMATRIX view = XMMatrixIdentity();
 	XMMATRIX projection = XMMatrixOrthographicOffCenterLH(0.0f, SCREEN_WIDTH,

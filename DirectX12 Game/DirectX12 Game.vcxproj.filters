@@ -86,6 +86,9 @@
     <Filter Include="ソース ファイル\Scene\DebugScene">
       <UniqueIdentifier>{473279c7-d9bc-43d0-9de3-95a06d8be59d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Object\Camera\Manager">
+      <UniqueIdentifier>{2d3f4ceb-849e-46e2-9382-b1ccb37366fb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -108,9 +111,6 @@
     </ClCompile>
     <ClCompile Include="PolygonDeferred.cpp">
       <Filter>ソース ファイル\Object\Polygon</Filter>
-    </ClCompile>
-    <ClCompile Include="CameraManager.cpp">
-      <Filter>ソース ファイル\Object\Camera</Filter>
     </ClCompile>
     <ClCompile Include="Bullet.cpp">
       <Filter>ソース ファイル\Object\GameObject\Object3D\Gun\Bullet</Filter>
@@ -184,6 +184,21 @@
     <ClCompile Include="DebugWeaponViewerScene.cpp">
       <Filter>ソース ファイル\Scene\DebugScene</Filter>
     </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>ソース ファイル\Object\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerCamera.cpp">
+      <Filter>ソース ファイル\Object\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="ShadowCamera.cpp">
+      <Filter>ソース ファイル\Object\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="DebugCamera.cpp">
+      <Filter>ソース ファイル\Object\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraManager.cpp">
+      <Filter>ソース ファイル\Object\Camera\Manager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main.h">
@@ -209,9 +224,6 @@
     </ClInclude>
     <ClInclude Include="PolygonDeferred.h">
       <Filter>ソース ファイル\Object\Polygon</Filter>
-    </ClInclude>
-    <ClInclude Include="CameraManager.h">
-      <Filter>ソース ファイル\Object\Camera</Filter>
     </ClInclude>
     <ClInclude Include="Collision.h">
       <Filter>ソース ファイル\Collision</Filter>
@@ -296,6 +308,21 @@
     </ClInclude>
     <ClInclude Include="DebugWeaponViewerScene.h">
       <Filter>ソース ファイル\Scene\DebugScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>ソース ファイル\Object\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerCamera.h">
+      <Filter>ソース ファイル\Object\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="ShadowCamera.h">
+      <Filter>ソース ファイル\Object\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugCamera.h">
+      <Filter>ソース ファイル\Object\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraManager.h">
+      <Filter>ソース ファイル\Object\Camera\Manager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -5,14 +5,17 @@
 #include"DebugMenuScene.h"
 #include"ImguiRenderer.h"
 #include"Input.h"
+#include"CameraManager.h"
 
 
 DebugMenuScene::DebugMenuScene() {
-	std::function<bool()> f = std::bind(&DebugMenuScene::ImguiDebug, this);
-	ImguiRenderer::GetInstance()->AddFunction(f);
+	
 }
 void DebugMenuScene::Initialize() {
-	
+	std::function<bool()> f = std::bind(&DebugMenuScene::ImguiDebug, this);
+	ImguiRenderer::GetInstance()->AddFunction(f);
+
+	CameraManager::GetInstance()->SetMainCamera(CameraManager::Index::CAMERA_DEBUG);
 }
 void DebugMenuScene::Update() {
 	Scene::Update();
