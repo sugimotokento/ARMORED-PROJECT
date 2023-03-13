@@ -29,18 +29,6 @@
     <Filter Include="ソース ファイル\Object\GameObject\Object3D">
       <UniqueIdentifier>{ec53b0d8-6b54-4717-8c50-3edd22cb56d4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Object\GameObject\Object3D\Gun">
-      <UniqueIdentifier>{4cf8087e-db12-4196-8dd8-613ac90e018d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Object\GameObject\Object3D\Gun\Bullet">
-      <UniqueIdentifier>{a7eb4616-8aa5-4c2e-b588-bd1f6aa0f64d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Object\GameObject\Object3D\Effect">
-      <UniqueIdentifier>{ef88840f-952a-4bf2-b7e3-362637e36b2f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Object\GameObject\Object3D\Effect\Particle">
-      <UniqueIdentifier>{f118840c-6949-4f45-bac1-8d336fd60c9e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Object\GameObject\Object2D">
       <UniqueIdentifier>{1c503c15-9ec3-4d70-8333-b16eb1ad7b60}</UniqueIdentifier>
     </Filter>
@@ -112,14 +100,8 @@
     <ClCompile Include="PolygonDeferred.cpp">
       <Filter>ソース ファイル\Object\Polygon</Filter>
     </ClCompile>
-    <ClCompile Include="Bullet.cpp">
-      <Filter>ソース ファイル\Object\GameObject\Object3D\Gun\Bullet</Filter>
-    </ClCompile>
     <ClCompile Include="Collision.cpp">
       <Filter>ソース ファイル\Collision</Filter>
-    </ClCompile>
-    <ClCompile Include="NormalGum.cpp">
-      <Filter>ソース ファイル\Object\GameObject\Object3D\Gun</Filter>
     </ClCompile>
     <ClCompile Include="Sprite.cpp">
       <Filter>ソース ファイル\Object\Polygon</Filter>
@@ -228,12 +210,6 @@
     <ClInclude Include="Collision.h">
       <Filter>ソース ファイル\Collision</Filter>
     </ClInclude>
-    <ClInclude Include="Gun.h">
-      <Filter>ソース ファイル\Object\GameObject\Object3D\Gun</Filter>
-    </ClInclude>
-    <ClInclude Include="NormalGun.h">
-      <Filter>ソース ファイル\Object\GameObject\Object3D\Gun</Filter>
-    </ClInclude>
     <ClInclude Include="Sprite.h">
       <Filter>ソース ファイル\Object\Polygon</Filter>
     </ClInclude>
@@ -278,9 +254,6 @@
     </ClInclude>
     <ClInclude Include="ImguiRenderer.h">
       <Filter>ソース ファイル\Renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="Bullet.h">
-      <Filter>ソース ファイル\Object\GameObject\Object3D\Gun</Filter>
     </ClInclude>
     <ClInclude Include="TestObj.h">
       <Filter>ソース ファイル\Object\GameObject\Object3D</Filter>

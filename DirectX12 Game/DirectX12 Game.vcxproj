@@ -143,7 +143,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="Call.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CameraManager.cpp" />
@@ -165,7 +164,6 @@
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="Ocean.cpp" />
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="NormalGum.cpp" />
     <ClCompile Include="PlayerCamera.cpp" />
     <ClCompile Include="PlayerUI.cpp" />
     <ClCompile Include="PolygonDeferred.cpp" />
@@ -181,7 +179,6 @@
     <ClCompile Include="XMMath.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Bullet.h" />
     <ClInclude Include="Call.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CameraManager.h" />
@@ -192,7 +189,6 @@
     <ClInclude Include="DebugMenuScene.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="GameScene.h" />
-    <ClInclude Include="Gun.h" />
     <ClInclude Include="ImguiRenderer.h" />
     <ClInclude Include="Imgui\imconfig.h" />
     <ClInclude Include="Imgui\imgui.h" />
@@ -207,7 +203,6 @@
     <ClInclude Include="Model.h" />
     <ClInclude Include="Ocean.h" />
     <ClInclude Include="Player.h" />
-    <ClInclude Include="NormalGun.h" />
     <ClInclude Include="PlayerCamera.h" />
     <ClInclude Include="PlayerUI.h" />
     <ClInclude Include="PolygonDeferred.h" />

@@ -1,7 +1,6 @@
 #include"Player.h"
 #include"Input.h"
 #include"Cube.h"
-#include"NormalGun.h"
 #include"SceneManager.h"
 #include"Scene.h"
  #include"Collision.h"
