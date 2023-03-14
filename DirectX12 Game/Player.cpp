@@ -26,11 +26,11 @@ void Player::Initialize() {
 	m_hp = MAX_HP;
 	m_isDie = false;
 
-	for (int i = 0; i < 5; i++) {
+	/*for (int i = 0; i < 5; i++) {
 		m_texture[i] = std::make_unique<TextureGeometry>();
 		m_model[i] = std::make_unique<Model>();
-	}
-	m_model[0].get()->LoadMesh("asset/model/Dreadnought/Arm.fbx");
+	}*/
+	/*m_model[0].get()->LoadMesh("asset/model/Dreadnought/Arm.fbx");
 	m_model[1].get()->LoadMesh("asset/model/Dreadnought/Head.fbx");
 	m_model[2].get()->LoadMesh("asset/model/Dreadnought/Lower.fbx");
 	m_model[3].get()->LoadMesh("asset/model/Dreadnought/Shoulder.fbx");
@@ -41,7 +41,7 @@ void Player::Initialize() {
 	m_texture[1].get()->LoadTexture(basePath + L"T_DN_Head_Albedo.tga", basePath + L"T_DN_Head_NormalMap.png", basePath + L"T_DN_Head_Occlusion.png", basePath + L"T_DN_Head_Metallic.png");
 	m_texture[2].get()->LoadTexture(basePath + L"T_DN_Lower_Albedo.tga", basePath + L"T_DN_Lower_NormalMap.png", basePath + L"T_DN_Lower_Occlusion.png", basePath + L"T_DN_Lower_Metallic.png");
 	m_texture[3].get()->LoadTexture(basePath + L"T_DN_Shoulder_Albedo.tga", basePath + L"T_DN_Shoulder_NormalMap.png", basePath + L"T_DN_Shoulder_Occlusion.png", basePath + L"T_DN_Shoulder_Metallic.png");
-	m_texture[4].get()->LoadTexture(basePath + L"T_DN_Upper_Albedo.tga", basePath + L"T_DN_Upper_NormalMap.png", basePath + L"T_DN_Upper_Occlusion.png", basePath + L"T_DN_Upper_Metallic.png");
+	m_texture[4].get()->LoadTexture(basePath + L"T_DN_Upper_Albedo.tga", basePath + L"T_DN_Upper_NormalMap.png", basePath + L"T_DN_Upper_Occlusion.png", basePath + L"T_DN_Upper_Metallic.png");*/
 
 	Renderer::GetInstance()->CreateConstantBuffer(m_constantBuffer);
 
@@ -74,9 +74,9 @@ void Player::Draw() {
 	XMStoreFloat4x4(&m_worldMTX, world);
 }
 void Player::Finalize() {
-	for (int i = 0; i < 5; i++) {
-		m_texture[i].get()->Finalize();
-	}
+	//for (int i = 0; i < 5; i++) {
+	//	m_texture[i].get()->Finalize();
+	//}
 }
 
 

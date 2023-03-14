@@ -19,7 +19,17 @@ PS_OUTPUT main(PS_INPUT input)
 {
 	PS_OUTPUT output;
     
-    output.Normal = input.Normal;
+    float3 normal = modelNormalTexture.Sample(sampler0, input.TexCoord).rgb;
+    normal = normalize(normal);
+    normal = (normal - 0.5) * 2;
+    
+    float3 finalNormal =
+            input.Tangent * normal.x +
+            input.Binormal * normal.y +
+            input.Normal.xyz * normal.z;
+    finalNormal = normalize(finalNormal);
+    
+    output.Normal = float4(finalNormal, 1);
     float3 albed = modelAlbedTexture.Sample(sampler0, input.TexCoord).rgb;
     float3 occlusion = modelOcclusionTexture.Sample(sampler0, input.TexCoord).rgb;
     output.Diffuse.rgb = albed * occlusion * input.Diffuse.rgb;

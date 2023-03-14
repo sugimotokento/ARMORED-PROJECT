@@ -77,6 +77,9 @@
     <Filter Include="ソース ファイル\Object\Camera\Manager">
       <UniqueIdentifier>{2d3f4ceb-849e-46e2-9382-b1ccb37366fb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Object\GameObject\Object3D\Weapon">
+      <UniqueIdentifier>{e9054002-1e68-4b79-bd58-00d78aafd505}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -296,6 +299,9 @@
     </ClInclude>
     <ClInclude Include="CameraManager.h">
       <Filter>ソース ファイル\Object\Camera\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Weapon.h">
+      <Filter>ソース ファイル\Object\GameObject\Object3D\Weapon</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -16,6 +16,7 @@ struct VS_INPUT
     float3 Position : POSITION;
     float3 Normal : NORMAL;
     float3 Tangent : TANGENT;
+    float3 Binormal : BINORMAL;
     float4 Diffuse : COLOR;
     float2 TexCoord : TEXCOORD;
 
@@ -30,7 +31,7 @@ struct PS_INPUT
     float2 TexCoord : TEXCOORD;
     
     float3 Tangent : TANGENT;
-    float3 Bitangent : BITANGENT;
+    float3 Binormal : BINORMAL;
 
     float4 LightPosition : POSITION1;
     float4 LightDepth : DEPTH2;
@@ -38,7 +39,7 @@ struct PS_INPUT
 
 float3 GetLightDir()
 {
-    float3 dir = float3(1, -0.5, 0.0);
+    float3 dir = float3(1, -0.7, 0.0);
     dir = normalize(dir);
     
     return dir;

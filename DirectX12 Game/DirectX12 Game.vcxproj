@@ -216,6 +216,7 @@
     <ClInclude Include="texture.h" />
     <ClInclude Include="TextureGeometry.h" />
     <ClInclude Include="DebugWeaponViewerScene.h" />
+    <ClInclude Include="Weapon.h" />
     <ClInclude Include="XMMath.h" />
   </ItemGroup>
   <ItemGroup>

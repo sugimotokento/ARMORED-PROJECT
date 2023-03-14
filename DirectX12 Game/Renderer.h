@@ -14,6 +14,7 @@ struct Vertex3DBuffer
 	XMFLOAT3 position;
 	XMFLOAT3 normal;
 	XMFLOAT3 tangent;
+	XMFLOAT3 binormal;
 	XMFLOAT4 diffuse;
 	XMFLOAT2 texCoord;
 

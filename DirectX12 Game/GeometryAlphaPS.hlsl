@@ -54,6 +54,18 @@ PS_OUTPUT main(PS_INPUT input)
         float3 albed = modelAlbedTexture.Sample(sampler0, input.TexCoord).rgb;
         float3 occlusion = modelOcclusionTexture.Sample(sampler0, input.TexCoord).rgb;
         float4 metal = modelMetalTexture.Sample(sampler0, input.TexCoord);
+        
+        float3 normal = modelNormalTexture.Sample(sampler0, input.TexCoord).rgb;
+        normal = normalize(normal);
+        normal = (normal - 0.5) * 2;
+    
+        float3 finalNormal =
+            input.Tangent * normal.x +
+            input.Binormal * normal.y +
+            input.Normal.xyz * normal.z;
+        finalNormal = normalize(finalNormal);
+        
+        
         float3 lightDir = GetLightDir();
         float specular = 0;
         float specularRatio = GetMetalRatio(metal);
@@ -63,7 +75,7 @@ PS_OUTPUT main(PS_INPUT input)
         
 
 
-        float3 refv = reflect(input.Normal.xyz, lightDir.xyz);
+        float3 refv = reflect(finalNormal.xyz, lightDir.xyz);
         refv = normalize(refv);
 
         specular = -dot(viewDir, refv);
@@ -76,6 +88,7 @@ PS_OUTPUT main(PS_INPUT input)
         output.Diffuse.rgb = albed * occlusion * input.Diffuse.rgb + specular;
         output.Diffuse.a = input.Diffuse.a;
     }
+
 
     return output;
 

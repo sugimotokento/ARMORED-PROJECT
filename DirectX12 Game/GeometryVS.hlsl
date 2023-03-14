@@ -17,7 +17,8 @@ PS_INPUT main(VS_INPUT input)
     output.Diffuse.rgb = input.Diffuse.rgb;
     output.Diffuse.a = 1.0;
     
-
+    output.Tangent = normalize(mul(World, input.Tangent)).xyz;
+    output.Binormal = normalize(mul(World, input.Binormal)).xyz;
 
     output.LightPosition = mul(position, WVPLight);
 

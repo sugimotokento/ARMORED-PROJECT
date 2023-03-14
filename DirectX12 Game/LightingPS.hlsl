@@ -143,8 +143,8 @@ float4 main(PS_INPUT input) : SV_TARGET
     viewDir = normalize(viewDir);
     lightDir = normalize(lightDir);
 
-    lambert = -dot(lightDir, normal);
-    lambert = saturate(lambert) * 0.5 + 0.5;
+    lambert = dot(lightDir, normal);
+    lambert = saturate(lambert) *0.5+0.5;
 
     float3 refv = reflect(lightDir.xyz, normal.xyz);
     refv = normalize(refv);
