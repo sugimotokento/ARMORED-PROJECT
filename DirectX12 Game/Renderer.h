@@ -38,7 +38,7 @@ class Renderer
 public:
 	struct Index {
 		enum MODEL_TEX_RESOURCE_NUM {
-			MODEL_TEX_RESOURCE_NUM = 4
+			MODEL_TEX_RESOURCE_NUM = 5
 		};
 		enum RtvResourceIndex {
 			RTV_RESOURCE_INDEX_NORMAL,

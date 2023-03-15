@@ -89,6 +89,7 @@ void TestObj::Draw() {
 	}
 }
 void TestObj::Finalize() {
+	m_constantBuffer.Get()->Release();
 
 	for (int i = 0; i < 5; i++) {
 		delete model[i];

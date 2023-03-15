@@ -9,6 +9,7 @@ Texture2D<float4> modelAlbedTexture : register(t7);
 Texture2D<float4> modelNormalTexture : register(t8);
 Texture2D<float4> modelOcclusionTexture : register(t9);
 Texture2D<float4> modelMetalTexture : register(t10);
+Texture2D<float4> modelEmmisionTexture : register(t11);
 
 SamplerState sampler0 : register(s0);
 
@@ -54,7 +55,7 @@ PS_OUTPUT main(PS_INPUT input)
         float3 albed = modelAlbedTexture.Sample(sampler0, input.TexCoord).rgb;
         float3 occlusion = modelOcclusionTexture.Sample(sampler0, input.TexCoord).rgb;
         float4 metal = modelMetalTexture.Sample(sampler0, input.TexCoord);
-        
+        float4 emmision = modelEmmisionTexture.Sample(sampler0, input.TexCoord);
         float3 normal = modelNormalTexture.Sample(sampler0, input.TexCoord).rgb;
         normal = normalize(normal);
         normal = (normal - 0.5) * 2;
@@ -85,7 +86,7 @@ PS_OUTPUT main(PS_INPUT input)
 
         specular *= specularRatio;
         
-        output.Diffuse.rgb = albed * occlusion * input.Diffuse.rgb + specular;
+        output.Diffuse.rgb = (albed * occlusion * input.Diffuse.rgb) + (specular * occlusion) + (emmision.rgb);
         output.Diffuse.a = input.Diffuse.a;
     }
 

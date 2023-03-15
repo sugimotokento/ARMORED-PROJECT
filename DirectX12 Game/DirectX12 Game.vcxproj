@@ -143,6 +143,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Ammunition.cpp" />
+    <ClCompile Include="AssaultRifle.cpp" />
     <ClCompile Include="Call.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CameraManager.cpp" />
@@ -179,6 +181,8 @@
     <ClCompile Include="XMMath.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Ammunition.h" />
+    <ClInclude Include="AssaultRifle.h" />
     <ClInclude Include="Call.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CameraManager.h" />

@@ -13,7 +13,7 @@ std::wstring TextureGeometry::FileExtension(std::wstring path)
 	return path.substr(idx + 1, path.length() - idx - 1);
 }
 
-void TextureGeometry::LoadTexture(std::wstring alpbedPath, std::wstring normalPath, std::wstring occlusionPath, std::wstring metalPath)
+void TextureGeometry::LoadTexture(std::wstring alpbedPath, std::wstring normalPath, std::wstring occlusionPath, std::wstring metalPath, std::wstring emmisionPath)
 {
 	ComPtr<ID3D12Device> device = Renderer::GetInstance()->GetDevice();
 	HRESULT hr{}; 
@@ -22,7 +22,8 @@ void TextureGeometry::LoadTexture(std::wstring alpbedPath, std::wstring normalPa
 		alpbedPath, 
 		normalPath,
 		occlusionPath,
-		metalPath
+		metalPath,
+		emmisionPath
 	};
 	TexMetadata meta[Renderer::Index::MODEL_TEX_RESOURCE_NUM] = {};
 	ScratchImage scratch[Renderer::Index::MODEL_TEX_RESOURCE_NUM] = {};

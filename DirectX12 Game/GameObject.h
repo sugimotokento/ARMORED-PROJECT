@@ -30,10 +30,10 @@ public:
 		out.y = m_worldMTX._12;
 		out.z = m_worldMTX._13;
 
-		//XMVECTOR dir;
-		//dir=XMLoadFloat3(&out);
-		//dir = XMVector2Normalize(dir);
-		//XMStoreFloat3(&out, dir);
+		XMVECTOR dir;
+		dir=XMLoadFloat3(&out);
+		dir = XMVector3Normalize(dir);
+		XMStoreFloat3(&out, dir);
 
 		return out;
 	}
@@ -43,10 +43,10 @@ public:
 		out.y = m_worldMTX._22;
 		out.z = m_worldMTX._23;
 
-		//XMVECTOR dir;
-		//dir = XMLoadFloat3(&out);
-		//dir = XMVector2Normalize(dir);
-		//XMStoreFloat3(&out, dir);
+		XMVECTOR dir;
+		dir = XMLoadFloat3(&out);
+		dir = XMVector3Normalize(dir);
+		XMStoreFloat3(&out, dir);
 
 		return out;
 	}
@@ -56,10 +56,10 @@ public:
 		out.y = m_worldMTX._32;
 		out.z = m_worldMTX._33;
 
-		//XMVECTOR dir;
-		//dir = XMLoadFloat3(&out);
-		//dir = XMVector2Normalize(dir);
-		//XMStoreFloat3(&out, dir);
+		XMVECTOR dir;
+		dir = XMLoadFloat3(&out);
+		dir = XMVector3Normalize(dir);
+		XMStoreFloat3(&out, dir);
 
 		return out;
 	}

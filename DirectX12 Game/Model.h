@@ -21,7 +21,6 @@ struct ModelResource{
 class Model {
 private:
 	std::vector<ModelResource> m_modelResource;
-	ComPtr<ID3D12Resource> m_constantBuffer;
 
 
 	XMFLOAT3 m_position;
@@ -32,6 +31,7 @@ private:
 public:
 	void LoadMesh(const char* fileName);
 	void Draw();
+	void Finalize();
 
 	XMFLOAT3 GetPosition() { return m_position; }
 	XMFLOAT3 GetScale() { return m_scale; }

@@ -14,7 +14,7 @@ void Scene::Update() {
 
 	for (int i = 0; i < Layer::COUNT; i++) {
 		m_gameObject[i].remove_if([](GameObject* obj) {
-			return obj->Destroy();
+			return obj->Destroy();//Destroy()‚Ì’†‚ÅFinalize‚ðŒÄ‚ñ‚Å‚¢‚é
 			});
 	}
 }

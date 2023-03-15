@@ -31,3 +31,13 @@ XMFLOAT3 XMMath::Cross(const XMFLOAT3& vec1, const XMFLOAT3& vec2) {
 
 	return out;
 }
+
+float XMMath::Length(const XMFLOAT3& vec) {
+	XMVECTOR vector = XMLoadFloat3(&vec);
+
+	vector = XMVector3Length(vector);
+	float len;
+	XMStoreFloat(&len, vector);
+
+	return len;
+}

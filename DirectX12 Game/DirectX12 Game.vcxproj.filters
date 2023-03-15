@@ -80,6 +80,12 @@
     <Filter Include="ソース ファイル\Object\GameObject\Object3D\Weapon">
       <UniqueIdentifier>{e9054002-1e68-4b79-bd58-00d78aafd505}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Object\GameObject\Object3D\Weapon\Rifle">
+      <UniqueIdentifier>{ca216b18-ca76-4e6b-bd66-a1d5c2223121}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\GameObject\Bullet">
+      <UniqueIdentifier>{099963dc-8bb4-413b-ad27-2fa3b402cefd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -183,6 +189,12 @@
     </ClCompile>
     <ClCompile Include="CameraManager.cpp">
       <Filter>ソース ファイル\Object\Camera\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="AssaultRifle.cpp">
+      <Filter>ソース ファイル\Object\GameObject\Object3D\Weapon\Rifle</Filter>
+    </ClCompile>
+    <ClCompile Include="Ammunition.cpp">
+      <Filter>ソース ファイル\Object\GameObject\Bullet</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -302,6 +314,12 @@
     </ClInclude>
     <ClInclude Include="Weapon.h">
       <Filter>ソース ファイル\Object\GameObject\Object3D\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="AssaultRifle.h">
+      <Filter>ソース ファイル\Object\GameObject\Object3D\Weapon\Rifle</Filter>
+    </ClInclude>
+    <ClInclude Include="Ammunition.h">
+      <Filter>ソース ファイル\Object\GameObject\Bullet</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

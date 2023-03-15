@@ -7,7 +7,7 @@
 
 #include"Ocean.h"
 #include"SkyDome.h"
-
+#include"Ammunition.h"
 
 DebugWeaponViewerScene::DebugWeaponViewerScene() {
 
@@ -18,6 +18,18 @@ void DebugWeaponViewerScene::Initialize() {
 }
 void DebugWeaponViewerScene::Update() {
 	Scene::Update();
+
+	if (Input::GetInstance()->GetKeyTrigger('W')) {
+		Ammunition::SettingItem settingItem = {
+			XMFLOAT3(0, 0, 1), 
+			XMFLOAT3(0, 1, 0), 
+			XMFLOAT3(0, 0, 0),
+			5,
+			100
+		};
+
+		AddGameObject<Ammunition>()->SetSettingItem(settingItem);
+	}
 }
 void DebugWeaponViewerScene::Draw(Layer layer) {
 	Scene::Draw(layer);

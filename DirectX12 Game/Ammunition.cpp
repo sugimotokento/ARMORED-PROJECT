@@ -1,25 +1,35 @@
-#include"SkyDome.h"
+#include"Ammunition.h"
+#include"XMMath.h"
 
+void Ammunition::Initialize() {
+	m_model = std::make_unique<Model>();
+	m_model.get()->LoadMesh("asset/model/Bullet/ScifiRifle2Projectile.fbx");
 
-void SkyDome::Initialize() {
-	model=std::make_unique<Model>();
-	model.get()->LoadMesh("asset/model/skydome.obj");
-	
-	texture = std::make_unique<TextureGeometry>();
-	texture.get()->LoadTexture(L"asset/Texture/Skydome.tga");
-
-	m_rotation = (XMFLOAT3(0, 0, 0));
-	m_scale = (XMFLOAT3(85000, 85000, 85000));
-	m_position=(XMFLOAT3(0, 0, 0));
-
+	m_texture = std::make_unique<TextureGeometry>();
+	std::wstring basePath = L"asset/Texture/Bullet/";
+	m_texture.get()->LoadTexture(
+		basePath + L"ScifiRifle2ProjectileAlbedo.png",
+		L"asset/Texture/White.png",
+		L"asset/Texture/White.png",
+		L"asset/Texture/Black.png",
+		basePath + L"ScifiRifle2ProjectileEmmision.png"
+	);
 
 	Renderer::GetInstance()->CreateConstantBuffer(m_constantBuffer);
 
+	m_scale = XMFLOAT3(0.01f, 0.01f, 0.2f);
 }
-void SkyDome::Update() {
+void Ammunition::Update() {
+	m_position += m_moveDir * m_speed;
 
+
+	XMFLOAT3 dist;
+	dist = m_startPosition - m_position;
+	if (XMMath::Length(dist) > m_range) {
+		SetDestroy();
+	}
 }
-void SkyDome::Draw() {
+void Ammunition::Draw() {
 	////マトリクス設定
 	XMMATRIX lightView = CameraManager::GetInstance()->GetViewMatrix(CameraManager::Index::CAMERA_SHADOW);
 	XMMATRIX lightProjection = CameraManager::GetInstance()->GetProjectionMatrix(CameraManager::Index::CAMERA_SHADOW);
@@ -31,6 +41,7 @@ void SkyDome::Draw() {
 	XMMATRIX rot = XMMatrixRotationRollPitchYaw(m_rotation.x, m_rotation.y, m_rotation.z);
 	XMMATRIX size = XMMatrixScaling(m_scale.x, m_scale.y, m_scale.z);
 	XMMATRIX world = size * rot * trans;
+	XMStoreFloat4x4(&m_worldMTX, world);
 
 	//定数バッファ設定
 	ConstantBuffer* constant;
@@ -47,30 +58,27 @@ void SkyDome::Draw() {
 	constant->vp = matrix;
 
 	XMStoreFloat4x4(&matrix, XMMatrixTranspose(world));
-	constant->world = matrix;
 
+	constant->world = matrix;
 	constant->reflectRate = XMFLOAT4(0, 0, 0, 0);
+
 
 	m_constantBuffer->Unmap(0, nullptr);
 
 	Renderer::GetInstance()->GetCommandList().Get()->SetGraphicsRootConstantBufferView(0,
 		m_constantBuffer->GetGPUVirtualAddress());
 
+
 	//テクスチャ設定
-	ID3D12DescriptorHeap* dh[] = { texture.get()->GetDescriptorHeap().Get()};
+	ID3D12DescriptorHeap* dh[] = { m_texture.get()->GetDescriptorHeap().Get() };
 	Renderer::GetInstance()->GetCommandList().Get()->SetDescriptorHeaps(1, dh);
 	Renderer::GetInstance()->GetCommandList().Get()->SetGraphicsRootDescriptorTable(1,
 		dh[0]->GetGPUDescriptorHandleForHeapStart()
 	);
+	m_model.get()->Draw();
 
-	if (Renderer::GetInstance()->GetNowPipelineStateID() == Renderer::Index::PIPELINE_STATE_ID_GEOMETRY_ALPHA)
-		Renderer::GetInstance()->SetPipeline(Renderer::Index::PIPELINE_STATE_ID_SKYDOME);
-
-	model.get()->Draw();
-
-	Renderer::GetInstance()->SetNowBasePipeline();
 }
-void SkyDome::Finalize() {
-	texture.get()->Finalize();
+void Ammunition::Finalize() {
+	m_texture.get()->Finalize();
 	m_constantBuffer.Get()->Release();
 }

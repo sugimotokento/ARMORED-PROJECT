@@ -3,6 +3,8 @@ Texture2D<float4> modelAlbedTexture : register(t7);
 Texture2D<float4> modelNormalTexture : register(t8);
 Texture2D<float4> modelOcclusionTexture : register(t9);
 Texture2D<float4> modelMetalTexture : register(t10);
+
+
 SamplerState sampler0 : register(s0);
 
 struct PS_OUTPUT

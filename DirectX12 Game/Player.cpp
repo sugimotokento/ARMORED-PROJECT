@@ -77,6 +77,7 @@ void Player::Finalize() {
 	//for (int i = 0; i < 5; i++) {
 	//	m_texture[i].get()->Finalize();
 	//}
+	m_constantBuffer.Get()->Release();
 }
 
 

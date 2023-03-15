@@ -5,7 +5,6 @@
 class Ocean :public GameObject {
 private:
 	ComPtr<ID3D12Resource> m_vertexBuffer;
-	ComPtr<ID3D12Resource>	m_IndexBuffer;
 	ComPtr<ID3D12Resource> m_constantBuffer;
 	XMFLOAT4 m_waterParam;
  
