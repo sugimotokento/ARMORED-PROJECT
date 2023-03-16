@@ -8,27 +8,23 @@
 #include"Ocean.h"
 #include"SkyDome.h"
 #include"Ammunition.h"
+#include"AssaultRifle.h"
 
 DebugWeaponViewerScene::DebugWeaponViewerScene() {
 
 }
 void DebugWeaponViewerScene::Initialize() {
-	AddGameObject<SkyDome>(Layer::GEOMETRY);
+	//AddGameObject<SkyDome>(Layer::GEOMETRY);
+	AddGameObject<AssaultRifle>(Layer::GEOMETRY)->SetPosition({ 0,1,0 });
 	AddGameObject<Ocean>(Layer::WATER);
 }
 void DebugWeaponViewerScene::Update() {
 	Scene::Update();
 
-	if (Input::GetInstance()->GetKeyTrigger('W')) {
-		Ammunition::SettingItem settingItem = {
-			XMFLOAT3(0, 0, 1), 
-			XMFLOAT3(0, 1, 0), 
-			XMFLOAT3(0, 0, 0),
-			5,
-			100
-		};
+	AssaultRifle* rifle = GetGameObject< AssaultRifle>();
 
-		AddGameObject<Ammunition>()->SetSettingItem(settingItem);
+	if (Input::GetInstance()->GetKeyPress('W')) {
+		rifle->Shot();
 	}
 }
 void DebugWeaponViewerScene::Draw(Layer layer) {

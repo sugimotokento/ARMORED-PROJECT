@@ -23,6 +23,7 @@ public:
 	XMFLOAT3 GetPosition() { return m_position; }
 	XMFLOAT3 GetScale() { return m_scale; }
 	XMFLOAT3 GetRotation() { return m_rotation; }
+	XMFLOAT4X4 GetWorldMTX() { return m_worldMTX; }
 
 	XMFLOAT3 GetRight() {
 		XMFLOAT3 out;

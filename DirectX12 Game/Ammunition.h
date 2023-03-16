@@ -39,4 +39,8 @@ public:
 
 		m_startPosition = item.position;
 	}
+
+#ifdef _DEBUG
+	bool ImguiDebug();
+#endif // _DEBUG
 };

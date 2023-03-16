@@ -2,11 +2,12 @@
 #include"Main.h"
 #include"GameObject.h"
 
-class Weapon :GameObject{
+class Weapon :public GameObject{
 protected:
 	XMFLOAT3 m_offset;//éËÇ‚å®Ç…à íuÇçáÇÌÇπÇÈoffset
 	GameObject* m_parent;
-	bool m_isReload = false;
+	float m_intervalMax = 20;
+	float m_intervalCount = 0;
 public:
 	virtual void Shot() = 0;
 	virtual void Initialize(){}
@@ -14,5 +15,6 @@ public:
 	virtual void Draw(){}
 	virtual void Finalize(){}
 
-	bool GetIsReload() { return m_isReload; }
+	float GetIntervalMax() { return m_intervalMax; }
+	float GetIntervalCount() { return m_intervalCount; }
 };

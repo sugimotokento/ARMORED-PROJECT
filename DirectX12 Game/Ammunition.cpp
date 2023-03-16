@@ -1,5 +1,6 @@
 #include"Ammunition.h"
 #include"XMMath.h"
+#include"ImguiRenderer.h"
 
 void Ammunition::Initialize() {
 	m_model = std::make_unique<Model>();
@@ -17,7 +18,13 @@ void Ammunition::Initialize() {
 
 	Renderer::GetInstance()->CreateConstantBuffer(m_constantBuffer);
 
-	m_scale = XMFLOAT3(0.01f, 0.01f, 0.2f);
+	m_scale = XMFLOAT3(0.01f, 0.01f, 0.08f);
+
+
+#ifdef _DEBUG
+	std::function<bool()> f = std::bind(&Ammunition::ImguiDebug, this);
+	ImguiRenderer::GetInstance()->AddFunction(f);
+#endif // _DEBUG
 }
 void Ammunition::Update() {
 	m_position += m_moveDir * m_speed;
@@ -82,3 +89,17 @@ void Ammunition::Finalize() {
 	m_texture.get()->Finalize();
 	m_constantBuffer.Get()->Release();
 }
+
+
+
+#ifdef _DEBUG
+bool Ammunition::ImguiDebug() {
+	XMFLOAT3 dist;
+	dist = m_startPosition - m_position;
+	ImGui::Begin("Ammunition");
+	ImGui::Text("dist:%lf,", XMMath::Length(dist));
+
+	ImGui::End();
+	return GetIsDestroy();
+}
+#endif // _DEBUG
