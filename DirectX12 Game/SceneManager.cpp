@@ -3,7 +3,7 @@
 #include"CameraManager.h"
 #include"GameScene.h"
 #include"Renderer.h"
-
+#include"ModelLoader.h"
 
 #ifdef _DEBUG
 #include"DebugMenuScene.h"
@@ -15,6 +15,7 @@ SceneManager::SceneManager() {
 	isGameEnd = false;
 	CameraManager::Create();
 	CameraManager::GetInstance()->Initialize();
+
 #ifdef _DEBUG
 	m_scene = new DebugMenuScene();
 #else 

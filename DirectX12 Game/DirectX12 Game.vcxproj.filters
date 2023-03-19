@@ -83,8 +83,11 @@
     <Filter Include="ソース ファイル\Object\GameObject\Object3D\Weapon\Rifle">
       <UniqueIdentifier>{ca216b18-ca76-4e6b-bd66-a1d5c2223121}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Object\GameObject\Bullet">
+    <Filter Include="ソース ファイル\Object\GameObject\Object3D\Bullet">
       <UniqueIdentifier>{099963dc-8bb4-413b-ad27-2fa3b402cefd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\GameObject\Object3D\Weapon\Shotgun">
+      <UniqueIdentifier>{4990a61f-aafc-4fbf-a2c0-253e6841a4ad}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -194,7 +197,13 @@
       <Filter>ソース ファイル\Object\GameObject\Object3D\Weapon\Rifle</Filter>
     </ClCompile>
     <ClCompile Include="Ammunition.cpp">
-      <Filter>ソース ファイル\Object\GameObject\Bullet</Filter>
+      <Filter>ソース ファイル\Object\GameObject\Object3D\Bullet</Filter>
+    </ClCompile>
+    <ClCompile Include="ModelLoader.cpp">
+      <Filter>ソース ファイル\FileLoad</Filter>
+    </ClCompile>
+    <ClCompile Include="Shotgun.cpp">
+      <Filter>ソース ファイル\Object\GameObject\Object3D\Weapon\Shotgun</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -319,7 +328,13 @@
       <Filter>ソース ファイル\Object\GameObject\Object3D\Weapon\Rifle</Filter>
     </ClInclude>
     <ClInclude Include="Ammunition.h">
-      <Filter>ソース ファイル\Object\GameObject\Bullet</Filter>
+      <Filter>ソース ファイル\Object\GameObject\Object3D\Bullet</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelLoader.h">
+      <Filter>ソース ファイル\FileLoad</Filter>
+    </ClInclude>
+    <ClInclude Include="Shotgun.h">
+      <Filter>ソース ファイル\Object\GameObject\Object3D\Weapon\Shotgun</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

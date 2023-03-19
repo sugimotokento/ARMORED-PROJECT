@@ -3,19 +3,11 @@
 #include"Scene.h"
 #include"XMMath.h"
 #include"ImguiRenderer.h"
+#include"ModelLoader.h"
 
 void AssaultRifle::Initialize() {
 
-	m_model = std::make_unique<Model>();
-	m_texture = std::make_unique<TextureGeometry>();
-
-	m_model.get()->LoadMesh("asset/model/Weapon/Rifle/ScifiRifle2Static.fbx");
-	m_texture.get()->LoadTexture(
-		L"asset/Texture/Weapon/Rifle/ScifiRifle2BlackAlbedo.tga",
-		L"asset/Texture/Weapon/Rifle/ScifiRifle2Normal.tga",
-		L"asset/Texture/Weapon/Rifle/ScifiRifle2AO.jpg",
-		L"asset/Texture/Weapon/Rifle/ScifiRifle2PBRMetalness.jpg"
-	);
+	ModelLoader::GetInstance()->LoadRequest(ModelLoader::Index::MODEL_ID_WEAPON_ASSAULT_RIFLE);
 
 	m_scale = XMFLOAT3(0.0025f, 0.0025f, 0.0025f);
 	m_rotation = XMFLOAT3(-0.1f, 0, 0);
@@ -24,8 +16,8 @@ void AssaultRifle::Initialize() {
 
 	//弾のパラメーター設定
 	m_bulletOffset.x = 0;
-	m_bulletOffset.y = 0.175f;
-	m_bulletOffset.z = 1.675f;
+	m_bulletOffset.y = 0.149f;
+	m_bulletOffset.z = 2.0f;
 	m_bulletSetting.range = 500;
 	m_bulletSetting.speed = 2;
 	m_intervalMax = 3.5f;
@@ -34,8 +26,8 @@ void AssaultRifle::Initialize() {
 
 
 #ifdef _DEBUG
-	/*std::function<bool()> f = std::bind(&AssaultRifle::ImguiDebug, this);
-	ImguiRenderer::GetInstance()->AddFunction(f);*/
+	std::function<bool()> f = std::bind(&AssaultRifle::ImguiDebug, this);
+	ImguiRenderer::GetInstance()->AddFunction(f);
 #endif // _DEBUG
 }
 void AssaultRifle::Update() {
@@ -81,18 +73,11 @@ void AssaultRifle::Draw() {
 		m_constantBuffer->GetGPUVirtualAddress());
 
 
-	//テクスチャ設定
-	ID3D12DescriptorHeap* dh[] = { m_texture->GetDescriptorHeap().Get() };
-	Renderer::GetInstance()->GetCommandList().Get()->SetDescriptorHeaps(1, dh);
-	Renderer::GetInstance()->GetCommandList().Get()->SetGraphicsRootDescriptorTable(1,
-		dh[0]->GetGPUDescriptorHandleForHeapStart()
-	);
-	m_model->Draw();
+	//モデル描画
+	ModelLoader::GetInstance()->Draw(ModelLoader::Index::MODEL_ID_WEAPON_ASSAULT_RIFLE);
 
 }
 void AssaultRifle::Finalize() {
-	m_model.get()->Finalize();
-	m_texture.get()->Finalize();
 	m_constantBuffer.Get()->Release();
 }
 

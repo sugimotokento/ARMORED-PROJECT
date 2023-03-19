@@ -18,7 +18,7 @@ void Ammunition::Initialize() {
 
 	Renderer::GetInstance()->CreateConstantBuffer(m_constantBuffer);
 
-	m_scale = XMFLOAT3(0.01f, 0.01f, 0.08f);
+	m_scale = XMFLOAT3(0.005f, 0.005f, 0.04f);
 
 
 #ifdef _DEBUG

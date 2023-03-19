@@ -1,10 +1,72 @@
 #include"DebugCamera.h"
+#include"Input.h"
+#include"XMMath.h"
+#include"ImguiRenderer.h"
+#include<math.h>
 
-
-void DebugCamera::Update() {
+DebugCamera::DebugCamera() {
 	m_position = XMFLOAT3(0, 2, -5);
-	m_target = XMFLOAT3(0.0f, 0, 5.0f);
+	m_target = XMFLOAT3(0.0f, 2, 5.0f);
+	m_rotation = XMFLOAT3(0, 0, 0);
+
+#ifdef _DEBUG
+	std::function<bool()> f = std::bind(&DebugCamera::ImguiDebug, this);
+	ImguiRenderer::GetInstance()->AddFunction(f);
+#endif // _DEBUG
+}
+void DebugCamera::Update() {
+	XMMATRIX trans = XMMatrixTranslation(m_position.x, m_position.y, m_position.z);
+	XMMATRIX rot = XMMatrixRotationRollPitchYaw(m_rotation.x, m_rotation.y, m_rotation.z);
+	XMMATRIX w = rot * trans;
+	XMFLOAT4X4 world;
+	XMStoreFloat4x4(&world, w);
+
+	XMFLOAT3 right = { world._11, world._12, world._13 };
+	XMFLOAT3 up = { world._21, world._22, world._23 };
+	XMFLOAT3 forward = { world._31, world._32, world._33 };
+	right=XMMath::Normalize(right);
+	up =XMMath::Normalize(up);
+	forward =XMMath::Normalize(forward);
+
+	if (fabsf(XInput::GetInstance()->GetRightThumb().x) > 0.01f) {
+		m_rotation.y += XInput::GetInstance()->GetRightThumb().x*0.04f;
+	}
+
+
+	if (fabsf(XInput::GetInstance()->GetLeftThumb().x) > 0.01f) {
+		m_position += right * 0.02f* XInput::GetInstance()->GetLeftThumb().x;
+	}
+	if (fabsf(XInput::GetInstance()->GetLeftThumb().y) > 0.01f) {
+		m_position += forward * 0.02f* XInput::GetInstance()->GetLeftThumb().y;
+	}
+
+	m_target =  forward*5;
 }
 void DebugCamera::Draw() {
 	Camera::Draw();
 }
+
+
+#ifdef _DEBUG
+bool DebugCamera::ImguiDebug() {
+	//XMMATRIX trans = XMMatrixTranslation(m_position.x, m_position.y, m_position.z);
+	//XMMATRIX rot = XMMatrixRotationRollPitchYaw(m_rotation.x, m_rotation.y, m_rotation.z);
+	//XMMATRIX w = rot * trans;
+	//XMFLOAT4X4 world;
+	//XMStoreFloat4x4(&world, w);
+
+	//XMFLOAT3 right = { world._11, world._12, world._13 };
+	//XMFLOAT3 up = { world._21, world._22, world._23 };
+	//XMFLOAT3 forward = { world._31, world._32, world._33 };
+
+
+	//ImGui::Begin("DebugCamera");
+	//ImGui::Text("Input");
+	//ImGui::Text("  x:%lf, y:%lf", XInput::GetInstance()->GetRightThumb().x, XInput::GetInstance()->GetRightThumb().y);
+	//ImGui::Text("");
+	//ImGui::Text("forward");
+	//ImGui::Text("x:%lf, y:%lf, z:%lf", forward.x, forward.y, forward.z);
+	//ImGui::End();
+	return true;
+}
+#endif // _DEBUG

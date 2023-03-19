@@ -7,6 +7,7 @@
 #include "renderer.h"
 #include"SceneManager.h"
 #include"Call.h"
+#include"ModelLoader.h"
 
 #ifdef _DEBUG
 #include"ImguiRenderer.h"
@@ -72,12 +73,13 @@ int APIENTRY WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance
 
 
 	// ‰Šú‰»
-	Renderer* renderer=new Renderer();
+	Renderer renderer;
 #ifdef _DEBUG
 	ImguiRenderer imguiRenderer;
 	ImguiRenderer::GetInstance()->Initiaize();
 #endif // _DEBUG
 	Call call;
+	ModelLoader::Create();
 	SceneManager::Create();
 	Input::Create();
 	XInput::Create();
@@ -140,10 +142,13 @@ int APIENTRY WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance
 	ImguiRenderer::GetInstance()->Finalize();
 #endif // _DEBUG
 
+	ModelLoader::GetInstance()->Finalize();
+	
 	XInput::Destroy();
 	Input::Destroy();
 	SceneManager::Destroy();
-	delete renderer;
+	ModelLoader::Destroy();
+	
 
 	return (int)msg.wParam;
 }

@@ -5,6 +5,9 @@
 #include"TextureGeometry.h"
 #include"Scene.h"
 #include"Renderer.h"
+#include"ModelLoader.h"
+#include"SceneManager.h"
+#include<thread>
 
 TestObj::TestObj() {
 
@@ -12,26 +15,20 @@ TestObj::TestObj() {
 void TestObj::Initialize() {
 
 	for (int i = 0; i < 5; i++) {
-		model[i] = new Model();
 		m_scale   =(XMFLOAT3(0.0025f, 0.0025f, 0.0025f));
 		m_rotation=(XMFLOAT3(0, -1.57f, 0));
 		m_position=(XMFLOAT3(0, 0, 0));
 
-		texture[i] = new TextureGeometry();
 	}
-	model[0]->LoadMesh("asset/model/Dreadnought/Arm.fbx");
-	model[1]->LoadMesh("asset/model/Dreadnought/Head.fbx");
-	model[2]->LoadMesh("asset/model/Dreadnought/Lower.fbx");
-	model[3]->LoadMesh("asset/model/Dreadnought/Shoulder.fbx");
-	model[4]->LoadMesh("asset/model/Dreadnought/Upper.fbx");
 
-	std::wstring basePath = L"asset/Texture/Dreadnought/";
-	texture[0]->LoadTexture(basePath + L"T_DN_Arm_Albedo.tga", basePath + L"T_DN_Arm_NormalMap.png", basePath+L"T_DN_Arm_Occlusion.png", basePath + L"T_DN_Arm_Metallic.png");
-	texture[1]->LoadTexture(basePath + L"T_DN_Head_Albedo.tga", basePath + L"T_DN_Head_NormalMap.png", basePath + L"T_DN_Head_Occlusion.png", basePath + L"T_DN_Head_Metallic.png");
-	texture[2]->LoadTexture(basePath + L"T_DN_Lower_Albedo.tga", basePath + L"T_DN_Lower_NormalMap.png", basePath + L"T_DN_Lower_Occlusion.png", basePath + L"T_DN_Lower_Metallic.png");
-	texture[3]->LoadTexture(basePath + L"T_DN_Shoulder_Albedo.tga", basePath + L"T_DN_Shoulder_NormalMap.png", basePath + L"T_DN_Shoulder_Occlusion.png", basePath + L"T_DN_Shoulder_Metallic.png");
-	texture[4]->LoadTexture(basePath + L"T_DN_Upper_Albedo.tga", basePath + L"T_DN_Upper_NormalMap.png", basePath + L"T_DN_Upper_Occlusion.png", basePath + L"T_DN_Upper_Metallic.png");
+	//モデルのロードリクエスト
+	ModelLoader::GetInstance()->LoadRequest(ModelLoader::Index::MODEL_ID_ROBOT_DREADNOUGHT_HEAD);
+	ModelLoader::GetInstance()->LoadRequest(ModelLoader::Index::MODEL_ID_ROBOT_DREADNOUGHT_ARM);
+	ModelLoader::GetInstance()->LoadRequest(ModelLoader::Index::MODEL_ID_ROBOT_DREADNOUGHT_LOWER);
+	ModelLoader::GetInstance()->LoadRequest(ModelLoader::Index::MODEL_ID_ROBOT_DREADNOUGHT_SHOULDER);
+	ModelLoader::GetInstance()->LoadRequest(ModelLoader::Index::MODEL_ID_ROBOT_DREADNOUGHT_UPPER);
 
+	//定数バッファの作成
 	Renderer::GetInstance()->CreateConstantBuffer(m_constantBuffer);
 
 }
@@ -77,27 +74,14 @@ void TestObj::Draw() {
 	Renderer::GetInstance()->GetCommandList().Get()->SetGraphicsRootConstantBufferView(0,
 		m_constantBuffer->GetGPUVirtualAddress());
 
-
-	for (int i = 0; i < 5; i++) {
-		//テクスチャ設定
-		ID3D12DescriptorHeap* dh[] = { texture[i]->GetDescriptorHeap().Get() };
-		Renderer::GetInstance()->GetCommandList().Get()->SetDescriptorHeaps(1, dh);
-		Renderer::GetInstance()->GetCommandList().Get()->SetGraphicsRootDescriptorTable(1,
-			dh[0]->GetGPUDescriptorHandleForHeapStart()
-		);
-		model[i]->Draw();
-	}
+	//モデル描画
+	ModelLoader::GetInstance()->Draw(ModelLoader::Index::MODEL_ID_ROBOT_DREADNOUGHT_HEAD);
+	ModelLoader::GetInstance()->Draw(ModelLoader::Index::MODEL_ID_ROBOT_DREADNOUGHT_ARM);
+	ModelLoader::GetInstance()->Draw(ModelLoader::Index::MODEL_ID_ROBOT_DREADNOUGHT_LOWER);
+	ModelLoader::GetInstance()->Draw(ModelLoader::Index::MODEL_ID_ROBOT_DREADNOUGHT_SHOULDER);
+	ModelLoader::GetInstance()->Draw(ModelLoader::Index::MODEL_ID_ROBOT_DREADNOUGHT_UPPER);
 }
 void TestObj::Finalize() {
 	m_constantBuffer.Get()->Release();
-
-	for (int i = 0; i < 5; i++) {
-		model[i]->Finalize();
-		delete model[i];
-
-		texture[i]->Finalize();
-		delete texture[i];
-	}
-
 
 }

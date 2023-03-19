@@ -9,19 +9,19 @@
 #include"SkyDome.h"
 #include"Ammunition.h"
 #include"AssaultRifle.h"
-
+#include"Shotgun.h"
 DebugWeaponViewerScene::DebugWeaponViewerScene() {
 
 }
 void DebugWeaponViewerScene::Initialize() {
 	//AddGameObject<SkyDome>(Layer::GEOMETRY);
-	AddGameObject<AssaultRifle>(Layer::GEOMETRY)->SetPosition({ 0,1,0 });
+	AddGameObject<Shotgun>(Layer::GEOMETRY)->SetPosition({ 0,1,0 });
 	AddGameObject<Ocean>(Layer::WATER);
 }
 void DebugWeaponViewerScene::Update() {
 	Scene::Update();
 
-	AssaultRifle* rifle = GetGameObject< AssaultRifle>();
+	Shotgun* rifle = GetGameObject< Shotgun>();
 
 	if (Input::GetInstance()->GetKeyPress('W')) {
 		rifle->Shot();

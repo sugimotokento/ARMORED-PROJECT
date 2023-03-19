@@ -2,6 +2,7 @@
 #include"Scene.h"
 #include<stdio.h>
 #include<conio.h>
+#include"ModelLoader.h"
 
 class SceneManager {
 private:
@@ -15,6 +16,7 @@ public:
 	~SceneManager();
 	void Update();
 	void Draw();
+	
 	void GameEnd();
 	Scene* GetScene();
 	bool GetIsGameEnd();
@@ -27,6 +29,7 @@ public:
 	void SetScene() {
 		if (m_scene) {
 			m_scene->Finalize();
+			ModelLoader::GetInstance()->Finalize();
 			delete m_scene;
 			m_scene = nullptr;
 		}

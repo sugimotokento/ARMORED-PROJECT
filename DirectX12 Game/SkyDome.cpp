@@ -3,10 +3,10 @@
 
 void SkyDome::Initialize() {
 	model=std::make_unique<Model>();
-	model.get()->LoadMesh("asset/model/skydome.obj");
+	model.get()->LoadMesh("asset/model/Field/skydome.obj");
 	
 	texture = std::make_unique<TextureGeometry>();
-	texture.get()->LoadTexture(L"asset/Texture/Skydome.tga");
+	texture.get()->LoadTexture(L"asset/Texture/Black.png");
 
 	m_rotation = (XMFLOAT3(0, 0, 0));
 	m_scale = (XMFLOAT3(85000, 85000, 85000));

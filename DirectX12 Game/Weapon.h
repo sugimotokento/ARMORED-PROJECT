@@ -17,4 +17,7 @@ public:
 
 	float GetIntervalMax() { return m_intervalMax; }
 	float GetIntervalCount() { return m_intervalCount; }
+
+	XMFLOAT3 GetOffset() { return m_offset; }
+	void SetOffset(XMFLOAT3 offset) { m_offset = offset; }
 };

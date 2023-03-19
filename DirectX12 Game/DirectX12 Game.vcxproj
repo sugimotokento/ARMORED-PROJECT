@@ -164,6 +164,7 @@
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Model.cpp" />
+    <ClCompile Include="ModelLoader.cpp" />
     <ClCompile Include="Ocean.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerCamera.cpp" />
@@ -173,6 +174,7 @@
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="ShadowCamera.cpp" />
+    <ClCompile Include="Shotgun.cpp" />
     <ClCompile Include="SkyDome.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="TestObj.cpp" />
@@ -205,6 +207,7 @@
     <ClInclude Include="Input.h" />
     <ClInclude Include="Main.h" />
     <ClInclude Include="Model.h" />
+    <ClInclude Include="ModelLoader.h" />
     <ClInclude Include="Ocean.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PlayerCamera.h" />
@@ -214,6 +217,7 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="ShadowCamera.h" />
+    <ClInclude Include="Shotgun.h" />
     <ClInclude Include="SkyDome.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="TestObj.h" />
