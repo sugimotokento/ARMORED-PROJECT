@@ -1,21 +1,10 @@
 #include"Ammunition.h"
 #include"XMMath.h"
 #include"ImguiRenderer.h"
+#include"ModelLoader.h"
 
 void Ammunition::Initialize() {
-	m_model = std::make_unique<Model>();
-	m_model.get()->LoadMesh("asset/model/Bullet/ScifiRifle2Projectile.fbx");
-
-	m_texture = std::make_unique<TextureGeometry>();
-	std::wstring basePath = L"asset/Texture/Bullet/";
-	m_texture.get()->LoadTexture(
-		basePath + L"ScifiRifle2ProjectileAlbedo.png",
-		L"asset/Texture/White.png",
-		L"asset/Texture/White.png",
-		L"asset/Texture/Black.png",
-		basePath + L"ScifiRifle2ProjectileEmmision.png"
-	);
-
+	ModelLoader::GetInstance()->LoadRequest(ModelLoader::Index::MODEL_ID_BULLET_AMMUNITION);
 	Renderer::GetInstance()->CreateConstantBuffer(m_constantBuffer);
 
 	m_scale = XMFLOAT3(0.005f, 0.005f, 0.04f);
@@ -76,17 +65,11 @@ void Ammunition::Draw() {
 		m_constantBuffer->GetGPUVirtualAddress());
 
 
-	//テクスチャ設定
-	ID3D12DescriptorHeap* dh[] = { m_texture.get()->GetDescriptorHeap().Get() };
-	Renderer::GetInstance()->GetCommandList().Get()->SetDescriptorHeaps(1, dh);
-	Renderer::GetInstance()->GetCommandList().Get()->SetGraphicsRootDescriptorTable(1,
-		dh[0]->GetGPUDescriptorHandleForHeapStart()
-	);
-	m_model.get()->Draw();
+	//モデル描画
+	ModelLoader::GetInstance()->Draw(ModelLoader::Index::MODEL_ID_BULLET_AMMUNITION);
 
 }
 void Ammunition::Finalize() {
-	m_texture.get()->Finalize();
 	m_constantBuffer.Get()->Release();
 }
 

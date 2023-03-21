@@ -180,6 +180,7 @@
     <ClCompile Include="TestObj.cpp" />
     <ClCompile Include="texture.cpp" />
     <ClCompile Include="TextureGeometry.cpp" />
+    <ClCompile Include="WeaponViewer.cpp" />
     <ClCompile Include="XMMath.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -225,6 +226,8 @@
     <ClInclude Include="TextureGeometry.h" />
     <ClInclude Include="DebugWeaponViewerScene.h" />
     <ClInclude Include="Weapon.h" />
+    <ClInclude Include="WeaponID.h" />
+    <ClInclude Include="WeaponViewer.h" />
     <ClInclude Include="XMMath.h" />
   </ItemGroup>
   <ItemGroup>

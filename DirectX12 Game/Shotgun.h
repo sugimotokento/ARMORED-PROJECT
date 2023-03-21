@@ -10,8 +10,8 @@ private:
 	Ammunition::SettingItem m_bulletSetting;
 
 	XMFLOAT3 m_bulletOffset;
-	float m_spread;
-
+	float m_spreadRatio = 1;
+	const int SHOT_NUM = 15;
 public:
 	void Initialize() final override;
 	void Update() final override;

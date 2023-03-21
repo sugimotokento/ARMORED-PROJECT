@@ -55,7 +55,7 @@ PS_OUTPUT main(PS_INPUT input)
         float3 albed = modelAlbedTexture.Sample(sampler0, input.TexCoord).rgb;
         float3 occlusion = modelOcclusionTexture.Sample(sampler0, input.TexCoord).rgb;
         float4 metal = modelMetalTexture.Sample(sampler0, input.TexCoord);
-        float4 emmision = modelEmmisionTexture.Sample(sampler0, input.TexCoord);
+        float4 emmision = modelEmmisionTexture.Sample(sampler0, input.TexCoord)*1.5;
         float3 normal = modelNormalTexture.Sample(sampler0, input.TexCoord).rgb;
         normal = normalize(normal);
         normal = (normal - 0.5) * 2;

@@ -33,7 +33,7 @@ public:
 		//’eƒ‚ƒfƒ‹ID
 #define MODEL_BULLET_ID(name, modelName, albedoTex, normalTex, occlusionTex, metalTex, emmisionTex)
 #define MODEL_BULLET_ID_TABLE\
-		MODEL_BULLET_ID(AMMUNITION, "Bullet/ScifiRifle2Projectile.fbx", L"Bullet/ScifiRifle2ProjectileAlbedo.png", L"White.png", L"White.png", L"Black.png", L"ScifiRifle2ProjectileEmmision.png")\
+		MODEL_BULLET_ID(AMMUNITION, "Bullet/ScifiRifle2Projectile.fbx", L"Bullet/ScifiRifle2ProjectileAlbedo.png", L"White.png", L"White.png", L"Black.png", L"Bullet/ScifiRifle2ProjectileEmmision.png")\
 
 		
 

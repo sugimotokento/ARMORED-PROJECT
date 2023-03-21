@@ -15,8 +15,6 @@ public:
 	};
 
 private:
-	std::unique_ptr<TextureGeometry> m_texture;
-	std::unique_ptr<Model> m_model;	
 	ComPtr<ID3D12Resource> m_constantBuffer;
 
 	XMFLOAT3 m_startPosition;

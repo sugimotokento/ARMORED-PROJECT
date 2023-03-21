@@ -4,6 +4,7 @@
 #include"XMMath.h"
 #include"ImguiRenderer.h"
 #include"ModelLoader.h"
+#include <cstdlib>
 
 void Shotgun::Initialize() {
 
@@ -12,6 +13,8 @@ void Shotgun::Initialize() {
 	m_scale = XMFLOAT3(0.0025f, 0.0025f, 0.0025f);
 	m_rotation = XMFLOAT3(-0.1f, 0, 0);
 
+	//武器のパラメーター設定
+	m_spreadRatio = 0.29f;
 
 
 	//弾のパラメーター設定
@@ -20,7 +23,7 @@ void Shotgun::Initialize() {
 	m_bulletOffset.z = 2.0f;
 	m_bulletSetting.range = 150;
 	m_bulletSetting.speed = 2;
-	m_intervalMax = 10;
+	m_intervalMax = 15;
 
 	Renderer::GetInstance()->CreateConstantBuffer(m_constantBuffer);
 
@@ -83,16 +86,29 @@ void Shotgun::Finalize() {
 
 void Shotgun::Shot() {
 	if (m_intervalCount > m_intervalMax) {
-		m_bulletSetting.moveDir = GetForward();
-		XMFLOAT3 offset = GetRight() * m_bulletOffset.x + GetUp() * m_bulletOffset.y + GetForward() * m_bulletOffset.z;
-		m_bulletSetting.position = GetPosition() + offset;
-		m_bulletSetting.rotation = GetRotation();
+		for (int i = 0; i < SHOT_NUM; i++) {
+			const float RANDOM_MAX = 10.0f;
+			float randomX = (float)(rand() % ((int)RANDOM_MAX * 10000));
+			randomX /= 10000;
+			if ((rand() % 2) == 0)randomX *= -1;
+			float randomY = (float)(rand() % ((int)RANDOM_MAX * 10000));
+			randomY /= 10000;
+			if ((rand() % 2) == 0)randomY *= -1;
+			float randomZ = (float)(rand() % ((int)RANDOM_MAX * 10000));
+			randomZ /= 10000;
+			if ((rand() % 2) == 0)randomZ *= -1;
 
-		SceneManager::GetInstance()->GetScene()->AddGameObject<Ammunition>()->SetSettingItem(m_bulletSetting);
+			m_bulletSetting.moveDir = GetForward() * RANDOM_MAX + GetRight() * randomX*m_spreadRatio + GetUp() * randomY * m_spreadRatio;
+			m_bulletSetting.moveDir = XMMath::Normalize(m_bulletSetting.moveDir);
+			XMFLOAT3 offset = GetRight() * m_bulletOffset.x + GetUp() * m_bulletOffset.y + GetForward() * m_bulletOffset.z;
+			m_bulletSetting.position = GetPosition() + offset;
+			m_bulletSetting.rotation = GetRotation();
 
+			SceneManager::GetInstance()->GetScene()->AddGameObject<Ammunition>()->SetSettingItem(m_bulletSetting);
+		}
 		m_intervalCount = 0;
-
 	}
+	
 }
 
 
@@ -103,7 +119,9 @@ bool Shotgun::ImguiDebug() {
 	ImGui::SliderFloat("x", &m_bulletOffset.x, -2, 2);
 	ImGui::SliderFloat("y", &m_bulletOffset.y, -2, 2);
 	ImGui::SliderFloat("z", &m_bulletOffset.z, -2, 2);
+	ImGui::Text("SpreadValue");
+	ImGui::SliderFloat("spreadRatio", &m_spreadRatio, 0, 1);
 	ImGui::End();
-	return false;
+	return GetIsDestroy();
 }
 #endif // _DEBUG

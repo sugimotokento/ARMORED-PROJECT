@@ -8,6 +8,9 @@
 #include"SceneManager.h"
 #include"Call.h"
 #include"ModelLoader.h"
+#include <iostream>     
+#include <ctime>        
+#include <cstdlib>      
 
 #ifdef _DEBUG
 #include"ImguiRenderer.h"
@@ -70,7 +73,7 @@ int APIENTRY WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance
 		NULL);
 
 
-
+	std::srand((unsigned int)time(NULL));
 
 	// èâä˙âª
 	Renderer renderer;

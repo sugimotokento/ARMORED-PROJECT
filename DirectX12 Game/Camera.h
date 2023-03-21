@@ -8,7 +8,7 @@ protected:
 protected:
 	XMFLOAT3 m_position;
 	XMFLOAT3 m_target;
-
+	XMFLOAT3 m_up=XMFLOAT3(0,1,0);
 public:
 	virtual void Update() {};
 	virtual void Draw();

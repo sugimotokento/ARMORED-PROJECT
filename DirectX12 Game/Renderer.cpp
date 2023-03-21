@@ -229,6 +229,7 @@ void Renderer::CreateSRVDescriptorHeap() {
 	srvDesc.Texture2D.PlaneSlice = 0;
 	srvDesc.Texture2D.ResourceMinLODClamp = 0.0f;
 	srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
+	
 
 	for (int i = 0; i < Index::RTV_RESOURCE_INDEX_GEOMETRY_MAX; i++) {
 		m_device->CreateShaderResourceView(m_resource[i].Get(), &srvDesc, handle);

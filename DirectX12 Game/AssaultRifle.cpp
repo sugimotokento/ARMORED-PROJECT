@@ -104,6 +104,6 @@ bool AssaultRifle::ImguiDebug() {
 	ImGui::SliderFloat("y", &m_bulletOffset.y, -2, 2);
 	ImGui::SliderFloat("z", &m_bulletOffset.z, -2, 2);
 	ImGui::End();
-	return false;
+	return GetIsDestroy();
 }
 #endif // _DEBUG

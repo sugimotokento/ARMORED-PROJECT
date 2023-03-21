@@ -41,3 +41,29 @@ float XMMath::Length(const XMFLOAT3& vec) {
 
 	return len;
 }
+
+XMFLOAT4 XMMath::QuaternionRotateAxis(const XMFLOAT4& quat, const XMFLOAT3& axis, float angle) {
+	FXMVECTOR axisVec = XMLoadFloat3(&axis);
+	XMVECTOR quatTemp = XMQuaternionRotationAxis(axisVec, angle);
+	quatTemp = XMQuaternionMultiply(XMLoadFloat4(&quat), quatTemp);
+
+	XMFLOAT4 out;
+	XMStoreFloat4(&out, quatTemp);
+	return out;
+}
+XMFLOAT4 XMMath::QuaternionSetRotation(const XMFLOAT3& axis, float angle) {
+	FXMVECTOR axisVec = XMLoadFloat3(&axis);
+	XMVECTOR quatTemp = XMQuaternionRotationAxis(axisVec, angle);
+
+	XMFLOAT4 out;
+	XMStoreFloat4(&out, quatTemp);
+	return out;
+}
+XMFLOAT4 XMMath::QuaternionNormalize(const XMFLOAT4& quat) {
+	XMVECTOR quatTemp = XMLoadFloat4(&quat);
+	quatTemp = XMQuaternionNormalize(quatTemp);
+
+	XMFLOAT4 out;
+	XMStoreFloat4(&out, quatTemp);
+	return out;
+}
