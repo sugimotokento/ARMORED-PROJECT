@@ -9,7 +9,7 @@ void AssaultRifle::Initialize() {
 
 	ModelLoader::GetInstance()->LoadRequest(ModelLoader::Index::MODEL_ID_WEAPON_ASSAULT_RIFLE);
 
-	m_scale = XMFLOAT3(0.0025f, 0.0025f, 0.0025f);
+	m_scale = XMFLOAT3(1, 1, 1);
 	m_rotation = XMFLOAT3(-0.1f, 0, 0);
 
 	
@@ -78,7 +78,7 @@ void AssaultRifle::Draw() {
 
 }
 void AssaultRifle::Finalize() {
-	m_constantBuffer.Get()->Release();
+
 }
 
 void AssaultRifle::Shot() {

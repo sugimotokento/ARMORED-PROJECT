@@ -2,8 +2,8 @@
 #include"Main.h"
 #include"GameObject.h"
 #include<list>
-#include"Model.h"
-#include"TextureGeometry.h"
+#include"Arm.h"
+
 
 class Player :public GameObject {
 public:
@@ -11,12 +11,9 @@ public:
 	const int MAX_HP = 5;
 
 private:
-	std::unique_ptr<TextureGeometry> m_texture[5];
-	std::unique_ptr<Model> m_model[5];
+	std::unique_ptr<Arm> m_arm[2];
 	ComPtr<ID3D12Resource> m_constantBuffer;
 
-	int m_hp;
-	bool m_isDie;
 
 	void Move();
 	void Shot();
@@ -33,8 +30,5 @@ public:
 	void Draw() final override;
 	void Finalize() final override;
 
-	void Damage(int damage=1);
-	int GetHP();
-	bool GetIsDie();
 
 };

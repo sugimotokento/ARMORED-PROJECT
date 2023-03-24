@@ -127,10 +127,7 @@ void TextureGeometry::LoadTexture(std::wstring alpbedPath, std::wstring normalPa
 
 }
 void TextureGeometry::Finalize() {
-	m_descriptorHeap.Get()->Release();
 
-	for (int i = 0; i < Renderer::Index::MODEL_TEX_RESOURCE_NUM; i++) {
-		m_resource[i].Get()->Release();
-	}
+
 }
 

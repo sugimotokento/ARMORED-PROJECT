@@ -65,7 +65,7 @@ void Renderer::CreateRendererTarget() {
 	m_device->CreateDescriptorHeap(&heapDesc, IID_PPV_ARGS(m_descriptorHeap.GetAddressOf()));
 
 	D3D12_RENDER_TARGET_VIEW_DESC rtvDesc = {};
-	rtvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
+	rtvDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
 
 	UINT size = m_device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV);
 	for (UINT i = 0; i < 2; ++i)
@@ -141,7 +141,7 @@ void Renderer::CreateResource() {
 	resourceDesc.Width = m_windowWidth;
 	resourceDesc.Height = m_windowHeight;
 	resourceDesc.DepthOrArraySize = 1;
-	resourceDesc.MipLevels = 1;
+	resourceDesc.MipLevels = 0;
 	resourceDesc.Layout = D3D12_TEXTURE_LAYOUT_UNKNOWN;
 	resourceDesc.SampleDesc.Count = 1;
 	resourceDesc.SampleDesc.Quality = 0;
@@ -272,7 +272,7 @@ void Renderer::CreateRootSignature() {
 	samplerDesc.AddressU = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
 	samplerDesc.AddressV = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
 	samplerDesc.AddressW = D3D12_TEXTURE_ADDRESS_MODE_WRAP;
-	samplerDesc.MipLODBias = 0.0f;
+	samplerDesc.MipLODBias = 0;
 	samplerDesc.MaxAnisotropy = 16;
 	samplerDesc.ComparisonFunc = D3D12_COMPARISON_FUNC_NEVER;
 	samplerDesc.BorderColor = D3D12_STATIC_BORDER_COLOR_TRANSPARENT_BLACK;

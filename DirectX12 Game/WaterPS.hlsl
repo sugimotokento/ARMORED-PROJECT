@@ -121,7 +121,7 @@ PS_OUTPUT main(PS_INPUT input)
     {
         float4 color = Water(input);
         output.Diffuse.rgb = color.rgb*1.5f;
-        output.Diffuse.a = 1;
+        output.Diffuse.a = 0;
     }
    
 

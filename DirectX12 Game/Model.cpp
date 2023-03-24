@@ -146,8 +146,6 @@ void Model::Draw() {
 
 
 void Model::Finalize() {
-	for (int i = 0; i < m_modelResource.size(); i++) {
-		m_modelResource[i].m_IndexBuffer.Get()->Release();
-		m_modelResource[i].m_vertexBuffer.Get()->Release();
-	}
+
+
 }

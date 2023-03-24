@@ -144,12 +144,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Ammunition.cpp" />
+    <ClCompile Include="Arm.cpp" />
     <ClCompile Include="AssaultRifle.cpp" />
     <ClCompile Include="Call.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CameraManager.cpp" />
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="Cube.cpp" />
+    <ClCompile Include="DebugBattleScene.cpp" />
     <ClCompile Include="DebugCamera.cpp" />
     <ClCompile Include="DebugMenuScene.cpp" />
     <ClCompile Include="DebugWeaponViewerScene.cpp" />
@@ -185,6 +187,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Ammunition.h" />
+    <ClInclude Include="Arm.h" />
     <ClInclude Include="AssaultRifle.h" />
     <ClInclude Include="Call.h" />
     <ClInclude Include="Camera.h" />
@@ -192,6 +195,7 @@
     <ClInclude Include="Collision.h" />
     <ClInclude Include="Cube.h" />
     <ClInclude Include="d3dx12.h" />
+    <ClInclude Include="DebugBattleScene.h" />
     <ClInclude Include="DebugCamera.h" />
     <ClInclude Include="DebugMenuScene.h" />
     <ClInclude Include="GameObject.h" />

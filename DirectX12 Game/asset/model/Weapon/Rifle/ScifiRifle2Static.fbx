@@ -8,11 +8,11 @@ FBXHeaderExtension:  {
 		Version: 1000
 		Year: 2023
 		Month: 3
-		Day: 16
+		Day: 22
 		Hour: 23
-		Minute: 44
-		Second: 21
-		Millisecond: 489
+		Minute: 21
+		Second: 58
+		Millisecond: 276
 	}
 	Creator: "FBX SDK/FBX Plugins version 2020.3.2"
 	OtherFlags:  {
@@ -31,8 +31,8 @@ FBXHeaderExtension:  {
 			Comment: ""
 		}
 		Properties70:  {
-			P: "DocumentUrl", "KString", "Url", "", "D:\新しいフォルダー\My project\Assets\Weapon\esgak7op_ScifiRifle2Static.fbx"
-			P: "SrcDocumentUrl", "KString", "Url", "", "D:\新しいフォルダー\My project\Assets\Weapon\esgak7op_ScifiRifle2Static.fbx"
+			P: "DocumentUrl", "KString", "Url", "", "D:\新しいフォルダー\My project\Assets\Dreadnought\nhfcubjc_ScifiRifle2Static.fbx"
+			P: "SrcDocumentUrl", "KString", "Url", "", "D:\新しいフォルダー\My project\Assets\Dreadnought\nhfcubjc_ScifiRifle2Static.fbx"
 			P: "Original", "Compound", "", ""
 			P: "Original|ApplicationVendor", "KString", "", "", ""
 			P: "Original|ApplicationName", "KString", "", "", "Unity FBX Exporter"
@@ -78,7 +78,7 @@ GlobalSettings:  {
 
 Documents:  {
 	Count: 1
-	Document: 2274873245600, "Scene", "Scene" {
+	Document: 1483541720544, "Scene", "Scene" {
 		Properties70:  {
 			P: "SourceObject", "object", "", ""
 			P: "ActiveAnimStackName", "KString", "", "", ""
@@ -278,7 +278,7 @@ Definitions:  {
 ;------------------------------------------------------------------
 
 Objects:  {
-	Geometry: 2273702307120, "Geometry::Scene", "Mesh" {
+	Geometry: 1483542812080, "Geometry::Scene", "Mesh" {
 		Vertices: *3483 {
 			a: 1.93832628428936,5.9417475014925,21.7848986387253,1.71984042972326,4.96478825807571,19.7528272867203,1.71984042972326,5.74888661503792,21.7848986387253,1.93832628428936,5.15764951705933,19.7528272867203,1.71984042972326,4.96478341519833,11.823857575655,1.93832628428936,5.15764430165291,11.823857575655,1.93832628428936,5.94173856079578,9.79178324341774,1.71984229236841,5.74887730181217,9.79178324341774,1.93832442164421,10.6597095727921,21.7848986387253,1.93832628428936,10.6597021222115,9.79178324341774,1.2204160913825,11.8525207042694,21.7848986387253,1.2204160913825,11.8525117635727,9.79178324341774,-1.22039820998907,11.8525117635727,9.79178324341774,-1.22039634734392,11.8525207042694,21.7848986387253,-1.93830635398626,10.6597021222115,9.79178324341774,-1.93830635398626,10.6597095727921,21.7848986387253,-1.93830635398626,9.15033519268036,19.8391929268837,-1.93830635398626,8.90407413244247,20.1162949204445,-1.93830635398626,9.15033221244812,13.3387491106987,-1.93830635398626,8.904068171978,13.0616575479507,-1.93830635398626,7.66874998807907,20.1162949204445,-1.93830635398626,7.66874477267265,13.0616456270218,-1.93830635398626,5.9417475014925,21.7848986387253,-1.93830635398626,7.45112001895905,19.8391929268837,-1.93830635398626,5.15764951705933,19.7528272867203,-1.93830635398626,5.94173856079578,9.79178324341774,-1.93830635398626,7.45111331343651,13.3387491106987,-1.93830635398626,5.15764430165291,11.823857575655,-1.71982254832983,4.96478341519833,11.823857575655,-1.71982254832983,5.74887730181217,9.79178324341774,-1.71982254832983,4.96478825807571,19.7528272867203,-1.71982254832983,5.74888661503792,21.7848986387253,-1.71982254832983,10.4668505489826,21.7848986387253,-1.71982254832983,10.4668408632278,9.79178324341774,-1.00191235542297,11.6596601903439,21.7848986387253,-1.00191235542297,11.6596505045891,9.79178324341774,1.00193032994866,11.6596601903439,21.7848986387253,1.71984042972326,10.4668505489826,21.7848986387253,1.00193219259381,11.6596519947052,9.79178324341774,1.71984042972326,10.4668408632278,9.79178324341774,
 0.742811383679509,7.45111331343651,13.3387491106987,0.742811383679509,7.66874998807907,20.1162949204445,0.742811383679509,7.45112001895905,19.8391929268837,0.742811383679509,7.66874477267265,13.0616456270218,0.742811383679509,8.90407413244247,20.1162949204445,0.742811383679509,8.904068171978,13.0616575479507,0.742811383679509,9.15033221244812,13.3387491106987,0.742811383679509,9.15033519268036,19.8391929268837,0.898212566971779,8.59976932406425,69.5265233516693,1.22893368825316,7.90862366557121,69.5265233516693,0.898212566971779,8.01608189940453,69.5265233516693,1.22893368825316,8.70722606778145,69.5265233516693,1.22660817578435,7.90937393903732,65.1626825332642,1.22660817578435,8.70646834373474,65.1626825332642,0.759526202455163,9.3533106148243,69.5265233516693,0.758089777082205,7.26451352238655,65.1626825332642,0.759526202455163,7.26253837347031,69.5265233516693,0.555130746215582,7.54386633634567,69.5265233516693,8.99999932357787e-06,7.01575726270676,69.5265233516693,8.99999932357787e-06,7.01819807291031,65.1626825332642,8.99999932357787e-06,7.3847658932209,64.2019689083099,0.542626203969121,7.56107196211815,64.2019689083099,0.542626203969121,7.56106898188591,59.0602159500122,8.99999932357787e-06,7.3847621679306,59.0602159500122,0.877982378005981,8.02264958620071,64.2019689083099,0.877982378005981,8.02264660596848,59.0602159500122,8.99999932357787e-06,7.36349746584892,69.5265233516693,0.877982378005981,8.59319046139717,64.2019689083099,0.877982378005981,8.59318673610687,59.0602159500122,0.758089777082205,9.35133099555969,65.1626944541931,0.542626203969121,9.05476957559586,64.2019689083099,0.542626203969121,9.05476659536362,59.0602159500122,8.99999932357787e-06,9.59764644503593,65.1626944541931,8.99999932357787e-06,9.6000924706459,69.5265233516693,8.99999932357787e-06,9.23107638955116,64.2019689083099,8.99999932357787e-06,9.23107266426086,59.0602159500122,-0.758071802556515,9.35133099555969,65.1626944541931,-0.759508181363344,9.3533106148243,69.5265233516693,-0.542608182877302,9.05476957559586,64.2019689083099,-0.542608182877302,9.05476659536362,59.0602159500122,
@@ -887,7 +887,7 @@ Objects:  {
 			}
 		}
 	}
-	Model: 2274877118784, "Model::ScifiRifle2Static", "Mesh" {
+	Model: 1476925879872, "Model::ScifiRifle2Static", "Mesh" {
 		Version: 232
 		Properties70:  {
 			P: "RotationOrder", "enum", "", "",4
@@ -896,12 +896,12 @@ Objects:  {
 			P: "ScalingMax", "Vector3D", "Vector", "",0,0,0
 			P: "DefaultAttributeIndex", "int", "Integer", "",0
 			P: "Lcl Rotation", "Lcl Rotation", "", "A",5.03158044011798e-05,0,0
-			P: "Lcl Scaling", "Lcl Scaling", "", "A",8,8,8
+			P: "Lcl Scaling", "Lcl Scaling", "", "A",0.0199999995529652,0.0199999995529652,0.0199999995529652
 		}
 		Shading: W
 		Culling: "CullingOff"
 	}
-	Material: 2274874530832, "Material::ScifiRifle2Black", "" {
+	Material: 1478300131920, "Material::ScifiRifle2Black", "" {
 		Version: 102
 		ShadingModel: "phong"
 		MultiLayer: 0
@@ -918,7 +918,7 @@ Objects:  {
 			P: "Reflectivity", "double", "Number", "",0
 		}
 	}
-	Video: 2273704344768, "Video::DiffuseColor_Texture", "Clip" {
+	Video: 1478300133360, "Video::DiffuseColor_Texture", "Clip" {
 		Type: "Clip"
 		Properties70:  {
 			P: "Path", "KString", "XRefUrl", "", "D:\新しいフォルダー\My project\Assets\ScifiWeaponSeriesRifles\Textures\ScifiRifle2\AlbedoAO\ScifiRifle2BlackAlbedoAO.png"
@@ -928,7 +928,7 @@ Objects:  {
 		Filename: "D:\新しいフォルダー\My project\Assets\ScifiWeaponSeriesRifles\Textures\ScifiRifle2\AlbedoAO\ScifiRifle2BlackAlbedoAO.png"
 		RelativeFilename: "..\ScifiWeaponSeriesRifles\Textures\ScifiRifle2\AlbedoAO\ScifiRifle2BlackAlbedoAO.png"
 	}
-	Video: 2273704345728, "Video::NormalMap_Texture", "Clip" {
+	Video: 1478300133840, "Video::NormalMap_Texture", "Clip" {
 		Type: "Clip"
 		Properties70:  {
 			P: "Path", "KString", "XRefUrl", "", "D:\新しいフォルダー\My project\Assets\ScifiWeaponSeriesRifles\Textures\ScifiRifle2\ScifiRifle2Normal.png"
@@ -938,7 +938,7 @@ Objects:  {
 		Filename: "D:\新しいフォルダー\My project\Assets\ScifiWeaponSeriesRifles\Textures\ScifiRifle2\ScifiRifle2Normal.png"
 		RelativeFilename: "..\ScifiWeaponSeriesRifles\Textures\ScifiRifle2\ScifiRifle2Normal.png"
 	}
-	Video: 2273704349088, "Video::SpecularColor_Texture", "Clip" {
+	Video: 1478300126640, "Video::SpecularColor_Texture", "Clip" {
 		Type: "Clip"
 		Properties70:  {
 			P: "Path", "KString", "XRefUrl", "", "D:\新しいフォルダー\My project\Assets\ScifiWeaponSeriesRifles\Textures\ScifiRifle2\ScifiRifle2PBRSpecular.tga"
@@ -948,7 +948,7 @@ Objects:  {
 		Filename: "D:\新しいフォルダー\My project\Assets\ScifiWeaponSeriesRifles\Textures\ScifiRifle2\ScifiRifle2PBRSpecular.tga"
 		RelativeFilename: "..\ScifiWeaponSeriesRifles\Textures\ScifiRifle2\ScifiRifle2PBRSpecular.tga"
 	}
-	Texture: 2274874536592, "Texture::DiffuseColor_Texture", "" {
+	Texture: 1478300130000, "Texture::DiffuseColor_Texture", "" {
 		Type: "TextureVideoClip"
 		Version: 202
 		TextureName: "Texture::DiffuseColor_Texture"
@@ -960,7 +960,7 @@ Objects:  {
 		Texture_Alpha_Source: "None"
 		Cropping: 0,0,0,0
 	}
-	Texture: 2274874538512, "Texture::NormalMap_Texture", "" {
+	Texture: 1478300130960, "Texture::NormalMap_Texture", "" {
 		Type: "TextureVideoClip"
 		Version: 202
 		TextureName: "Texture::NormalMap_Texture"
@@ -972,7 +972,7 @@ Objects:  {
 		Texture_Alpha_Source: "None"
 		Cropping: 0,0,0,0
 	}
-	Texture: 2274874534672, "Texture::SpecularColor_Texture", "" {
+	Texture: 1478300131440, "Texture::SpecularColor_Texture", "" {
 		Type: "TextureVideoClip"
 		Version: 202
 		TextureName: "Texture::SpecularColor_Texture"
@@ -992,40 +992,40 @@ Objects:  {
 Connections:  {
 	
 	;Model::ScifiRifle2Static, Model::RootNode
-	C: "OO",2274877118784,0
+	C: "OO",1476925879872,0
 	
 	;Material::ScifiRifle2Black, Model::ScifiRifle2Static
-	C: "OO",2274874530832,2274877118784
+	C: "OO",1478300131920,1476925879872
 	
 	;Geometry::Scene, Model::ScifiRifle2Static
-	C: "OO",2273702307120,2274877118784
+	C: "OO",1483542812080,1476925879872
 	
 	;Texture::DiffuseColor_Texture, Material::ScifiRifle2Black
-	C: "OO",2274874536592,2274874530832
+	C: "OO",1478300130000,1478300131920
 	
 	;Texture::NormalMap_Texture, Material::ScifiRifle2Black
-	C: "OO",2274874538512,2274874530832
+	C: "OO",1478300130960,1478300131920
 	
 	;Texture::SpecularColor_Texture, Material::ScifiRifle2Black
-	C: "OO",2274874534672,2274874530832
+	C: "OO",1478300131440,1478300131920
 	
 	;Texture::DiffuseColor_Texture, Material::ScifiRifle2Black
-	C: "OP",2274874536592,2274874530832, "DiffuseColor"
+	C: "OP",1478300130000,1478300131920, "DiffuseColor"
 	
 	;Texture::NormalMap_Texture, Material::ScifiRifle2Black
-	C: "OP",2274874538512,2274874530832, "NormalMap"
+	C: "OP",1478300130960,1478300131920, "NormalMap"
 	
 	;Texture::SpecularColor_Texture, Material::ScifiRifle2Black
-	C: "OP",2274874534672,2274874530832, "SpecularColor"
+	C: "OP",1478300131440,1478300131920, "SpecularColor"
 	
 	;Video::DiffuseColor_Texture, Texture::DiffuseColor_Texture
-	C: "OO",2273704344768,2274874536592
+	C: "OO",1478300133360,1478300130000
 	
 	;Video::NormalMap_Texture, Texture::NormalMap_Texture
-	C: "OO",2273704345728,2274874538512
+	C: "OO",1478300133840,1478300130960
 	
 	;Video::SpecularColor_Texture, Texture::SpecularColor_Texture
-	C: "OO",2273704349088,2274874534672
+	C: "OO",1478300126640,1478300131440
 }
 ;Takes section
 ;----------------------------------------------------

@@ -211,6 +211,12 @@
     <ClCompile Include="WeaponViewer.cpp">
       <Filter>ソース ファイル\Object\GameObject\Viewer</Filter>
     </ClCompile>
+    <ClCompile Include="Arm.cpp">
+      <Filter>ソース ファイル\Object\GameObject\Object3D\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="DebugBattleScene.cpp">
+      <Filter>ソース ファイル\Scene\DebugScene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main.h">
@@ -347,6 +353,12 @@
     </ClInclude>
     <ClInclude Include="WeaponViewer.h">
       <Filter>ソース ファイル\Object\GameObject\Viewer</Filter>
+    </ClInclude>
+    <ClInclude Include="Arm.h">
+      <Filter>ソース ファイル\Object\GameObject\Object3D\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugBattleScene.h">
+      <Filter>ソース ファイル\Scene\DebugScene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

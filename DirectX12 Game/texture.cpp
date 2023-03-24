@@ -97,7 +97,7 @@ void Texture::LoadTexture(std::wstring fileName)
 
 }
 void Texture::Finalize() {
-	m_descriptorHeap.Get()->Release();
-	m_resource.Get()->Release();
+
+
 }
 

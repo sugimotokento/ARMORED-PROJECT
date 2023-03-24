@@ -133,10 +133,8 @@ float4 main(PS_INPUT input) : SV_TARGET
     normal = normalize(normal);
 
    
-    
     float4 color = baseColor;
     float lambert = 1;
-    float specular = 0;
     float ssao = 1;
     float3 lightDir = GetLightDir();
     float3 viewDir = position - cameraPosition;
@@ -149,9 +147,8 @@ float4 main(PS_INPUT input) : SV_TARGET
     float3 refv = reflect(lightDir.xyz, normal.xyz);
     refv = normalize(refv);
 
-    specular = -dot(viewDir, refv);
-    specular = saturate(specular);
-    specular = pow(specular, 50);
+    if (color.a == 0)
+        lambert = 1;
 
     ssao = ScreenSpaceAnbientOcclusion(input);
 	

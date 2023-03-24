@@ -14,13 +14,13 @@ void PlayerUI::Update() {
 void PlayerUI::Draw() {	
 	//m_frame->Draw();
 
-	int i = 0;
-	for (Sprite* sprite : m_stock) {
-		if (i < m_player->GetHP()) {
-			sprite->Draw();
-		}
-		i++;
-	}
+	//int i = 0;
+	//for (Sprite* sprite : m_stock) {
+	//	if (i < m_player->GetHP()) {
+	//		sprite->Draw();
+	//	}
+	//	i++;
+	//}
 	
 }
 void PlayerUI::Finalize() {

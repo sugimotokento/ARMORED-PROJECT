@@ -7,17 +7,17 @@ void PlayerCamera::Update() {
 	if (player) {
 		XMFLOAT3 playerPos = player->GetPosition();
 		XMFLOAT3 cameraPos = playerPos;
-		cameraPos.y += 2;
+		cameraPos.y += 4.5f;
 
-		cameraPos.x += -player->GetForward().x * 5;
-		cameraPos.y += -player->GetForward().y * 5;
-		cameraPos.z += -player->GetForward().z * 5;
+		cameraPos.x += -player->GetForward().x * 10;
+		cameraPos.y += -player->GetForward().y * 10;
+		cameraPos.z += -player->GetForward().z * 10;
 		m_position= cameraPos;
 
 		XMFLOAT3 target = playerPos;
-		target.x += player->GetForward().x * 2;
-		target.y += player->GetForward().y * 2;
-		target.z += player->GetForward().z * 2;
+		target.x += player->GetForward().x * 12;
+		target.y += player->GetForward().y * 12;
+		target.z += player->GetForward().z * 12;
 		m_target = target;
 	}
 }

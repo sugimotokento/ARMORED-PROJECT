@@ -10,7 +10,7 @@ void Shotgun::Initialize() {
 
 	ModelLoader::GetInstance()->LoadRequest(ModelLoader::Index::MODEL_ID_WEAPON_SHOTGUN);
 
-	m_scale = XMFLOAT3(0.0025f, 0.0025f, 0.0025f);
+	m_scale = XMFLOAT3(1, 1, 1);
 	m_rotation = XMFLOAT3(-0.1f, 0, 0);
 
 	//武器のパラメーター設定
@@ -20,7 +20,7 @@ void Shotgun::Initialize() {
 	//弾のパラメーター設定
 	m_bulletOffset.x = 0;
 	m_bulletOffset.y = 0.275f;
-	m_bulletOffset.z = 2.0f;
+	m_bulletOffset.z = 0.29f;
 	m_bulletSetting.range = 150;
 	m_bulletSetting.speed = 2;
 	m_intervalMax = 15;
@@ -81,7 +81,7 @@ void Shotgun::Draw() {
 
 }
 void Shotgun::Finalize() {
-	m_constantBuffer.Get()->Release();
+
 }
 
 void Shotgun::Shot() {

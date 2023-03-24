@@ -13,9 +13,9 @@ GameScene::GameScene() {
 void GameScene::Initialize() {
 	AddGameObject<SkyDome>(Layer::GEOMETRY);
 	AddGameObject<Ocean>(Layer::WATER);
-	AddGameObject<Player>(Layer::GEOMETRY)->SetPosition(XMFLOAT3(0, 0, -5));
+	AddGameObject<Player>(Layer::GEOMETRY);
 
-	AddGameObject<TestObj>(Layer::ALPHA);
+	//AddGameObject<TestObj>(Layer::ALPHA);
 
 	CameraManager::GetInstance()->SetMainCamera(CameraManager::Index::CAMERA_PLAYER);
 }

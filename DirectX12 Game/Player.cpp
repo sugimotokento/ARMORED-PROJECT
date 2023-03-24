@@ -8,6 +8,7 @@
 #include"Call.h"
 #include"CameraManager.h"
 #include"XMMath.h"
+#include"ModelLoader.h"
 
 #ifdef _DEBUG
 #include"ImguiRenderer.h"
@@ -23,25 +24,18 @@ void Player::Initialize() {
 	m_scale = XMFLOAT3(1, 1, 1);
 	m_rotation = XMFLOAT3(0, 0, 0);
 
-	m_hp = MAX_HP;
-	m_isDie = false;
+	m_arm[0] = std::make_unique<Arm>();
+	m_arm[1] = std::make_unique<Arm>();
+	m_arm[0].get()->Initialize(Arm::Index::LEFT, this);
+	m_arm[1].get()->Initialize(Arm::Index::LEFT, this);
 
-	/*for (int i = 0; i < 5; i++) {
-		m_texture[i] = std::make_unique<TextureGeometry>();
-		m_model[i] = std::make_unique<Model>();
-	}*/
-	/*m_model[0].get()->LoadMesh("asset/model/Dreadnought/Arm.fbx");
-	m_model[1].get()->LoadMesh("asset/model/Dreadnought/Head.fbx");
-	m_model[2].get()->LoadMesh("asset/model/Dreadnought/Lower.fbx");
-	m_model[3].get()->LoadMesh("asset/model/Dreadnought/Shoulder.fbx");
-	m_model[4].get()->LoadMesh("asset/model/Dreadnought/Upper.fbx");
-
-	std::wstring basePath = L"asset/Texture/Dreadnought/";
-	m_texture[0].get()->LoadTexture(basePath + L"T_DN_Arm_Albedo.tga", basePath + L"T_DN_Arm_NormalMap.png", basePath + L"T_DN_Arm_Occlusion.png", basePath + L"T_DN_Arm_Metallic.png");
-	m_texture[1].get()->LoadTexture(basePath + L"T_DN_Head_Albedo.tga", basePath + L"T_DN_Head_NormalMap.png", basePath + L"T_DN_Head_Occlusion.png", basePath + L"T_DN_Head_Metallic.png");
-	m_texture[2].get()->LoadTexture(basePath + L"T_DN_Lower_Albedo.tga", basePath + L"T_DN_Lower_NormalMap.png", basePath + L"T_DN_Lower_Occlusion.png", basePath + L"T_DN_Lower_Metallic.png");
-	m_texture[3].get()->LoadTexture(basePath + L"T_DN_Shoulder_Albedo.tga", basePath + L"T_DN_Shoulder_NormalMap.png", basePath + L"T_DN_Shoulder_Occlusion.png", basePath + L"T_DN_Shoulder_Metallic.png");
-	m_texture[4].get()->LoadTexture(basePath + L"T_DN_Upper_Albedo.tga", basePath + L"T_DN_Upper_NormalMap.png", basePath + L"T_DN_Upper_Occlusion.png", basePath + L"T_DN_Upper_Metallic.png");*/
+	//モデルのロードリクエスト
+	ModelLoader::GetInstance()->LoadRequest(ModelLoader::Index::MODEL_ID_ROBOT_DREADNOUGHT_HEAD);
+	ModelLoader::GetInstance()->LoadRequest(ModelLoader::Index::MODEL_ID_ROBOT_DREADNOUGHT_EYE);
+	ModelLoader::GetInstance()->LoadRequest(ModelLoader::Index::MODEL_ID_ROBOT_DREADNOUGHT_ARM);
+	ModelLoader::GetInstance()->LoadRequest(ModelLoader::Index::MODEL_ID_ROBOT_DREADNOUGHT_LOWER);
+	ModelLoader::GetInstance()->LoadRequest(ModelLoader::Index::MODEL_ID_ROBOT_DREADNOUGHT_SHOULDER);
+	ModelLoader::GetInstance()->LoadRequest(ModelLoader::Index::MODEL_ID_ROBOT_DREADNOUGHT_UPPER);
 
 	Renderer::GetInstance()->CreateConstantBuffer(m_constantBuffer);
 
@@ -51,8 +45,6 @@ void Player::Initialize() {
 #endif // _DEBUG
 }
 void Player::Update() {
-	if (m_isDie)return;
-	m_position = XMFLOAT3(m_position.x, 0.5f, m_position.z);
 	Move();
 	Rotation();
 	Shot();
@@ -72,12 +64,43 @@ void Player::Draw() {
 	XMMATRIX size = XMMatrixScaling(m_scale.x, m_scale.y, m_scale.z);
 	XMMATRIX world = size * rot * trans;
 	XMStoreFloat4x4(&m_worldMTX, world);
+
+	//定数バッファ設定
+	ConstantBuffer* constant;
+	m_constantBuffer->Map(0, nullptr, (void**)&constant);
+
+	XMFLOAT4X4 matrix;
+	XMStoreFloat4x4(&matrix, XMMatrixTranspose(world * view * projection));
+	constant->wvp = matrix;
+
+	XMStoreFloat4x4(&matrix, XMMatrixTranspose(world * lightView * lightProjection));
+	constant->wvpLight = matrix;
+
+	XMStoreFloat4x4(&matrix, XMMatrixTranspose(view * projection));
+	constant->vp = matrix;
+
+	XMStoreFloat4x4(&matrix, XMMatrixTranspose(world));
+
+	constant->world = matrix;
+	constant->reflectRate = XMFLOAT4(0, 0, 0, 0);
+
+
+	m_constantBuffer->Unmap(0, nullptr);
+
+	Renderer::GetInstance()->GetCommandList().Get()->SetGraphicsRootConstantBufferView(0,
+		m_constantBuffer->GetGPUVirtualAddress());
+
+	//モデル描画
+	ModelLoader::GetInstance()->Draw(ModelLoader::Index::MODEL_ID_ROBOT_DREADNOUGHT_HEAD);
+	ModelLoader::GetInstance()->Draw(ModelLoader::Index::MODEL_ID_ROBOT_DREADNOUGHT_ARM);
+	ModelLoader::GetInstance()->Draw(ModelLoader::Index::MODEL_ID_ROBOT_DREADNOUGHT_LOWER);
+	ModelLoader::GetInstance()->Draw(ModelLoader::Index::MODEL_ID_ROBOT_DREADNOUGHT_SHOULDER);
+	ModelLoader::GetInstance()->Draw(ModelLoader::Index::MODEL_ID_ROBOT_DREADNOUGHT_UPPER);
+	ModelLoader::GetInstance()->Draw(ModelLoader::Index::MODEL_ID_ROBOT_DREADNOUGHT_EYE);
+
 }
 void Player::Finalize() {
-	//for (int i = 0; i < 5; i++) {
-	//	m_texture[i].get()->Finalize();
-	//}
-	m_constantBuffer.Get()->Release();
+ 
 }
 
 
@@ -131,23 +154,6 @@ void Player::FieldCollision() {
 	//		}
 	//	}
 	//}
-}
-
-
-void Player::Damage(int damage) {
-	if (m_isDie)return;
-
-	m_hp -= damage;
-	if (m_hp <= 0) {
-	//	SceneManager::GetInstance()->GetScene()->AddGameObject<DestroyEffect>()->AddParticle(m_position, XMFLOAT4(0, 0, 1, 1));
-		m_isDie = true;
-	}
-}
-int Player::GetHP() {
-	return m_hp;
-}
-bool Player::GetIsDie() {
-	return m_isDie;
 }
 
 

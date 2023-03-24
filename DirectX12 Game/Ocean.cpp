@@ -172,8 +172,8 @@ void Ocean::Draw() {
 
 }
 void Ocean::Finalize() {
-	m_constantBuffer.Get()->Release();
-	m_vertexBuffer.Get()->Release();
+
+
 }
 
 

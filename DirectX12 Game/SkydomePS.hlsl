@@ -108,7 +108,7 @@ PS_OUTPUT main(PS_INPUT input)
     float rayleighPhase = 0.75 * (1.0 + fcos2);
     float miePhase = 1.5 * ((1.0 - g2) / (2.0 + g2)) * (1.0 + fcos2) / pow(1.0 + g2 - 2.0 * g * fcos, 1.5);
  
-    float4 col = 1.0;
+    float4 col = 0;
     col.rgb = rayleighPhase * c0 + miePhase * c1;
     output.Diffuse = col;
     return output;
