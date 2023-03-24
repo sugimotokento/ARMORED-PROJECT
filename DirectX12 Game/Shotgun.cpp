@@ -68,7 +68,7 @@ void Shotgun::Draw() {
 
 	constant->world = matrix;
 	constant->reflectRate = XMFLOAT4(0, 0, 0, 0);
-
+	constant->cameraPosition = CameraManager::GetInstance()->GetMainPosition();
 
 	m_constantBuffer->Unmap(0, nullptr);
 

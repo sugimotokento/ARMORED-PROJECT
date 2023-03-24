@@ -80,6 +80,7 @@ public:
 	void Draw();
 	void Finalize();
 
+	Index::CamraIndex GetMainCameraIndex() { return m_mainCamera; }
 	void SetMainCamera(Index::CamraIndex index) { m_oldMainCamera = index; }
 
 	//Œ»İg‚Á‚Ä‚¢‚éƒJƒƒ‰‚ğæ“¾

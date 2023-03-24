@@ -62,7 +62,7 @@ void Arm::Draw() {
 	constant->vp = matrix;
 
 	XMStoreFloat4x4(&matrix, XMMatrixTranspose(world));
-
+	constant->cameraPosition = CameraManager::GetInstance()->GetMainPosition();
 	constant->world = matrix;
 	constant->reflectRate = XMFLOAT4(0, 0, 0, 0);
 

@@ -49,8 +49,8 @@ void Ocean::Initialize() {
 	Vertex3DBuffer* buffer{};
 	m_vertexBuffer->Map(0, nullptr, (void**)&buffer);
 
-	const float sizeX = 0.5f;
-	const float sizeZ = 0.5f;
+	const float sizeX = 5000.0f;
+	const float sizeZ = 5000.0f;
 
 	//3Dポリゴン用頂点の準備
 	{
@@ -78,7 +78,7 @@ void Ocean::Initialize() {
 		}
 		////テクスチャの設定
 		{
-			const float TEX_SIZE = 500;
+			const float TEX_SIZE = 50000;
 			buffer[0].texCoord = { TEX_SIZE, TEX_SIZE };
 			buffer[1].texCoord = { 0.0f, TEX_SIZE };
 			buffer[2].texCoord = { TEX_SIZE, 0.0f };
@@ -128,7 +128,7 @@ void Ocean::Draw() {
 	constant->world = matrix;
 
 	constant->reflectRate = XMFLOAT4(0, 0, 0, 0);
-
+	constant->cameraPosition = CameraManager::GetInstance()->GetMainPosition();
 
 	constant->waterParam.x = m_waterParam.x;
 	constant->waterParam.y = m_waterParam.y;

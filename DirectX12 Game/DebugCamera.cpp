@@ -1,4 +1,5 @@
 #include"DebugCamera.h"
+#include"CameraManager.h"
 #include"Input.h"
 #include"XMMath.h"
 #include"ImguiRenderer.h"
@@ -38,6 +39,8 @@ DebugCamera::DebugCamera() {
 #endif // _DEBUG
 }
 void DebugCamera::Update() {
+	//デバッグカメラ以外を使っていたらReturn
+	if (CameraManager::GetInstance()->GetMainCameraIndex() != CameraManager::Index::CAMERA_DEBUG)return;
 	
 	FXMVECTOR quat = XMLoadFloat4(&m_quaternion);
 	XMMATRIX trans = XMMatrixTranslation(m_position.x, m_position.y, m_position.z);

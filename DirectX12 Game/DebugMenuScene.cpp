@@ -3,6 +3,7 @@
 #include"GameScene.h"
 #include"DebugWeaponViewerScene.h"
 #include"DebugMenuScene.h"
+#include"DebugBattleScene.h"
 #include"ImguiRenderer.h"
 #include"Input.h"
 #include"CameraManager.h"
@@ -41,6 +42,11 @@ bool DebugMenuScene::ImguiDebug() {
 		isEnd = true;
 	}
 
+	//デバッグ用バトルシーン
+	if (ImGui::Button("DebugBattle")) {
+		SceneManager::GetInstance()->SetScene<DebugBattleScene>();
+		isEnd = true;
+	}
 
 	//武器の確認用シーン
 	if (ImGui::Button("WeaponViewer")) {

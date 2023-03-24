@@ -48,7 +48,7 @@ void SkyDome::Draw() {
 
 	XMStoreFloat4x4(&matrix, XMMatrixTranspose(world));
 	constant->world = matrix;
-
+	constant->cameraPosition = CameraManager::GetInstance()->GetMainPosition();
 	constant->reflectRate = XMFLOAT4(0, 0, 0, 0);
 
 	m_constantBuffer->Unmap(0, nullptr);

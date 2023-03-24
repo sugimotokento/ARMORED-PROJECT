@@ -80,7 +80,7 @@ void Player::Draw() {
 	constant->vp = matrix;
 
 	XMStoreFloat4x4(&matrix, XMMatrixTranspose(world));
-
+	constant->cameraPosition = CameraManager::GetInstance()->GetMainPosition();
 	constant->world = matrix;
 	constant->reflectRate = XMFLOAT4(0, 0, 0, 0);
 
@@ -107,24 +107,17 @@ void Player::Finalize() {
 
 void Player::Move() {
 
-	m_position += GetRight() * MOVE_SPEED * XInput::GetInstance()->GetLeftThumb().x;
-	m_position += GetForward() * MOVE_SPEED * XInput::GetInstance()->GetLeftThumb().y;
+	if (fabsf(XInput::GetInstance()->GetLeftThumb().x) > 0.01f) {
+		m_position += GetRight() * 0.1f * XInput::GetInstance()->GetLeftThumb().x;
+	}
+	if (fabsf(XInput::GetInstance()->GetLeftThumb().y) > 0.01f) {
+		m_position += GetForward() * 0.1f * XInput::GetInstance()->GetLeftThumb().y;
+	}
 }
 void Player::Rotation() {
-	//“ü—Í‚µ‚½•ûŒü‚ÉŒü‚©‚¹‚é
-
-
-	if (Input::GetInstance()->GetKeyPress(VK_UP)) {
+	if (fabsf(XInput::GetInstance()->GetRightThumb().x) > 0.01f) {
+		m_rotation.y += 0.1f * XInput::GetInstance()->GetRightThumb().x;
 	}
-	if (Input::GetInstance()->GetKeyPress(VK_DOWN)) {
-	}
-	if (Input::GetInstance()->GetKeyPress(VK_RIGHT)) {
-	//	m_rotation.y += 0.02f;
-	}
-	if (Input::GetInstance()->GetKeyPress(VK_LEFT)) {
-		//m_rotation.y -= 0.02f;
-	}
-
 
 }
  

@@ -92,6 +92,9 @@
     <Filter Include="ソース ファイル\Object\GameObject\Viewer">
       <UniqueIdentifier>{8c01bd2c-bb22-4ad4-8721-7dbf5832117a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\Scene\DebugScene\DebugMenu">
+      <UniqueIdentifier>{898b3367-9ad3-4249-a5da-25ec18298f9a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -175,9 +178,6 @@
     <ClCompile Include="XMMath.cpp">
       <Filter>ソース ファイル\System</Filter>
     </ClCompile>
-    <ClCompile Include="DebugMenuScene.cpp">
-      <Filter>ソース ファイル\Scene\DebugScene</Filter>
-    </ClCompile>
     <ClCompile Include="DebugWeaponViewerScene.cpp">
       <Filter>ソース ファイル\Scene\DebugScene</Filter>
     </ClCompile>
@@ -216,6 +216,9 @@
     </ClCompile>
     <ClCompile Include="DebugBattleScene.cpp">
       <Filter>ソース ファイル\Scene\DebugScene</Filter>
+    </ClCompile>
+    <ClCompile Include="DebugMenuScene.cpp">
+      <Filter>ソース ファイル\Scene\DebugScene\DebugMenu</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -312,9 +315,6 @@
     <ClInclude Include="XMMath.h">
       <Filter>ソース ファイル\System</Filter>
     </ClInclude>
-    <ClInclude Include="DebugMenuScene.h">
-      <Filter>ソース ファイル\Scene\DebugScene</Filter>
-    </ClInclude>
     <ClInclude Include="DebugWeaponViewerScene.h">
       <Filter>ソース ファイル\Scene\DebugScene</Filter>
     </ClInclude>
@@ -359,6 +359,9 @@
     </ClInclude>
     <ClInclude Include="DebugBattleScene.h">
       <Filter>ソース ファイル\Scene\DebugScene</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugMenuScene.h">
+      <Filter>ソース ファイル\Scene\DebugScene\DebugMenu</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
