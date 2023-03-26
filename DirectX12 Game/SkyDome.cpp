@@ -9,7 +9,7 @@ void SkyDome::Initialize() {
 	texture.get()->LoadTexture(L"asset/Texture/Black.png");
 
 	m_rotation = (XMFLOAT3(0, 0, 0));
-	m_scale = (XMFLOAT3(85000, 85000, 85000));
+	m_scale = (XMFLOAT3(100000, 100000, 100000));
 	m_position=(XMFLOAT3(0, 0, 0));
 
 

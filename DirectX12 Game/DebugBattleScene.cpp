@@ -3,7 +3,7 @@
 #include"Player.h"
 #include"Ocean.h"
 #include"SkyDome.h"
-
+#include"DebugBattleMenu.h"
 
 DebugBattleScene::DebugBattleScene() {
 
@@ -12,6 +12,7 @@ void DebugBattleScene::Initialize() {
 	AddGameObject<SkyDome>(Layer::GEOMETRY);
 	AddGameObject<Ocean>(Layer::WATER);
 	AddGameObject<Player>(Layer::GEOMETRY);
+	AddGameObject<DebugBattleMenu>(Layer::GEOMETRY);
 
 	//AddGameObject<TestObj>(Layer::ALPHA);
 

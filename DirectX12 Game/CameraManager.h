@@ -22,7 +22,7 @@ public:
 		DEBUG_CAMERA_ID(DEBUG, new DebugCamera)\
 
 
-		enum CamraIndex {
+		enum CameraIndex {
 #undef CAMERA_ID
 #define CAMERA_ID(name, className) CAMERA_##name,
 			CAMERA_ID_TABLE
@@ -37,7 +37,7 @@ public:
 		};
 
 
-		static Camera* CreateCamera(CamraIndex id) {
+		static Camera* CreateCamera(CameraIndex id) {
 #undef CAMERA_ID
 #define CAMERA_ID(name, className)\
 		case CAMERA_##name:\
@@ -69,8 +69,8 @@ private:
 
 
 	//カメラの切り替えタイミングを合わせつために、いったんoldに変更するカメラを入れてUpdateの最初にmainを更新する
-	Index::CamraIndex m_mainCamera = Index::CAMERA_PLAYER;
-	Index::CamraIndex m_oldMainCamera = Index::CAMERA_PLAYER;
+	Index::CameraIndex m_mainCamera = Index::CAMERA_PLAYER;
+	Index::CameraIndex m_oldMainCamera = Index::CAMERA_PLAYER;
 
 public:
 	CameraManager();
@@ -80,8 +80,9 @@ public:
 	void Draw();
 	void Finalize();
 
-	Index::CamraIndex GetMainCameraIndex() { return m_mainCamera; }
-	void SetMainCamera(Index::CamraIndex index) { m_oldMainCamera = index; }
+	Index::CameraIndex GetMainCameraIndex() { return m_mainCamera; }
+	void SetMainCamera(Index::CameraIndex index) { m_oldMainCamera = index; }
+	void SetMainCameraPosition(XMFLOAT3 pos) { m_camera[m_mainCamera]->SetPosition(pos); }
 
 	//現在使っているカメラを取得
 	XMMATRIX GetMainViewMatrix() { return m_camera[m_mainCamera]->GetViewMatrix(); }
@@ -89,10 +90,10 @@ public:
 	XMFLOAT3 GetMainPosition() { return m_camera[m_mainCamera]->GetPosition(); }
 	XMFLOAT3 GetMainTarget() { return m_camera[m_mainCamera]->GetTarget(); }
 
-	XMMATRIX GetViewMatrix(Index::CamraIndex index)			{ return m_camera[index]->GetViewMatrix();}
-	XMMATRIX GetProjectionMatrix(Index::CamraIndex index)	{ return m_camera[index]->GetProjectionMatrix(); }
-	XMFLOAT3 GetPosition(Index::CamraIndex index)			{ return m_camera[index]->GetPosition(); }
-	XMFLOAT3 GetTarget(Index::CamraIndex index)				{ return m_camera[index]->GetTarget(); }
+	XMMATRIX GetViewMatrix(Index::CameraIndex index)			{ return m_camera[index]->GetViewMatrix();}
+	XMMATRIX GetProjectionMatrix(Index::CameraIndex index)	{ return m_camera[index]->GetProjectionMatrix(); }
+	XMFLOAT3 GetPosition(Index::CameraIndex index)			{ return m_camera[index]->GetPosition(); }
+	XMFLOAT3 GetTarget(Index::CameraIndex index)				{ return m_camera[index]->GetTarget(); }
 
 	static void Create();
 	static void Destroy();

@@ -42,6 +42,7 @@ void DebugCamera::Update() {
 	//デバッグカメラ以外を使っていたらReturn
 	if (CameraManager::GetInstance()->GetMainCameraIndex() != CameraManager::Index::CAMERA_DEBUG)return;
 	
+	m_quaternion = XMMath::QuaternionNormalize(m_quaternion);
 	FXMVECTOR quat = XMLoadFloat4(&m_quaternion);
 	XMMATRIX trans = XMMatrixTranslation(m_position.x, m_position.y, m_position.z);
 	XMMATRIX rot = XMMatrixRotationQuaternion(quat);

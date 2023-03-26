@@ -206,6 +206,8 @@ public:
 	void ShadowPassEnd();
 	void Draw2DStart();
 	void Draw2DEnd();
+	void DrawLoadStart();
+	void DrawLoadEnd();
 	void DrawEnd();
 	static Renderer* GetInstance() { return m_instance; }
 	ComPtr<ID3D12Device> GetDevice() { return m_device; }

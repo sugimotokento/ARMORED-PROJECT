@@ -152,6 +152,7 @@
     <ClCompile Include="Collision.cpp" />
     <ClCompile Include="Cube.cpp" />
     <ClCompile Include="DebugBattleScene.cpp" />
+    <ClCompile Include="DebugBattleMenu.cpp" />
     <ClCompile Include="DebugCamera.cpp" />
     <ClCompile Include="DebugMenuScene.cpp" />
     <ClCompile Include="DebugWeaponViewerScene.cpp" />
@@ -164,6 +165,7 @@
     <ClCompile Include="Imgui\imgui_impl_win32.cpp" />
     <ClCompile Include="Imgui\imgui_widgets.cpp" />
     <ClCompile Include="Input.cpp" />
+    <ClCompile Include="LoadUI.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="ModelLoader.cpp" />
@@ -196,6 +198,7 @@
     <ClInclude Include="Cube.h" />
     <ClInclude Include="d3dx12.h" />
     <ClInclude Include="DebugBattleScene.h" />
+    <ClInclude Include="DebugBattleMenu.h" />
     <ClInclude Include="DebugCamera.h" />
     <ClInclude Include="DebugMenuScene.h" />
     <ClInclude Include="GameObject.h" />
@@ -210,6 +213,7 @@
     <ClInclude Include="Imgui\imstb_textedit.h" />
     <ClInclude Include="Imgui\imstb_truetype.h" />
     <ClInclude Include="Input.h" />
+    <ClInclude Include="LoadUI.h" />
     <ClInclude Include="Main.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="ModelLoader.h" />

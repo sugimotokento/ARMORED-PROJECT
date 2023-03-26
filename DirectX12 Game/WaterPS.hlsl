@@ -86,8 +86,8 @@ float4 Water(PS_INPUT input)
     fresnel = 0.05 + (1.0 - 0.05) * pow(fresnel, 5);
     fresnel *= light;
     
-    
-    float4 uv = mul(input.WorldPosition, VP);
+    float4 worldPos = input.WorldPosition;
+    float4 uv = mul(worldPos, VP);
     uv.xy /= uv.w;
     uv.x = uv.x * 0.5 + 0.5;
     uv.y = -uv.y * 0.5 + 0.5;
@@ -104,7 +104,7 @@ float4 Water(PS_INPUT input)
     float3 upColor = mainColor;
     float3 underColor = float3(0.05, 0.08, 0.15);
     outColor.rgb = lerp(upColor, underColor, alpha + 0.1);
-    outColor.rgb = outColor.rgb * (1.0 - fresnel) + outColor.rgb * fresnel * 1.3 + specular;
+    outColor.rgb = outColor.rgb * (1.0 - fresnel) + outColor.rgb * fresnel * 1.3;
     outColor.rgb *= 1.3;
     alpha = alpha;
     alpha = max(0, alpha);
@@ -120,7 +120,7 @@ PS_OUTPUT main(PS_INPUT input)
     PS_OUTPUT output;
     {
         float4 color = Water(input);
-        output.Diffuse.rgb = color.rgb*1.5f;
+        output.Diffuse.rgb = color.rgb*1.2f;
         output.Diffuse.a = 0;
     }
    

@@ -9,7 +9,7 @@ CameraManager* CameraManager::instance;
 
 CameraManager::CameraManager() {
 	for (int i = 0; i < Index::CAMERA_MAX; i++) {
-		m_camera[i] = Index::CreateCamera(static_cast<Index::CamraIndex>(i));
+		m_camera[i] = Index::CreateCamera(static_cast<Index::CameraIndex>(i));
 	}
 }
 

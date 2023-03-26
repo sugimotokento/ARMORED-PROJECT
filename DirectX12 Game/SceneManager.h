@@ -4,19 +4,27 @@
 #include<conio.h>
 #include"ModelLoader.h"
 
+class LoadUI;
+
 class SceneManager {
 private:
 	Scene* m_scene;
+	LoadUI* m_loadUI;
 	bool isGameEnd;
 
 	static SceneManager* instance;
 
 	SceneManager();
+
+	bool m_isSceneLoadEnd = true;
+	void LoadScene();
+	void DrawLoadAnimation();
+	
 public:
 	~SceneManager();
 	void Update();
 	void Draw();
-	
+	void InitializeScene();
 	void GameEnd();
 	Scene* GetScene();
 	bool GetIsGameEnd();
@@ -33,10 +41,10 @@ public:
 			delete m_scene;
 			m_scene = nullptr;
 		}
-
+		m_isSceneLoadEnd = false;
 		T* scene = new T();
 		m_scene = scene;
-		m_scene->Initialize();
+		//InitializeScene();
 	}
 
 };

@@ -75,8 +75,9 @@ void Sprite::Draw() {
 		SCREEN_HEIGHT, 0.0f, 0.0f, 1.0f);
 
 	XMMATRIX size = XMMatrixScaling(m_scale.x, m_scale.y, m_scale.z);
+	XMMATRIX rot = XMMatrixRotationRollPitchYaw(m_rotation.x, m_rotation.y, m_rotation.z);
 	XMMATRIX pos = XMMatrixTranslation(m_position.x, m_position.y, m_position.z);
-	XMMATRIX world = size * pos;
+	XMMATRIX world = size * rot * pos;
 
 
 	//定数バッファ設定
@@ -121,8 +122,7 @@ void Sprite::Draw() {
 	Renderer::GetInstance()->GetCommandList().Get()->DrawInstanced(4, 1, 0, 0);
 }
 void Sprite::Finalize() {
-	m_constantBuffer.Get()->Release();
-	m_vertexBuffer.Get()->Release();
+
 	m_texture->Finalize();
 	delete m_texture;
 }
@@ -131,6 +131,9 @@ void Sprite::Finalize() {
 
 void Sprite::SetPosition(XMFLOAT3 position) {
 	m_position = position;
+}
+void Sprite::SetRotation(XMFLOAT3 rotation) {
+	m_rotation = rotation;
 }
 void Sprite::SetScale(XMFLOAT3 scale) {
 	m_scale = scale;

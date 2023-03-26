@@ -20,14 +20,14 @@ Player::Player() {
 
 }
 void Player::Initialize() {
-	m_position = XMFLOAT3(0, 0.5f, 0);
+	m_position = XMFLOAT3(0, 1, 0);
 	m_scale = XMFLOAT3(1, 1, 1);
 	m_rotation = XMFLOAT3(0, 0, 0);
 
 	m_arm[0] = std::make_unique<Arm>();
 	m_arm[1] = std::make_unique<Arm>();
 	m_arm[0].get()->Initialize(Arm::Index::LEFT, this);
-	m_arm[1].get()->Initialize(Arm::Index::LEFT, this);
+	m_arm[1].get()->Initialize(Arm::Index::RIGHT, this);
 
 	//モデルのロードリクエスト
 	ModelLoader::GetInstance()->LoadRequest(ModelLoader::Index::MODEL_ID_ROBOT_DREADNOUGHT_HEAD);
@@ -44,12 +44,17 @@ void Player::Initialize() {
 	ImguiRenderer::GetInstance()->AddFunction(f);
 #endif // _DEBUG
 }
+
 void Player::Update() {
+#ifdef _DEBUG//デバッグカメラだったらReturn
+	if (CameraManager::GetInstance()->GetMainCameraIndex() == CameraManager::Index::CAMERA_DEBUG)return;
+#endif
 	Move();
 	Rotation();
 	Shot();
 	FieldCollision();
-
+	m_arm[0].get()->Update();
+	m_arm[1].get()->Update();
 }
 void Player::Draw() {
 	////マトリクス設定
@@ -98,6 +103,9 @@ void Player::Draw() {
 	ModelLoader::GetInstance()->Draw(ModelLoader::Index::MODEL_ID_ROBOT_DREADNOUGHT_UPPER);
 	ModelLoader::GetInstance()->Draw(ModelLoader::Index::MODEL_ID_ROBOT_DREADNOUGHT_EYE);
 
+	m_arm[0].get()->Draw();
+	m_arm[1].get()->Draw();
+
 }
 void Player::Finalize() {
  
@@ -108,10 +116,10 @@ void Player::Finalize() {
 void Player::Move() {
 
 	if (fabsf(XInput::GetInstance()->GetLeftThumb().x) > 0.01f) {
-		m_position += GetRight() * 0.1f * XInput::GetInstance()->GetLeftThumb().x;
+		m_position += GetRight() * 0.5f * XInput::GetInstance()->GetLeftThumb().x;
 	}
 	if (fabsf(XInput::GetInstance()->GetLeftThumb().y) > 0.01f) {
-		m_position += GetForward() * 0.1f * XInput::GetInstance()->GetLeftThumb().y;
+		m_position += GetForward() * 0.5f * XInput::GetInstance()->GetLeftThumb().y;
 	}
 }
 void Player::Rotation() {
@@ -152,10 +160,10 @@ void Player::FieldCollision() {
 
 #ifdef _DEBUG
 bool Player::ImguiDebug() {
-	ImGui::Begin("Player");
-	ImGui::Text("GetForward()");
-	ImGui::Text("  x:%lf, y:%lf, z:%lf", GetForward().x, GetForward().y, GetForward().z);
-	ImGui::End();
+	//ImGui::Begin("Player");
+	//ImGui::Text("GetForward()");
+	//ImGui::Text("  x:%lf, y:%lf, z:%lf", GetForward().x, GetForward().y, GetForward().z);
+	//ImGui::End();
 	return GetIsDestroy();
 }
 #endif // _DEBUG

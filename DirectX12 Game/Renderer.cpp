@@ -656,17 +656,47 @@ void Renderer::Draw2DEnd() {
 
 #ifdef _DEBUG
 	//Imgui
-	{
 		ID3D12DescriptorHeap* dh[] = { m_imguiSRVDescriptorHeap.Get() };
 		m_graphicsCommandList->SetDescriptorHeaps(1, dh);
 		ImguiRenderer::GetInstance()->Draw();
-	}
 #endif // _DEBUG
 
 	//プレゼント用リソースバリア
 	SetResourceBarrier(m_renderTarget[m_rtIndex].Get(), D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATE_PRESENT);
 
 }
+
+//ロード画面用描画
+void Renderer::DrawLoadStart() {
+
+	FLOAT clearColor[4] = { 0, 0, 0, 1.0f };
+	m_nowBasePipelineStateID = Index::PIPELINE_STATE_ID_SPRITE;
+
+	//レンダーたゲット用リソースバリア
+	SetResourceBarrier(m_renderTarget[m_rtIndex].Get(), D3D12_RESOURCE_STATE_PRESENT, D3D12_RESOURCE_STATE_RENDER_TARGET);
+
+	//デプスパッファ・レンダーターゲットのクリア
+	m_graphicsCommandList->ClearDepthStencilView(m_dsHandle, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
+	m_graphicsCommandList->ClearRenderTargetView(m_rtHandle[m_rtIndex], clearColor, 0, nullptr);
+
+
+	//レンダーターゲットの設定
+	m_graphicsCommandList->OMSetRenderTargets(1, &m_rtHandle[m_rtIndex], TRUE, &m_dsHandle);
+	//ビューポートとシザー矩形の設定
+	m_graphicsCommandList->RSSetViewports(1, &m_viewport);
+	m_graphicsCommandList->RSSetScissorRects(1, &m_scissorRect);
+
+	//パイプラインステートライティング
+	m_graphicsCommandList->SetPipelineState(m_pipelineState[Index::PIPELINE_STATE_ID_SPRITE].Get());
+}
+void Renderer::DrawLoadEnd() {
+
+
+	//プレゼント用リソースバリア
+	SetResourceBarrier(m_renderTarget[m_rtIndex].Get(), D3D12_RESOURCE_STATE_RENDER_TARGET, D3D12_RESOURCE_STATE_PRESENT);
+
+}
+
 
 void Renderer::DrawEnd() {
 

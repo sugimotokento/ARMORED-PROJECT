@@ -89,11 +89,11 @@
     <Filter Include="ソース ファイル\Object\GameObject\Object3D\Weapon\Shotgun">
       <UniqueIdentifier>{4990a61f-aafc-4fbf-a2c0-253e6841a4ad}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ソース ファイル\Object\GameObject\Viewer">
-      <UniqueIdentifier>{8c01bd2c-bb22-4ad4-8721-7dbf5832117a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ソース ファイル\Scene\DebugScene\DebugMenu">
       <UniqueIdentifier>{898b3367-9ad3-4249-a5da-25ec18298f9a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Object\GameObject\Debug">
+      <UniqueIdentifier>{8c01bd2c-bb22-4ad4-8721-7dbf5832117a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -209,7 +209,7 @@
       <Filter>ソース ファイル\Object\GameObject\Object3D\Weapon\Shotgun</Filter>
     </ClCompile>
     <ClCompile Include="WeaponViewer.cpp">
-      <Filter>ソース ファイル\Object\GameObject\Viewer</Filter>
+      <Filter>ソース ファイル\Object\GameObject\Debug</Filter>
     </ClCompile>
     <ClCompile Include="Arm.cpp">
       <Filter>ソース ファイル\Object\GameObject\Object3D\Player</Filter>
@@ -219,6 +219,12 @@
     </ClCompile>
     <ClCompile Include="DebugMenuScene.cpp">
       <Filter>ソース ファイル\Scene\DebugScene\DebugMenu</Filter>
+    </ClCompile>
+    <ClCompile Include="DebugBattleMenu.cpp">
+      <Filter>ソース ファイル\Object\GameObject\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="LoadUI.cpp">
+      <Filter>ソース ファイル\Object\GameObject\Object2D</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -352,7 +358,7 @@
       <Filter>ソース ファイル\Object\GameObject\Object3D\Weapon</Filter>
     </ClInclude>
     <ClInclude Include="WeaponViewer.h">
-      <Filter>ソース ファイル\Object\GameObject\Viewer</Filter>
+      <Filter>ソース ファイル\Object\GameObject\Debug</Filter>
     </ClInclude>
     <ClInclude Include="Arm.h">
       <Filter>ソース ファイル\Object\GameObject\Object3D\Player</Filter>
@@ -362,6 +368,12 @@
     </ClInclude>
     <ClInclude Include="DebugMenuScene.h">
       <Filter>ソース ファイル\Scene\DebugScene\DebugMenu</Filter>
+    </ClInclude>
+    <ClInclude Include="DebugBattleMenu.h">
+      <Filter>ソース ファイル\Object\GameObject\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="LoadUI.h">
+      <Filter>ソース ファイル\Object\GameObject\Object2D</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

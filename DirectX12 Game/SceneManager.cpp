@@ -4,6 +4,11 @@
 #include"GameScene.h"
 #include"Renderer.h"
 #include"ModelLoader.h"
+#include"Input.h"
+#include"ImguiRenderer.h"
+#include<thread>
+#include<functional>
+#include"LoadUI.h"
 
 #ifdef _DEBUG
 #include"DebugMenuScene.h"
@@ -16,6 +21,9 @@ SceneManager::SceneManager() {
 	CameraManager::Create();
 	CameraManager::GetInstance()->Initialize();
 
+	m_loadUI = new LoadUI();
+	m_loadUI->Initialize();
+
 #ifdef _DEBUG
 	m_scene = new DebugMenuScene();
 #else 
@@ -26,6 +34,9 @@ SceneManager::SceneManager() {
 SceneManager::~SceneManager() {
 	CameraManager::GetInstance()->Finalize();
 	CameraManager::Destroy();
+
+	m_loadUI->Finalize();
+	delete m_loadUI;
 	m_scene->Finalize();
 	delete m_scene;
 
@@ -33,8 +44,17 @@ SceneManager::~SceneManager() {
 
 void SceneManager::Update() {
 	if (!m_scene)return;
+
+	//ここでシーンをロードする
+	if (m_isSceneLoadEnd == false) {
+		InitializeScene();
+		m_isSceneLoadEnd = true;
+	}
+
 	m_scene->Update();
 	CameraManager::GetInstance()->Update();
+
+
 }
 void SceneManager::Draw() {
 	if (!m_scene)return;
@@ -91,3 +111,42 @@ SceneManager* SceneManager::GetInstance() {
 	return instance;
 }
 
+
+
+void SceneManager::LoadScene() {
+	m_scene->Initialize();
+	m_isSceneLoadEnd = true;
+}
+void SceneManager::DrawLoadAnimation() {
+		while (true) {
+		//エラー回避用のダミーパス
+		{
+			Renderer::GetInstance()->ShadowPassStart();
+			Renderer::GetInstance()->ShadowPassEnd();
+
+			Renderer::GetInstance()->GeometryPassStart();
+			Renderer::GetInstance()->GeometryPassEnd();
+
+			Renderer::GetInstance()->GeometryAlphaPassStart();
+			Renderer::GetInstance()->GeometryAlphaPassEnd();
+		}
+
+		//ここで描画
+		Renderer::GetInstance()->DrawLoadStart();
+		m_loadUI->Update();
+		m_loadUI->Draw();
+		Renderer::GetInstance()->DrawLoadEnd();
+
+		Renderer::GetInstance()->DrawEnd();
+
+		if (m_isSceneLoadEnd == true)break;
+	}
+}
+void SceneManager::InitializeScene() {
+	std::thread th2(std::bind(&SceneManager::DrawLoadAnimation, this));
+	std::thread th1(std::bind(&SceneManager::LoadScene, this));
+
+	th2.join();
+	th1.join();
+
+}

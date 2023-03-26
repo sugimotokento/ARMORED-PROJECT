@@ -39,7 +39,7 @@ struct PS_INPUT
 
 float3 GetLightDir()
 {
-    float3 dir = float3(1, -0.7, 0.0);
+    float3 dir = float3(1, -1, 0.0);
     dir = normalize(dir);
     
     return dir;

@@ -13,6 +13,7 @@ private:
 	Texture* m_texture;
 
 	XMFLOAT3 m_position;
+	XMFLOAT3 m_rotation;
 	XMFLOAT3 m_scale;
 public:
 	Sprite() = delete;
@@ -22,6 +23,7 @@ public:
 	void Finalize();
 
 	void SetPosition(XMFLOAT3 position);
+	void SetRotation(XMFLOAT3 rotation);
 	void SetScale(XMFLOAT3 scale);
 	void SetColor(XMFLOAT4 color);
 };
