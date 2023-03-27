@@ -20,6 +20,8 @@ public:
 	virtual void Finalize() = 0;
 
 	void SetPosition(XMFLOAT3 position) { m_position = position; }
+	void SetScale(XMFLOAT3 scale) { m_scale = scale; }
+	void SetRotation(XMFLOAT3 rotation) { m_rotation = rotation; }
 	XMFLOAT3 GetPosition() { return m_position; }
 	XMFLOAT3 GetScale() { return m_scale; }
 	XMFLOAT3 GetRotation() { return m_rotation; }

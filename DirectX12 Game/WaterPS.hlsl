@@ -92,24 +92,30 @@ float4 Water(PS_INPUT input)
     uv.x = uv.x * 0.5 + 0.5;
     uv.y = -uv.y * 0.5 + 0.5;
     float4 depth = positionTexture.Sample(sampler0, uv.xy);
-    float alpha = (length(depth - input.WorldPosition)) * 0.5;
-    alpha = pow(alpha, 0.26f);
-    alpha *= 0.6f;
+    float alpha = (length(depth - worldPos)) * 0.5;
+    alpha *= 0.007f;
+    alpha = pow(alpha, 0.229f);
+  
+    //alpha *= WaterParam.y;
+    //alpha = pow(alpha, WaterParam.x);
+   
     
-    float3 blendColor = float3(0.15, 0, 0.25);
-   // float3 blendColor = WaterParam.xyz;//デバッグ用
-    float3 atmosphericScattering = AtmosphericScattering(input.WorldPosition, lightDir.xyz, cameraPosition.xyz);
-    float3 mainColor = lerp(atmosphericScattering, blendColor, 0.5);
+    //float3 blendColor = float3(0.15, 0, 0.25);
+   //float3 blendColor = WaterParam.xyz;//デバッグ用
+    //float3 atmosphericScattering = AtmosphericScattering(input.WorldPosition, lightDir.xyz, cameraPosition.xyz);
+   // float3 mainColor = lerp(atmosphericScattering, blendColor, 0.5);
+    int mainColor = 0.8;
     
     float3 upColor = mainColor;
-    float3 underColor = float3(0.05, 0.08, 0.15);
+    float3 underColor = float3(0.028, 0.09, 0.139);
     outColor.rgb = lerp(upColor, underColor, alpha + 0.1);
     outColor.rgb = outColor.rgb * (1.0 - fresnel) + outColor.rgb * fresnel * 1.3;
     outColor.rgb *= 1.3;
     alpha = alpha;
     alpha = max(0, alpha);
     alpha = min(1, alpha);
-    outColor.rgb = lerp(unlitColorTexture.Sample(sampler0, uv.xy).rgb, outColor.rgb, alpha);
+    float3 texColor = lerp(unlitColorTexture.Sample(sampler0, uv.xy).rgb, underColor.rgb, alpha);
+    outColor.rgb = lerp(texColor, outColor.rgb, alpha);
     
     return outColor;
 }

@@ -158,10 +158,11 @@ float4 main(PS_INPUT input) : SV_TARGET
     float4 reflectColor = ScreenSpaceReflection(input, color);
     color = reflectColor * metallicRate + color * (1 - metallicRate);
 
-    return float4((color + bloom).rgb, 1);
-    if (position.y > 0)
+    
+    if (position.y >= 0)
     {
-       
+        
+        return float4((color + bloom).rgb, 1);
     }
 
     return float4(((colorTexture.Sample(sampler0, input.TexCoord))).rgb, 1);

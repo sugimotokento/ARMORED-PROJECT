@@ -9,7 +9,9 @@ private:
 	XMFLOAT4 m_waterParam;
  
 
-
+#ifdef _DEBUG
+	bool ImguiDebug();
+#endif // _DEBUG
 public:
 	Ocean();
 	void Initialize() final override;

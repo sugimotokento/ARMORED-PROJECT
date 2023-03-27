@@ -10,7 +10,10 @@ Ocean::Ocean() {
 	m_position = XMFLOAT3(0, 0, 10);
 	m_scale = XMFLOAT3(300, 1, 300);
 
-
+#ifdef _DEBUG
+	//std::function<bool()> f = std::bind(&Ocean::ImguiDebug, this);
+	//ImguiRenderer::GetInstance()->AddFunction(f);
+#endif // _DEBUG
 }
 void Ocean::Initialize() {
 	ComPtr<ID3D12Device> device = Renderer::GetInstance()->GetDevice();
@@ -178,3 +181,16 @@ void Ocean::Finalize() {
 
 
 
+#ifdef _DEBUG
+bool Ocean::ImguiDebug() {
+	ImGui::Begin("Ocean");
+	float param[4]{ m_waterParam.x, m_waterParam.y, m_waterParam.z, m_waterParam.w };
+	ImGui::SliderFloat4("OceanParam", param, 0, 1);
+	m_waterParam.x = param[0];
+	m_waterParam.y = param[1];
+	m_waterParam.z = param[2];
+	m_waterParam.w = param[3];
+	ImGui::End();
+	return GetIsDestroy();
+}
+#endif // _DEBUG

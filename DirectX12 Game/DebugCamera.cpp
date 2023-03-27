@@ -6,6 +6,7 @@
 #include<math.h>
 
 DebugCamera::DebugCamera() {
+#ifdef _DEBUG
 	m_position = XMFLOAT3(5, 2, -5);
 	m_target = XMFLOAT3(0.0f, 0, 5.0f);
 	m_rotation = XMFLOAT3(0, 0, 0);
@@ -33,12 +34,13 @@ DebugCamera::DebugCamera() {
 	q = XMQuaternionMultiply(XMLoadFloat4(&m_quaternion), q);
 	XMStoreFloat4(&m_quaternion, q);
 
-#ifdef _DEBUG
+
 	std::function<bool()> f = std::bind(&DebugCamera::ImguiDebug, this);
 	ImguiRenderer::GetInstance()->AddFunction(f);
 #endif // _DEBUG
 }
 void DebugCamera::Update() {
+#ifdef _DEBUG
 	//デバッグカメラ以外を使っていたらReturn
 	if (CameraManager::GetInstance()->GetMainCameraIndex() != CameraManager::Index::CAMERA_DEBUG)return;
 	
@@ -69,16 +71,25 @@ void DebugCamera::Update() {
 
 
 	if (fabsf(XInput::GetInstance()->GetLeftThumb().x) > 0.01f) {
-		m_position += right * 0.04f* XInput::GetInstance()->GetLeftThumb().x;
+		m_position += right * 0.08f* XInput::GetInstance()->GetLeftThumb().x;
 	}
 	if (fabsf(XInput::GetInstance()->GetLeftThumb().y) > 0.01f) {
-		m_position += forward * 0.04f* XInput::GetInstance()->GetLeftThumb().y;
+		m_position += forward * 0.08f* XInput::GetInstance()->GetLeftThumb().y;
+	}
+	if (XInput::GetInstance()->GetPadPress(XINPUT_GAMEPAD_DPAD_UP)) {
+		m_position += up * 0.08f;
+	}
+	if (XInput::GetInstance()->GetPadPress(XINPUT_GAMEPAD_DPAD_DOWN)) {
+		m_position += -up * 0.08f;
 	}
 
 	m_target = m_position+  forward*5;
+#endif
 }
 void DebugCamera::Draw() {
+#ifdef _DEBUG
 	Camera::Draw();
+#endif
 }
 
 

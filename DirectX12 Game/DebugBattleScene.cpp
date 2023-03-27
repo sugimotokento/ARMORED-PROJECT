@@ -4,15 +4,23 @@
 #include"Ocean.h"
 #include"SkyDome.h"
 #include"DebugBattleMenu.h"
+#include"Field.h"
 
 DebugBattleScene::DebugBattleScene() {
 
 }
 void DebugBattleScene::Initialize() {
-	AddGameObject<SkyDome>(Layer::GEOMETRY);
+	AddGameObject<Field>(Layer::GEOMETRY);
 	AddGameObject<Ocean>(Layer::WATER);
+	AddGameObject<SkyDome>(Layer::GEOMETRY);
+
 	AddGameObject<Player>(Layer::GEOMETRY);
+
+#ifdef  _DEBUG
 	AddGameObject<DebugBattleMenu>(Layer::GEOMETRY);
+#endif //  _DEBUG
+
+
 
 	//AddGameObject<TestObj>(Layer::ALPHA);
 

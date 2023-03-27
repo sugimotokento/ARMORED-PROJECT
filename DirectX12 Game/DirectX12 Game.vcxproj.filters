@@ -226,6 +226,12 @@
     <ClCompile Include="LoadUI.cpp">
       <Filter>ソース ファイル\Object\GameObject\Object2D</Filter>
     </ClCompile>
+    <ClCompile Include="Building.cpp">
+      <Filter>ソース ファイル\Object\GameObject\Object3D\Field</Filter>
+    </ClCompile>
+    <ClCompile Include="Field.cpp">
+      <Filter>ソース ファイル\Object\GameObject\Object3D\Field</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main.h">
@@ -374,6 +380,12 @@
     </ClInclude>
     <ClInclude Include="LoadUI.h">
       <Filter>ソース ファイル\Object\GameObject\Object2D</Filter>
+    </ClInclude>
+    <ClInclude Include="Building.h">
+      <Filter>ソース ファイル\Object\GameObject\Object3D\Field</Filter>
+    </ClInclude>
+    <ClInclude Include="Field.h">
+      <Filter>ソース ファイル\Object\GameObject\Object3D\Field</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
