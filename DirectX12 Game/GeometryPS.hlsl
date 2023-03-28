@@ -37,7 +37,7 @@ PS_OUTPUT main(PS_INPUT input)
     output.Diffuse.rgb = albed * occlusion * input.Diffuse.rgb;
     output.Diffuse.a = 1;
 	output.Position = input.WorldPosition;
-	output.Depth = input.Depth;
+	output.Depth = input.Position.z;
     
     float4 metalMap = modelMetalTexture.Sample(sampler0, input.TexCoord);
     output.ReflectRate = GetMetalRatio(metalMap)*0.5;

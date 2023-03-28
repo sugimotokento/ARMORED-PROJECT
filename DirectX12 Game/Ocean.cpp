@@ -97,7 +97,8 @@ void Ocean::Update() {
 
 }
 void Ocean::Draw() {
-
+	if (Renderer::GetInstance()->GetNowPipelineStateID() == Renderer::Index::PIPELINE_STATE_ID_GEOMETRY_ALPHA)
+		Renderer::GetInstance()->SetPipeline(Renderer::Index::PIPELINE_STATE_ID_WATER);
 	////マトリクス設定
 	XMMATRIX lightView = CameraManager::GetInstance()->GetViewMatrix(CameraManager::Index::CAMERA_SHADOW);
 	XMMATRIX lightProjection = CameraManager::GetInstance()->GetProjectionMatrix(CameraManager::Index::CAMERA_SHADOW);
@@ -166,8 +167,7 @@ void Ocean::Draw() {
 	Renderer::GetInstance()->GetCommandList().Get()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
 	//描画
-	if(Renderer::GetInstance()->GetNowPipelineStateID()==Renderer::Index::PIPELINE_STATE_ID_GEOMETRY_ALPHA)
-		Renderer::GetInstance()->SetPipeline(Renderer::Index::PIPELINE_STATE_ID_WATER);
+
 	Renderer::GetInstance()->GetCommandList().Get()->DrawInstanced(6, 1, 0, 0);
 	if (Renderer::GetInstance()->GetNowPipelineStateID() == Renderer::Index::PIPELINE_STATE_ID_GEOMETRY_ALPHA)
 		Renderer::GetInstance()->SetNowBasePipeline();
@@ -184,12 +184,14 @@ void Ocean::Finalize() {
 #ifdef _DEBUG
 bool Ocean::ImguiDebug() {
 	ImGui::Begin("Ocean");
-	float param[4]{ m_waterParam.x, m_waterParam.y, m_waterParam.z, m_waterParam.w };
-	ImGui::SliderFloat4("OceanParam", param, 0, 1);
+	static float param[2]{ m_waterParam.x, m_waterParam.y };
+	ImGui::SliderFloat2("OceanParam", param, 0, 1);
 	m_waterParam.x = param[0];
 	m_waterParam.y = param[1];
-	m_waterParam.z = param[2];
-	m_waterParam.w = param[3];
+
+	static float w = 0;
+	ImGui::SliderFloat("ParamW", &w, 0, 1);
+	m_waterParam.z = w;
 	ImGui::End();
 	return GetIsDestroy();
 }

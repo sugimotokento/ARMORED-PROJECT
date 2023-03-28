@@ -43,18 +43,16 @@ public:
 		//フィールドモデルID
 #define MODEL_FIELD_ID(name, modelName, albedoTex, normalTex, occlusionTex, metalTex, emmisionTex)
 #define MODEL_FIELD_ID_TABLE\
-		MODEL_FIELD_ID(SKYDOME,    "Field/skydome.obj",					L"White.png",							L"White.png", L"White.png", L"Black.png", L"Black.png")\
-		MODEL_FIELD_ID(BUILDING1,  "Field/Building/back building1.FBX",	L"Field/Building/build texture5.png",	L"White.png", L"White.png", L"Black.png", L"Black.png")\
-		MODEL_FIELD_ID(BUILDING2,  "Field/Building/back building2.FBX",	L"Field/Building/build texture5.png",	L"White.png", L"White.png", L"Black.png", L"Black.png")\
-		MODEL_FIELD_ID(BUILDING3,  "Field/Building/back building3.FBX",	L"Field/Building/build texture5.png",	L"White.png", L"White.png", L"Black.png", L"Black.png")\
-		MODEL_FIELD_ID(BUILDING4,  "Field/Building/back building4.FBX",	L"Field/Building/build texture5.png",	L"White.png", L"White.png", L"Black.png", L"Black.png")\
-		MODEL_FIELD_ID(BUILDING5,  "Field/Building/back building5.FBX",	L"Field/Building/build texture5.png",	L"White.png", L"White.png", L"Black.png", L"Black.png")\
-		MODEL_FIELD_ID(BUILDING6,  "Field/Building/back building6.FBX",	L"Field/Building/build texture5.png",	L"White.png", L"White.png", L"Black.png", L"Black.png")\
-		MODEL_FIELD_ID(BUILDING7,  "Field/Building/back building7.FBX",	L"Field/Building/build texture5.png",	L"White.png", L"White.png", L"Black.png", L"Black.png")\
-		MODEL_FIELD_ID(BUILDING8,  "Field/Building/back building8.FBX",	L"Field/Building/build texture5.png",	L"White.png", L"White.png", L"Black.png", L"Black.png")\
-		MODEL_FIELD_ID(BUILDING9,  "Field/Building/back building9.FBX",	L"Field/Building/build texture5.png",	L"White.png", L"White.png", L"Black.png", L"Black.png")\
-		MODEL_FIELD_ID(BUILDING10, "Field/Building/back building10.FBX",	L"Field/Building/build texture5.png",	L"White.png", L"White.png", L"Black.png", L"Black.png")\
-		MODEL_FIELD_ID(BUILDING11, "Field/Building/back building11.FBX",	L"Field/Building/build texture5.png",	L"White.png", L"White.png", L"Black.png", L"Black.png")\
+		MODEL_FIELD_ID(SKYDOME,    "Field/skydome.obj",								L"White.png",							L"White.png",							 L"White.png", L"Black.png",								L"Black.png")\
+		MODEL_FIELD_ID(BUILDING1,  "Field/Building/back building4.FBX",				L"Field/Building/build texture5.png",	L"White.png",							 L"White.png", L"Black.png",								L"Black.png")\
+		MODEL_FIELD_ID(BUILDING2,  "Field/Building/back building5.FBX",				L"Field/Building/build texture5.png",	L"White.png",							 L"White.png", L"Black.png",								L"Black.png")\
+		MODEL_FIELD_ID(BUILDING3,  "Field/Building/back building7.FBX",				L"Field/Building/build texture5.png",	L"White.png",							 L"White.png", L"Black.png",								L"Black.png")\
+		MODEL_FIELD_ID(BUILDING4,  "Field/Building/back building8.FBX",				L"Field/Building/build texture5.png",	L"White.png",							 L"White.png", L"Black.png",								L"Black.png")\
+		MODEL_FIELD_ID(BUILDING5,  "Field/Building/back building9.FBX",				L"Field/Building/build texture5.png",	L"White.png",						 	 L"White.png", L"Black.png",								L"Black.png")\
+		MODEL_FIELD_ID(BUILDING6,  "Field/Building/building8-lod1.fbx",				L"Field/Building/building8_color.png",	L"Field/Building/building8_normal.png",  L"White.png", L"Field/Building/building8_metallic.png",    L"Black.png")\
+		MODEL_FIELD_ID(BUILDING7,  "Field/Building/building8-variation2-lod1.fbx",	L"Field/Building/building8_color.png",	L"Field/Building/building8_normal.png",  L"White.png", L"Field/Building/building8_metallic.png",	L"Black.png")\
+		MODEL_FIELD_ID(BUILDING8,  "Field/Building/building10.fbx",					L"Field/Building/building10_color.png",	L"Field/Building/building10_normal.png", L"White.png", L"Field/Building/building10_metallic.png",	L"Black.png")\
+		MODEL_FIELD_ID(BUILDING9,  "Field/Building/building10-variant1-lod1.fbx",	L"Field/Building/building10_color.png",	L"Field/Building/building10_normal.png", L"White.png", L"Field/Building/building10_metallic.png",	L"Black.png")\
 
 
 

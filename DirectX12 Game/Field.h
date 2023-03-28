@@ -4,7 +4,7 @@
 
 class Field :public GameObject {
 private:
-	enum { BUILDING_MAX = 11 };
+	enum { BUILDING_MAX = 9 };
 	std::unique_ptr<Building> m_building[BUILDING_MAX];
 
 public:

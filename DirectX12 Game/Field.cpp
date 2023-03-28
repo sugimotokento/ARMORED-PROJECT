@@ -7,9 +7,15 @@ void Field::Initialize() {
 		m_building[i - startID] = std::make_unique<Building>();
 		m_building[i - startID].get()->SetModelID(static_cast<Building::Index::BuildingModelID>(i));
 		m_building[i - startID].get()->Initialize();
-		m_building[i - startID].get()->SetScale(XMFLOAT3(0.7f, 0.7f, 0.7f));
 
-		m_building[i - startID].get()->SetPosition(XMFLOAT3(0, -50, ((float)(i - startID))*100));
+		
+		m_building[i - startID].get()->SetScale(XMFLOAT3(0.8f, 0.8f, 0.8f));
+		m_building[i - startID].get()->SetPosition(XMFLOAT3(0, -100, ((float)(i - startID))*100));
+
+		if (static_cast<Building::Index::BuildingModelID>(i) >= Building::Index::MODEL_ID_BUILDING6) {
+			m_building[i - startID].get()->SetScale(XMFLOAT3(3, 3, 3));
+			m_building[i - startID].get()->SetPosition(XMFLOAT3(0, -100, ((float)(i - startID)) * 100));
+		}
 	}
 
 }

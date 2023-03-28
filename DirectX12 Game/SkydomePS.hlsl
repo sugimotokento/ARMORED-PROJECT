@@ -67,7 +67,8 @@ PS_OUTPUT main(PS_INPUT input)
     
     float3 v3CameraPos = rat;
     v3CameraPos.y = fInnerRadius;
-    float3 lightPos = -GetLightDir();
+    float3 lightPos = GetLightDir();
+    lightPos.y *= -1;
     float3 v3LightDir = normalize(lightPos);
  
     float3 v3Ray = worldPos - v3CameraPos;

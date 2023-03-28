@@ -3,6 +3,7 @@
 #include"AtmosphericScattering.hlsl"
 Texture2D<float4> unlitColorTexture : register(t1);
 Texture2D<float4> positionTexture : register(t2);
+Texture2D<float4> depthTexture : register(t3);
 Texture2D<float4> shadowTexture : register(t5);
 
 Texture2D<float4> modelAlbedTexture : register(t7);
@@ -78,7 +79,7 @@ float4 Water(PS_INPUT input)
 
     float specular = dot(eyev, refv);
     specular = saturate(specular);
-    specular = pow(specular, 80);
+    specular = pow(specular, 30);
    // outDiffuse.rgb = spec * 1.0;
     
     //フレネル近似式
@@ -86,36 +87,33 @@ float4 Water(PS_INPUT input)
     fresnel = 0.05 + (1.0 - 0.05) * pow(fresnel, 5);
     fresnel *= light;
     
-    float4 worldPos = input.WorldPosition;
-    float4 uv = mul(worldPos, VP);
+    float4 worldPos = input.Position;
+    float4 uv = mul(input.WorldPosition, VP);
     uv.xy /= uv.w;
     uv.x = uv.x * 0.5 + 0.5;
     uv.y = -uv.y * 0.5 + 0.5;
-    float4 depth = positionTexture.Sample(sampler0, uv.xy);
-    float alpha = (length(depth - worldPos)) * 0.5;
-    alpha *= 0.007f;
-    alpha = pow(alpha, 0.229f);
+    float4 depth = depthTexture.Sample(sampler0, uv.xy);
+    float alpha = (length(depth.z - worldPos.z))*49.84;
   
-    //alpha *= WaterParam.y;
-    //alpha = pow(alpha, WaterParam.x);
+    alpha *= 0.2;
+    alpha = pow(alpha, 0.16);
+
+    //alpha *= WaterParam.x;
+    //alpha = pow(alpha, WaterParam.y);
    
-    
-    //float3 blendColor = float3(0.15, 0, 0.25);
-   //float3 blendColor = WaterParam.xyz;//デバッグ用
-    //float3 atmosphericScattering = AtmosphericScattering(input.WorldPosition, lightDir.xyz, cameraPosition.xyz);
-   // float3 mainColor = lerp(atmosphericScattering, blendColor, 0.5);
-    int mainColor = 0.8;
-    
-    float3 upColor = mainColor;
-    float3 underColor = float3(0.028, 0.09, 0.139);
-    outColor.rgb = lerp(upColor, underColor, alpha + 0.1);
+
+    float3 underColor = float3(0.046, 0.111, 0.144);
+    outColor.rgb = underColor;
     outColor.rgb = outColor.rgb * (1.0 - fresnel) + outColor.rgb * fresnel * 1.3;
     outColor.rgb *= 1.3;
     alpha = alpha;
     alpha = max(0, alpha);
     alpha = min(1, alpha);
-    float3 texColor = lerp(unlitColorTexture.Sample(sampler0, uv.xy).rgb, underColor.rgb, alpha);
+    
+
+    float3 texColor = lerp(unlitColorTexture.Sample(sampler0, uv.xy).rgb, outColor.rgb, alpha);
     outColor.rgb = lerp(texColor, outColor.rgb, alpha);
+
     
     return outColor;
 }
