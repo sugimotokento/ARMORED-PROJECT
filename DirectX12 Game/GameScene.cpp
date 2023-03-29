@@ -3,7 +3,6 @@
 #include"Player.h"
 #include"PlayerUI.h"
 #include"SceneManager.h"
-#include"TestObj.h"
 #include"Ocean.h"
 #include"SkyDome.h"
 

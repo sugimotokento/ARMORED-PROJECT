@@ -6,11 +6,8 @@
 Arm::Arm() {
 
 }
-void Arm::Initialize(Index::ArmSide side, GameObject* parent) {
+void Arm::Setting(Index::ArmSide side, GameObject* parent) {
 	m_side = side;
-	m_scale = XMFLOAT3(1, 1, 1);
-	m_rotation = XMFLOAT3(0, 0, 0);
-
 	m_parent = parent;
 
 	if (m_side == Index::ArmSide::LEFT) {
@@ -23,6 +20,12 @@ void Arm::Initialize(Index::ArmSide side, GameObject* parent) {
 		//m_position = XMFLOAT3(0, 0, 0);
 		ModelLoader::GetInstance()->LoadRequest(ModelLoader::Index::MODEL_ID_ROBOT_DREADNOUGHT_HAND_R);
 	}
+}
+void Arm::Initialize() {
+	
+	m_scale = XMFLOAT3(1, 1, 1);
+	m_rotation = XMFLOAT3(0, 0, 0);
+
 
 	Renderer::GetInstance()->CreateConstantBuffer(m_constantBuffer);
 

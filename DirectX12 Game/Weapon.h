@@ -4,8 +4,7 @@
 
 class Weapon :public GameObject{
 protected:
-	XMFLOAT3 m_offset;//è‚âŒ¨‚ÉˆÊ’u‚ğ‡‚í‚¹‚éoffset
-	GameObject* m_parent;
+	GameObject* m_parent=nullptr;
 	float m_intervalMax = 20;
 	float m_intervalCount = 0;
 public:
@@ -19,6 +18,5 @@ public:
 	float GetIntervalMax() { return m_intervalMax; }
 	float GetIntervalCount() { return m_intervalCount; }
 
-	XMFLOAT3 GetOffset() { return m_offset; }
-	void SetOffset(XMFLOAT3 offset) { m_offset = offset; }
+	void SetParent(GameObject* parent) { m_parent = parent; }
 };

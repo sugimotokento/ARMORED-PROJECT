@@ -42,13 +42,15 @@ private:
 public:
 	~XInput();
 	void Update();
-	bool GetPadPress(BYTE code);
-	bool GetPadTrigger(BYTE code);
+	bool GetPadPress(WORD code);
+	bool GetPadTrigger(WORD code);
 	XMFLOAT2 GetRightThumb();
 	XMFLOAT2 GetLeftThumb();
 
 	float GetRightTrigger() { return m_inputState.Gamepad.bRightTrigger; }
 	float GetLeftTrigger() { return m_inputState.Gamepad.bLeftTrigger; }
+
+	XINPUT_STATE GetInputState() { return m_inputState; }
 	
 	static void Create();
 	static void Destroy();

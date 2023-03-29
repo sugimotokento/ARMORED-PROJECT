@@ -10,7 +10,7 @@ void AssaultRifle::Initialize() {
 	ModelLoader::GetInstance()->LoadRequest(ModelLoader::Index::MODEL_ID_WEAPON_ASSAULT_RIFLE);
 
 	m_scale = XMFLOAT3(1, 1, 1);
-	m_rotation = XMFLOAT3(-0.1f, 0, 0);
+	m_rotation = XMFLOAT3(0, 0, 0);
 
 	
 
@@ -18,16 +18,16 @@ void AssaultRifle::Initialize() {
 	m_bulletOffset.x = 0;
 	m_bulletOffset.y = 0.149f;
 	m_bulletOffset.z = 2.0f;
-	m_bulletSetting.range = 500;
-	m_bulletSetting.speed = 2;
+	m_bulletSetting.range = 1000;
+	m_bulletSetting.speed = 10;
 	m_intervalMax = 3.5f;
 
 	Renderer::GetInstance()->CreateConstantBuffer(m_constantBuffer);
 
 
 #ifdef _DEBUG
-	std::function<bool()> f = std::bind(&AssaultRifle::ImguiDebug, this);
-	ImguiRenderer::GetInstance()->AddFunction(f);
+	/*std::function<bool()> f = std::bind(&AssaultRifle::ImguiDebug, this);
+	ImguiRenderer::GetInstance()->AddFunction(f);*/
 #endif // _DEBUG
 }
 void AssaultRifle::Update() {
@@ -44,7 +44,15 @@ void AssaultRifle::Draw() {
 	XMMATRIX trans = XMMatrixTranslation(m_position.x, m_position.y, m_position.z);
 	XMMATRIX rot = XMMatrixRotationRollPitchYaw(m_rotation.x, m_rotation.y, m_rotation.z);
 	XMMATRIX size = XMMatrixScaling(m_scale.x, m_scale.y, m_scale.z);
-	XMMATRIX world = size * rot * trans;
+	XMMATRIX world;
+	if (m_parent != nullptr) {
+		XMFLOAT4X4 parentWorldTemp = m_parent->GetWorldMTX();
+		XMMATRIX parentWorld = XMLoadFloat4x4(&parentWorldTemp);
+		world = (size * rot * trans)* parentWorld;
+	}
+	else {
+		world = size * rot * trans;
+	}
 	XMStoreFloat4x4(&m_worldMTX, world);
 
 	//定数バッファ設定
@@ -85,7 +93,8 @@ void AssaultRifle::Shot() {
 	if (m_intervalCount > m_intervalMax) {
 		m_bulletSetting.moveDir = GetForward();
 		XMFLOAT3 offset = GetRight() * m_bulletOffset.x + GetUp() * m_bulletOffset.y + GetForward() * m_bulletOffset.z;
-		m_bulletSetting.position = GetPosition() + offset;
+		XMFLOAT3 worldPos = XMFLOAT3(m_worldMTX._41, m_worldMTX._42, m_worldMTX._43);
+		m_bulletSetting.position = worldPos + offset;
 		m_bulletSetting.rotation = GetRotation();
 
 		SceneManager::GetInstance()->GetScene()->AddGameObject<Ammunition>()->SetSettingItem(m_bulletSetting);

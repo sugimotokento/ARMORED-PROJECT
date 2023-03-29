@@ -87,13 +87,13 @@ float4 Water(PS_INPUT input)
     fresnel = 0.05 + (1.0 - 0.05) * pow(fresnel, 5);
     fresnel *= light;
     
-    float4 worldPos = input.Position;
+    float4 waterDepth = input.Position;
     float4 uv = mul(input.WorldPosition, VP);
     uv.xy /= uv.w;
     uv.x = uv.x * 0.5 + 0.5;
     uv.y = -uv.y * 0.5 + 0.5;
     float4 depth = depthTexture.Sample(sampler0, uv.xy);
-    float alpha = (length(depth.z - worldPos.z))*49.84;
+    float alpha = (length(depth.z - waterDepth.z)) * 49.84;
   
     alpha *= 0.2;
     alpha = pow(alpha, 0.16);

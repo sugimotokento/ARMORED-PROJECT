@@ -157,9 +157,6 @@
     <ClCompile Include="ImguiRenderer.cpp">
       <Filter>ソース ファイル\Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="TestObj.cpp">
-      <Filter>ソース ファイル\Object\GameObject\Object3D</Filter>
-    </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>ソース ファイル\Object\GameObject\Object3D\Player</Filter>
     </ClCompile>
@@ -305,9 +302,6 @@
     </ClInclude>
     <ClInclude Include="ImguiRenderer.h">
       <Filter>ソース ファイル\Renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="TestObj.h">
-      <Filter>ソース ファイル\Object\GameObject\Object3D</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>ソース ファイル\Object\GameObject\Object3D\Player</Filter>

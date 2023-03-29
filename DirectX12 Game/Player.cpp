@@ -9,6 +9,9 @@
 #include"CameraManager.h"
 #include"XMMath.h"
 #include"ModelLoader.h"
+#include"Weapon.h"
+#include"Shotgun.h"
+#include"AssaultRifle.h"
 
 #ifdef _DEBUG
 #include"ImguiRenderer.h"
@@ -26,8 +29,19 @@ void Player::Initialize() {
 
 	m_arm[0] = std::make_unique<Arm>();
 	m_arm[1] = std::make_unique<Arm>();
-	m_arm[0].get()->Initialize(Arm::Index::LEFT, this);
-	m_arm[1].get()->Initialize(Arm::Index::RIGHT, this);
+	m_arm[0].get()->Initialize();
+	m_arm[1].get()->Initialize();
+	m_arm[0].get()->Setting(Arm::Index::LEFT, this);
+	m_arm[1].get()->Setting(Arm::Index::RIGHT, this);
+
+	m_lightWeapon[Index::LEFT] = new Shotgun();
+	m_lightWeapon[Index::RIGHT] = new AssaultRifle();
+	m_lightWeapon[Index::LEFT]->Initialize();
+	m_lightWeapon[Index::RIGHT]->Initialize();
+	m_lightWeapon[Index::LEFT]->SetParent(m_arm[Index::LEFT].get());
+	m_lightWeapon[Index::RIGHT]->SetParent(m_arm[Index::RIGHT].get());
+	m_lightWeapon[Index::LEFT]->SetPosition(XMFLOAT3(0, 0, 0.78f));
+	m_lightWeapon[Index::RIGHT]->SetPosition(XMFLOAT3(0, 0, 0.78f));
 
 	//モデルのロードリクエスト
 	ModelLoader::GetInstance()->LoadRequest(ModelLoader::Index::MODEL_ID_ROBOT_DREADNOUGHT_HEAD);
@@ -40,8 +54,8 @@ void Player::Initialize() {
 	Renderer::GetInstance()->CreateConstantBuffer(m_constantBuffer);
 
 #ifdef _DEBUG
-	std::function<bool()> f = std::bind(&Player::ImguiDebug, this);
-	ImguiRenderer::GetInstance()->AddFunction(f);
+	//std::function<bool()> f = std::bind(&Player::ImguiDebug, this);
+	//ImguiRenderer::GetInstance()->AddFunction(f);
 #endif // _DEBUG
 }
 
@@ -55,6 +69,8 @@ void Player::Update() {
 	FieldCollision();
 	m_arm[0].get()->Update();
 	m_arm[1].get()->Update();
+	m_lightWeapon[Index::LEFT]->Update();
+	m_lightWeapon[Index::RIGHT]->Update();
 }
 void Player::Draw() {
 	////マトリクス設定
@@ -103,12 +119,16 @@ void Player::Draw() {
 	ModelLoader::GetInstance()->Draw(ModelLoader::Index::MODEL_ID_ROBOT_DREADNOUGHT_UPPER);
 	ModelLoader::GetInstance()->Draw(ModelLoader::Index::MODEL_ID_ROBOT_DREADNOUGHT_EYE);
 
-	m_arm[0].get()->Draw();
-	m_arm[1].get()->Draw();
+	m_arm[Index::LEFT].get()->Draw();
+	m_arm[Index::RIGHT].get()->Draw();
+
+	m_lightWeapon[Index::LEFT]->Draw();
+	m_lightWeapon[Index::RIGHT]->Draw();
 
 }
 void Player::Finalize() {
- 
+	delete m_lightWeapon[Index::LEFT];
+	delete m_lightWeapon[Index::RIGHT];
 }
 
 
@@ -130,10 +150,12 @@ void Player::Rotation() {
 }
  
 void Player::Shot() {
-	/*for (Gun* gun : m_guns) {
-		gun->Update();
-
-	}*/
+	if (XInput::GetInstance()->GetPadPress(XINPUT_GAMEPAD_LEFT_SHOULDER)) {
+		m_lightWeapon[Index::LEFT]->Shot();
+	}
+	if (XInput::GetInstance()->GetPadPress(XINPUT_GAMEPAD_RIGHT_SHOULDER)) {
+		m_lightWeapon[Index::RIGHT]->Shot();
+	}
 }
 void Player::FieldCollision() {
 	//Field* field = SceneManager::GetInstance()->GetScene()->GetGameObject<Field>();
@@ -160,10 +182,10 @@ void Player::FieldCollision() {
 
 #ifdef _DEBUG
 bool Player::ImguiDebug() {
-	//ImGui::Begin("Player");
-	//ImGui::Text("GetForward()");
-	//ImGui::Text("  x:%lf, y:%lf, z:%lf", GetForward().x, GetForward().y, GetForward().z);
-	//ImGui::End();
+	ImGui::Begin("Player");
+
+	
+	ImGui::End();
 	return GetIsDestroy();
 }
 #endif // _DEBUG

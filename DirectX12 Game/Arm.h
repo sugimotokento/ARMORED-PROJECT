@@ -1,9 +1,8 @@
 #pragma once
-#include"Main.h"
+#include"GameObject.h"
 #include"ModelLoader.h"
 
-class GameObject;
-class Arm {
+class Arm :public GameObject{
 public:
 	struct Index {
 		enum ArmSide {
@@ -16,18 +15,15 @@ private:
 	ComPtr<ID3D12Resource> m_constantBuffer;
 	Index::ArmSide m_side;
 	GameObject* m_parent;
-	XMFLOAT3 m_position;
-	XMFLOAT3 m_scale;
-	XMFLOAT3 m_rotation;
-	XMFLOAT4X4 m_worldMTX;
 
 	
 public:
 	Arm();
-	void Initialize(Index::ArmSide side, GameObject* parent);
-	void Update();
-	void Draw();
-	void Finalize();
+	void Initialize() final override;
+	void Update() final override;
+	void Draw() final override;
+	void Finalize() final override;
 
+	void Setting(Index::ArmSide side, GameObject* parent);
 
 };

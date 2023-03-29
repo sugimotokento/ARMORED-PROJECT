@@ -11,7 +11,7 @@ void Shotgun::Initialize() {
 	ModelLoader::GetInstance()->LoadRequest(ModelLoader::Index::MODEL_ID_WEAPON_SHOTGUN);
 
 	m_scale = XMFLOAT3(1, 1, 1);
-	m_rotation = XMFLOAT3(-0.1f, 0, 0);
+	m_rotation = XMFLOAT3(0, 0, 0);
 
 	//武器のパラメーター設定
 	m_spreadRatio = 0.29f;
@@ -21,16 +21,16 @@ void Shotgun::Initialize() {
 	m_bulletOffset.x = 0;
 	m_bulletOffset.y = 0.275f;
 	m_bulletOffset.z = 0.29f;
-	m_bulletSetting.range = 150;
-	m_bulletSetting.speed = 2;
+	m_bulletSetting.range = 300;
+	m_bulletSetting.speed = 10;
 	m_intervalMax = 15;
 
 	Renderer::GetInstance()->CreateConstantBuffer(m_constantBuffer);
 
 
 #ifdef _DEBUG
-	std::function<bool()> f = std::bind(&Shotgun::ImguiDebug, this);
-	ImguiRenderer::GetInstance()->AddFunction(f);
+	//std::function<bool()> f = std::bind(&Shotgun::ImguiDebug, this);
+	//ImguiRenderer::GetInstance()->AddFunction(f);
 #endif // _DEBUG
 }
 void Shotgun::Update() {
@@ -47,7 +47,15 @@ void Shotgun::Draw() {
 	XMMATRIX trans = XMMatrixTranslation(m_position.x, m_position.y, m_position.z);
 	XMMATRIX rot = XMMatrixRotationRollPitchYaw(m_rotation.x, m_rotation.y, m_rotation.z);
 	XMMATRIX size = XMMatrixScaling(m_scale.x, m_scale.y, m_scale.z);
-	XMMATRIX world = size * rot * trans;
+	XMMATRIX world;
+	if (m_parent != nullptr) {
+		XMFLOAT4X4 parentWorldTemp = m_parent->GetWorldMTX();
+		XMMATRIX parentWorld = XMLoadFloat4x4(&parentWorldTemp);
+		world = (size * rot * trans) * parentWorld;
+	}
+	else {
+		world = size * rot * trans;
+	}
 	XMStoreFloat4x4(&m_worldMTX, world);
 
 	//定数バッファ設定
@@ -101,7 +109,8 @@ void Shotgun::Shot() {
 			m_bulletSetting.moveDir = GetForward() * RANDOM_MAX + GetRight() * randomX*m_spreadRatio + GetUp() * randomY * m_spreadRatio;
 			m_bulletSetting.moveDir = XMMath::Normalize(m_bulletSetting.moveDir);
 			XMFLOAT3 offset = GetRight() * m_bulletOffset.x + GetUp() * m_bulletOffset.y + GetForward() * m_bulletOffset.z;
-			m_bulletSetting.position = GetPosition() + offset;
+			XMFLOAT3 worldPos = XMFLOAT3(m_worldMTX._41, m_worldMTX._42, m_worldMTX._43);
+			m_bulletSetting.position = worldPos + offset;
 			m_bulletSetting.rotation = GetRotation();
 
 			SceneManager::GetInstance()->GetScene()->AddGameObject<Ammunition>()->SetSettingItem(m_bulletSetting);

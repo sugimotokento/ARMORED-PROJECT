@@ -7,12 +7,12 @@ void Ammunition::Initialize() {
 	ModelLoader::GetInstance()->LoadRequest(ModelLoader::Index::MODEL_ID_BULLET_AMMUNITION);
 	Renderer::GetInstance()->CreateConstantBuffer(m_constantBuffer);
 
-	m_scale = XMFLOAT3(0.005f, 0.005f, 0.04f);
+	m_scale = XMFLOAT3(0.03f, 0.03f, 0.16f);
 
 
 #ifdef _DEBUG
-	std::function<bool()> f = std::bind(&Ammunition::ImguiDebug, this);
-	ImguiRenderer::GetInstance()->AddFunction(f);
+	//std::function<bool()> f = std::bind(&Ammunition::ImguiDebug, this);
+	//ImguiRenderer::GetInstance()->AddFunction(f);
 #endif // _DEBUG
 }
 void Ammunition::Update() {

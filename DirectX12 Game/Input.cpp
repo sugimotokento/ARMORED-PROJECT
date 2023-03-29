@@ -61,10 +61,10 @@ void XInput::Update() {
 	//ƒRƒ“ƒgƒ[ƒ‰‚Ìó‘Ô‚ğæ“¾
 	DWORD result = XInputGetState(0, &m_inputState);
 }
-bool XInput::GetPadPress(BYTE code) {
+bool XInput::GetPadPress(WORD code) {
 	return m_inputState.Gamepad.wButtons & code;
 }
-bool XInput::GetPadTrigger(BYTE code) {
+bool XInput::GetPadTrigger(WORD code) {
 	return (m_inputState.Gamepad.wButtons & code) && !(m_oldInputState.Gamepad.wButtons & code);
 }
 XMFLOAT2 XInput::GetRightThumb() {
