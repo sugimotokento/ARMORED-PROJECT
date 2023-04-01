@@ -1,17 +1,17 @@
 #pragma once
 #include<list>
 #include <functional>
-
+#include<vector>
 class GameObject;
 class Scene {
 
 public:
 	enum Layer {
-		GEOMETRY,
-		WATER,
-		ALPHA,
-		SPRITE,
-		COUNT
+		GEOMETRY,	//不透明オブジェクトレイヤー
+		WATER,		//水面オブジェクトレイヤー
+		ALPHA,		//透過オブジェクトレイヤー
+		SPRITE,		//2Dオブジェクトレイヤー
+		COUNT		
 	};
 
 private:
@@ -46,8 +46,8 @@ public:
 		return nullptr;
 	}
 	template <typename T>
-	std::list<T*> GetGameObjects(Layer layer = GEOMETRY) {
-		std::list<T*> objects;
+	std::vector<T*> GetGameObjects(Layer layer = GEOMETRY) {
+		std::vector<T*> objects;
 		for (GameObject* obj : m_gameObject[layer]) {
 			if (typeid(*obj) == typeid(T)) {
 				objects.push_back((T*)obj);

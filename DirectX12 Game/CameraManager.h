@@ -11,6 +11,7 @@ class  CameraManager
 {
 public:
 	struct Index {
+		//g—p‚·‚éƒJƒƒ‰‚ğ’Ç‰Á‚·‚é
 #define CAMERA_ID(name, className)
 #define CAMERA_ID_TABLE\
 		CAMERA_ID(PLAYER,	new PlayerCamera)\

@@ -151,6 +151,7 @@ void Player::Move() {
 	float boostSpeed = BOOST_SPEED_MAX * acceleration;
 	float speed = (0.5f* deceleration + boostSpeed);
 
+	m_afterburner->SetBoosterRatio(acceleration);
 
 	if (fabsf(XInput::GetInstance()->GetLeftThumb().x) > 0.01f) {
 		m_position += GetRight() * speed * XInput::GetInstance()->GetLeftThumb().x;

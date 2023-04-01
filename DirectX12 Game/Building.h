@@ -3,6 +3,7 @@
 #include"ModelLoader.h"
 #include<memory>
 
+//建物オブジェクト
 class Building :public GameObject {
 public:
 	struct Index {

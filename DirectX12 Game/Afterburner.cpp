@@ -1,5 +1,7 @@
 #include"Afterburner.h"
 #include"ModelLoader.h"
+#include"XMMath.h"
+#include <cstdlib>
 
 void Afterburner::Initialize() {
 	//定数バッファの作成
@@ -9,7 +11,14 @@ void Afterburner::Initialize() {
 	m_scale = XMFLOAT3(1, 1, 1);
 }
 void Afterburner::Update() {
+	XMFLOAT3 maxScale = XMFLOAT3(0.24f, 0.24f, 0.24f);
+	XMFLOAT3 minScale = XMFLOAT3(0.01f, 0.01f, 0.01f);
 
+	//ランダムでスケールを少し変える
+	int randomInt = rand() % 10000;//%10にすると10パターンの値にしかならないので10000(桁数はテキトー)
+	float randomFloat = ((float)randomInt) / 100000;//0～0.1の値にする
+
+	m_scale = (maxScale * m_boosterRatio + minScale * (1 - m_boosterRatio))*(1- randomFloat);
 }
 void Afterburner::Draw() {
 	////マトリクス設定
