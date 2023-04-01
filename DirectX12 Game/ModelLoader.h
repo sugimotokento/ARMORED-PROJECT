@@ -11,6 +11,14 @@ class ModelLoader {
 public:
 	struct Index {
 
+		//name			:enumのMODEL_ID_○○_ID_から先の名前を設定する
+		//modelName		:モデルファイルの"asset/model/"から先のパスを指定する
+		//albedoTex		:カラーマップのL"asset/Texture/"から先のパスを指定する
+		//normalTex		:法線マップのL"asset/Texture/"から先のパスを指定する			(必要ない場合はL"White.png"を指定する)
+		//occlusionTex	:オクルージョンマップのL"asset/Texture/"から先のパスを指定する	(必要ない場合はL"White.png"を指定する)
+		//metalTex		:メタルマップのL"asset/Texture/"から先のパスを指定する			(必要ない場合はL"Black.png"を指定する)
+		//emmisionTex	:エミッションマップのL"asset/Texture/"から先のパスを指定する	(必要ない場合はL"Black.png"を指定する)
+
 		//ロボットモデルID
 #define MODEL_ROBOT_ID(name, modelName, albedoTex, normalTex, occlusionTex, metalTex, emmisionTex)
 #define MODEL_ROBOT_ID_TABLE\
@@ -28,8 +36,8 @@ public:
 		//武器モデルID
 #define MODEL_WEAPON_ID(name, modelName, albedoTex, normalTex, occlusionTex, metalTex, emmisionTex)
 #define MODEL_WEAPON_ID_TABLE\
-		MODEL_WEAPON_ID(ASSAULT_RIFLE, "Weapon/Rifle/ScifiRifle2Static.fbx", L"Weapon/Rifle/ScifiRifle2BlackAlbedo.tga", L"Weapon/Rifle/ScifiRifle2Normal.tga", L"Weapon/Rifle/ScifiRifle2AO.jpg", L"Weapon/Rifle/ScifiRifle2PBRMetalness.jpg", L"Black.png")\
-		MODEL_WEAPON_ID(SHOTGUN, "Weapon/Shotgun/Shotgun.fbx", L"Weapon/Shotgun/T_DN_Shotgun_Albedo.tga", L"Weapon/Shotgun/T_DN_Shotgun_NormalMap.png", L"Weapon/Shotgun/T_DN_Shotgun_Occlusion.png", L"Weapon/Shotgun/T_DN_Shotgun_Metallic.tga", L"Weapon/Shotgun/T_DN_Shotgun_Emission.png")\
+		MODEL_WEAPON_ID(ASSAULT_RIFLE,	"Weapon/Rifle/ScifiRifle2Static.fbx",	L"Weapon/Rifle/ScifiRifle2BlackAlbedo.tga", L"Weapon/Rifle/ScifiRifle2Normal.tga",			L"Weapon/Rifle/ScifiRifle2AO.jpg",				L"Weapon/Rifle/ScifiRifle2PBRMetalness.jpg", L"Black.png")\
+		MODEL_WEAPON_ID(SHOTGUN,		"Weapon/Shotgun/Shotgun.fbx",			L"Weapon/Shotgun/T_DN_Shotgun_Albedo.tga",	L"Weapon/Shotgun/T_DN_Shotgun_NormalMap.png",	L"Weapon/Shotgun/T_DN_Shotgun_Occlusion.png",	L"Weapon/Shotgun/T_DN_Shotgun_Metallic.tga", L"Weapon/Shotgun/T_DN_Shotgun_Emission.png")\
 
 
 
@@ -53,6 +61,11 @@ public:
 		MODEL_FIELD_ID(BUILDING7,  "Field/Building/building8-variation2-lod1.fbx",	L"Field/Building/building8_color.png",	L"Field/Building/building8_normal.png",  L"White.png", L"Field/Building/building8_metallic.png",	L"Black.png")\
 		MODEL_FIELD_ID(BUILDING8,  "Field/Building/building10.fbx",					L"Field/Building/building10_color.png",	L"Field/Building/building10_normal.png", L"White.png", L"Field/Building/building10_metallic.png",	L"Black.png")\
 		MODEL_FIELD_ID(BUILDING9,  "Field/Building/building10-variant1-lod1.fbx",	L"Field/Building/building10_color.png",	L"Field/Building/building10_normal.png", L"White.png", L"Field/Building/building10_metallic.png",	L"Black.png")\
+
+		//エフェクトモデルID
+#define MODEL_EFFECT_ID(name, modelName, albedoTex, normalTex, occlusionTex, metalTex, emmisionTex)
+#define MODEL_EFFECT_ID_TABLE\
+		MODEL_EFFECT_ID(AFTERBURNER, "Effect/Afterburner.fbx", L"Effect/AfterburnerAlbedo.png", L"White.png", L"White.png", L"Black.png", L"Effect/AfterburnerEmmision.png")\
 
 
 
@@ -90,6 +103,10 @@ public:
 #define MODEL_FIELD_ID(name, modelName, albedoTex, normalTex, occlusionTex, metalTex, emmisionTex)MODEL_ID_FIELD_##name,
 			MODEL_FIELD_ID_TABLE
 
+			//エフェクトモデルID
+#undef MODEL_EFFECT_ID
+#define MODEL_EFFECT_ID(name, modelName, albedoTex, normalTex, occlusionTex, metalTex, emmisionTex)MODEL_ID_EFFECT_##name,
+			MODEL_EFFECT_ID_TABLE
 			MODEL_MAX
 		};
 
@@ -128,12 +145,20 @@ public:
 			str+=##modelName;\
 			return str;\
 
+			//エフェクトモデルID
+#undef MODEL_EFFECT_ID
+#define MODEL_EFFECT_ID(name, modelName, albedoTex, normalTex, occlusionTex, metalTex, emmisionTex)\
+		case MODEL_ID_EFFECT_##name:\
+			str+=##modelName;\
+			return str;\
+
 
 			switch (id) {
 				MODEL_ROBOT_ID_TABLE
 				MODEL_WEAPON_ID_TABLE
 				MODEL_BULLET_ID_TABLE
 				MODEL_FIELD_ID_TABLE
+				MODEL_EFFECT_ID_TABLE
 			}
 
 			return " ";
@@ -194,11 +219,23 @@ public:
 			return str[texID];\
 
 
+			//フィールドモデルID
+#undef MODEL_EFFECT_ID
+#define MODEL_EFFECT_ID(name, modelName, albedoTex, normalTex, occlusionTex, metalTex, emmisionTex)\
+		case MODEL_ID_EFFECT_##name:\
+			str[0]+=##albedoTex;\
+			str[1]+=##normalTex;\
+			str[2]+=##occlusionTex;\
+			str[3]+=##metalTex;\
+			str[4]+=##emmisionTex;\
+			return str[texID];\
+
 			switch (modelID) {
 				MODEL_ROBOT_ID_TABLE
 				MODEL_WEAPON_ID_TABLE
 				MODEL_BULLET_ID_TABLE
 				MODEL_FIELD_ID_TABLE
+				MODEL_EFFECT_ID_TABLE
 			}
 
 			return L" ";

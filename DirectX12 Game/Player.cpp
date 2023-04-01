@@ -12,7 +12,7 @@
 #include"Weapon.h"
 #include"Shotgun.h"
 #include"AssaultRifle.h"
-
+#include"Afterburner.h"
 #ifdef _DEBUG
 #include"ImguiRenderer.h"
 #endif // _DEBUG
@@ -27,6 +27,7 @@ void Player::Initialize() {
 	m_scale = XMFLOAT3(1, 1, 1);
 	m_rotation = XMFLOAT3(0, 0, 0);
 
+	//腕の初期化
 	m_arm[0] = std::make_unique<Arm>();
 	m_arm[1] = std::make_unique<Arm>();
 	m_arm[0].get()->Initialize();
@@ -34,6 +35,7 @@ void Player::Initialize() {
 	m_arm[0].get()->Setting(Arm::Index::LEFT, this);
 	m_arm[1].get()->Setting(Arm::Index::RIGHT, this);
 
+	//武器の初期化
 	m_lightWeapon[Index::LEFT] = new Shotgun();
 	m_lightWeapon[Index::RIGHT] = new AssaultRifle();
 	m_lightWeapon[Index::LEFT]->Initialize();
@@ -43,6 +45,13 @@ void Player::Initialize() {
 	m_lightWeapon[Index::LEFT]->SetPosition(XMFLOAT3(0, 0, 0.78f));
 	m_lightWeapon[Index::RIGHT]->SetPosition(XMFLOAT3(0, 0, 0.78f));
 
+	//エフェクト初期化
+	m_afterburner = new Afterburner();
+	m_afterburner->Initialize();
+	m_afterburner->SetParent(this);
+	m_afterburner->SetPosition(XMFLOAT3(0, 2.857f, -0.143f));
+	m_afterburner->SetScale(XMFLOAT3(0.24f, 0.24f, 0.24f));
+
 	//モデルのロードリクエスト
 	ModelLoader::GetInstance()->LoadRequest(ModelLoader::Index::MODEL_ID_ROBOT_DREADNOUGHT_HEAD);
 	ModelLoader::GetInstance()->LoadRequest(ModelLoader::Index::MODEL_ID_ROBOT_DREADNOUGHT_EYE);
@@ -51,11 +60,13 @@ void Player::Initialize() {
 	ModelLoader::GetInstance()->LoadRequest(ModelLoader::Index::MODEL_ID_ROBOT_DREADNOUGHT_SHOULDER);
 	ModelLoader::GetInstance()->LoadRequest(ModelLoader::Index::MODEL_ID_ROBOT_DREADNOUGHT_UPPER);
 
+
+	//定数バッファの作成
 	Renderer::GetInstance()->CreateConstantBuffer(m_constantBuffer);
 
 #ifdef _DEBUG
-	//std::function<bool()> f = std::bind(&Player::ImguiDebug, this);
-	//ImguiRenderer::GetInstance()->AddFunction(f);
+	std::function<bool()> f = std::bind(&Player::ImguiDebug, this);
+	ImguiRenderer::GetInstance()->AddFunction(f);
 #endif // _DEBUG
 }
 
@@ -66,11 +77,11 @@ void Player::Update() {
 	Move();
 	Rotation();
 	Shot();
-	FieldCollision();
 	m_arm[0].get()->Update();
 	m_arm[1].get()->Update();
 	m_lightWeapon[Index::LEFT]->Update();
 	m_lightWeapon[Index::RIGHT]->Update();
+	m_afterburner->Update();
 }
 void Player::Draw() {
 	////マトリクス設定
@@ -124,22 +135,28 @@ void Player::Draw() {
 
 	m_lightWeapon[Index::LEFT]->Draw();
 	m_lightWeapon[Index::RIGHT]->Draw();
-
+	m_afterburner->Draw();
 }
 void Player::Finalize() {
 	delete m_lightWeapon[Index::LEFT];
 	delete m_lightWeapon[Index::RIGHT];
+	delete m_afterburner;
 }
 
 
 
 void Player::Move() {
+	float deceleration =max(0.1f, 1-XInput::GetInstance()->GetLeftTrigger());
+	float acceleration = XInput::GetInstance()->GetRightTrigger();
+	float boostSpeed = BOOST_SPEED_MAX * acceleration;
+	float speed = (0.5f* deceleration + boostSpeed);
+
 
 	if (fabsf(XInput::GetInstance()->GetLeftThumb().x) > 0.01f) {
-		m_position += GetRight() * 0.5f * XInput::GetInstance()->GetLeftThumb().x;
+		m_position += GetRight() * speed * XInput::GetInstance()->GetLeftThumb().x;
 	}
 	if (fabsf(XInput::GetInstance()->GetLeftThumb().y) > 0.01f) {
-		m_position += GetForward() * 0.5f * XInput::GetInstance()->GetLeftThumb().y;
+		m_position += GetForward() * speed * XInput::GetInstance()->GetLeftThumb().y;
 	}
 }
 void Player::Rotation() {
@@ -157,35 +174,19 @@ void Player::Shot() {
 		m_lightWeapon[Index::RIGHT]->Shot();
 	}
 }
-void Player::FieldCollision() {
-	//Field* field = SceneManager::GetInstance()->GetScene()->GetGameObject<Field>();
-	//for (int i = 0; i < 2; i++) {
-	//	for (int j = 0; j < Field::Size::WIDTH / 2; j++) {
-	//		if (Collision::Box(m_cube, field->GetCubeX(i, j))) {
-	//			XMFLOAT3 pushVec = Collision::GetBoxPushVec(m_cube, field->GetCubeX(i, j));
-	//			m_position.x += pushVec.x;
-	//			m_position.z += pushVec.z;
-	//		}
-	//	}
-	//}
-	//for (int i = 0; i < 2; i++) {
-	//	for (int j = 0; j < Field::Size::WIDTH / 2 - 2; j++) {
-	//		if (Collision::Box(m_cube, field->GetCubeY(i, j))) {
-	//			XMFLOAT3 pushVec = Collision::GetBoxPushVec(m_cube, field->GetCubeY(i, j));
-	//			m_position.x += pushVec.x;
-	//			m_position.z += pushVec.z;
-	//		}
-	//	}
-	//}
-}
 
 
 #ifdef _DEBUG
 bool Player::ImguiDebug() {
-	ImGui::Begin("Player");
+	//ImGui::Begin("Player");
+	//static float pos[3];
+	//static float scale = 1;
+	//ImGui::SliderFloat3("AfterburnerOffset", pos, -5, 5);
+	//m_afterburner->SetPosition(XMFLOAT3(pos[0], pos[1], pos[2]));
 
-	
-	ImGui::End();
+	//ImGui::SliderFloat("Scale", &scale, 0, 5);
+	//m_afterburner->SetScale(XMFLOAT3(scale, scale, scale));
+	//ImGui::End();
 	return GetIsDestroy();
 }
 #endif // _DEBUG

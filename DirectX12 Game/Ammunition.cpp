@@ -2,13 +2,17 @@
 #include"XMMath.h"
 #include"ImguiRenderer.h"
 #include"ModelLoader.h"
+#include"XMMath.h"
+#include<math.h>
 
 void Ammunition::Initialize() {
 	ModelLoader::GetInstance()->LoadRequest(ModelLoader::Index::MODEL_ID_BULLET_AMMUNITION);
 	Renderer::GetInstance()->CreateConstantBuffer(m_constantBuffer);
 
-	m_scale = XMFLOAT3(0.03f, 0.03f, 0.16f);
+	m_scale = XMFLOAT3(0.06f, 0.06f, 0.32f);
 
+	XMVECTOR quat = XMQuaternionIdentity();
+	XMStoreFloat4(&m_quaternion, quat);
 
 #ifdef _DEBUG
 	//std::function<bool()> f = std::bind(&Ammunition::ImguiDebug, this);
@@ -34,7 +38,7 @@ void Ammunition::Draw() {
 	XMMATRIX projection = CameraManager::GetInstance()->GetMainProjectionMatrix();
 
 	XMMATRIX trans = XMMatrixTranslation(m_position.x, m_position.y, m_position.z);
-	XMMATRIX rot = XMMatrixRotationRollPitchYaw(m_rotation.x, m_rotation.y, m_rotation.z);
+	XMMATRIX rot = XMMatrixRotationQuaternion(XMLoadFloat4(&m_quaternion));
 	XMMATRIX size = XMMatrixScaling(m_scale.x, m_scale.y, m_scale.z);
 	XMMATRIX world = size * rot * trans;
 	XMStoreFloat4x4(&m_worldMTX, world);
@@ -71,6 +75,25 @@ void Ammunition::Draw() {
 }
 void Ammunition::Finalize() {
 	m_constantBuffer.Get()->Release();
+}
+
+void Ammunition::SetSettingItem(SettingItem item) {
+	m_moveDir = item.moveDir;
+	m_position = item.position;
+	m_rotation = item.rotation;
+	m_speed = item.speed;
+	m_range = item.range;
+
+	m_startPosition = item.position;
+
+	XMFLOAT3 forward = XMFLOAT3(0,0,1);
+	float dot = XMMath::Dot(forward, m_moveDir);
+	float angle = acosf(dot);
+	if (fabsf(angle) < 0.01f)return;
+
+	XMFLOAT3 axis = XMMath::Cross(forward, m_moveDir);
+	axis = XMMath::Normalize(axis);
+	m_quaternion = XMMath::QuaternionRotateAxis(m_quaternion, axis, angle);
 }
 
 

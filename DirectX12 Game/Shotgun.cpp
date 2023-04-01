@@ -22,7 +22,7 @@ void Shotgun::Initialize() {
 	m_bulletOffset.y = 0.275f;
 	m_bulletOffset.z = 0.29f;
 	m_bulletSetting.range = 300;
-	m_bulletSetting.speed = 10;
+	m_bulletSetting.speed = 50;
 	m_intervalMax = 15;
 
 	Renderer::GetInstance()->CreateConstantBuffer(m_constantBuffer);

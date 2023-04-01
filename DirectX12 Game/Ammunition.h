@@ -16,9 +16,10 @@ public:
 
 private:
 	ComPtr<ID3D12Resource> m_constantBuffer;
-
 	XMFLOAT3 m_startPosition;
 	XMFLOAT3 m_moveDir;
+	XMFLOAT4 m_quaternion;
+
 	float m_speed = 1;
 	float m_range = 100;
 
@@ -28,15 +29,7 @@ public:
 	void Draw() final override;
 	void Finalize() final override;
 
-	void SetSettingItem(SettingItem item) {
-		m_moveDir = item.moveDir;
-		m_position = item.position;
-		m_rotation = item.rotation;
-		m_speed = item.speed;
-		m_range = item.range;
-
-		m_startPosition = item.position;
-	}
+	void SetSettingItem(SettingItem item);
 
 #ifdef _DEBUG
 	bool ImguiDebug();

@@ -10,7 +10,7 @@
 class XMMath {
 public:
 	static XMFLOAT3 Normalize(const XMFLOAT3& vec);
-	static XMFLOAT3 Dot(const XMFLOAT3& vec1, const XMFLOAT3& vec2);
+	static float Dot(const XMFLOAT3& vec1, const XMFLOAT3& vec2);
 	static XMFLOAT3 Cross(const XMFLOAT3& vec1, const XMFLOAT3& vec2);
 	static float Length(const XMFLOAT3& vec);
 

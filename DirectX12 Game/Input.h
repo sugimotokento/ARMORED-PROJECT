@@ -47,8 +47,8 @@ public:
 	XMFLOAT2 GetRightThumb();
 	XMFLOAT2 GetLeftThumb();
 
-	float GetRightTrigger() { return m_inputState.Gamepad.bRightTrigger; }
-	float GetLeftTrigger() { return m_inputState.Gamepad.bLeftTrigger; }
+	float GetRightTrigger() { return ((float)m_inputState.Gamepad.bRightTrigger)/255; }
+	float GetLeftTrigger() { return ((float)m_inputState.Gamepad.bLeftTrigger)/255; }
 
 	XINPUT_STATE GetInputState() { return m_inputState; }
 	

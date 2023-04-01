@@ -19,7 +19,7 @@ void AssaultRifle::Initialize() {
 	m_bulletOffset.y = 0.149f;
 	m_bulletOffset.z = 2.0f;
 	m_bulletSetting.range = 1000;
-	m_bulletSetting.speed = 10;
+	m_bulletSetting.speed = 50;
 	m_intervalMax = 3.5f;
 
 	Renderer::GetInstance()->CreateConstantBuffer(m_constantBuffer);
