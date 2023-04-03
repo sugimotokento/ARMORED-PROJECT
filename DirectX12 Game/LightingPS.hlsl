@@ -22,7 +22,7 @@ float Random(float2 uv)
 float ScreenSpaceAnbientOcclusion(PS_INPUT input)
 {
     float ao = 1;
-    int loop = 20;
+    int loop = 15;
     float4 normal = normalTexture.Sample(sampler0, input.TexCoord);
     float depth = depthTexture.Sample(sampler0, input.TexCoord).r;
 
@@ -61,9 +61,9 @@ float4 ScreenSpaceReflection(PS_INPUT input, float4 color)
     refVec = normalize(refVec);
 
 
-    for (int i = 0; i < 50; i++)
+    for (int i = 0; i < 25; i++)
     {
-        position.xyz += (refVec.xyz);
+        position.xyz += (refVec.xyz)*2;
         position.w = 1;
         float4 uv = mul(position, VP);
         uv.xy /= uv.w;
@@ -87,7 +87,7 @@ float4 Bloom(PS_INPUT input)
 {
 	
     float4 bloom = 0;
-    int loop = 10;
+    int loop = 7;
     for (int y = -loop; y < loop + 1; y++)
     {
         for (int x = -loop; x < loop + 1; x++)

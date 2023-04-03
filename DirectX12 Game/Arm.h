@@ -5,7 +5,7 @@
 class Arm :public GameObject{
 public:
 	struct Index {
-		enum ArmSide {
+		enum ArmModelID {
 			LEFT = ModelLoader::Index::ModelID::MODEL_ID_ROBOT_DREADNOUGHT_HAND_L,
 			RIGHT= ModelLoader::Index::ModelID::MODEL_ID_ROBOT_DREADNOUGHT_HAND_R,
 			MAX=2
@@ -13,7 +13,7 @@ public:
 	};
 private:
 	ComPtr<ID3D12Resource> m_constantBuffer;
-	Index::ArmSide m_side;
+	Index::ArmModelID m_side;
 
 	
 public:
@@ -23,6 +23,6 @@ public:
 	void Draw() final override;
 	void Finalize() final override;
 
-	void SetSide(Index::ArmSide side);
+	void SetModelID(Index::ArmModelID side);
 
 };

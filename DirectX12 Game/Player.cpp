@@ -31,8 +31,8 @@ void Player::Initialize() {
 	Arm* arm[Arm::Index::MAX];
 	arm[Index::LEFT] = AddChild<Arm>();
 	arm[Index::RIGHT] = AddChild<Arm>();
-	arm[Index::LEFT]->SetSide(Arm::Index::LEFT);
-	arm[Index::RIGHT]->SetSide(Arm::Index::RIGHT);
+	arm[Index::LEFT]->SetModelID(Arm::Index::ArmModelID::LEFT);
+	arm[Index::RIGHT]->SetModelID(Arm::Index::ArmModelID::RIGHT);
 
 	//武器を腕の子オブジェクトとして追加
 	m_lightWeapon[Index::LEFT] = arm[Index::LEFT]->AddChild<Shotgun>();

@@ -6,15 +6,15 @@
 Arm::Arm() {
 
 }
-void Arm::SetSide(Index::ArmSide side) {
+void Arm::SetModelID(Index::ArmModelID side) {
 	m_side = side;
 
-	if (m_side == Arm::Index::ArmSide::LEFT) {
+	if (m_side == Arm::Index::ArmModelID::LEFT) {
 		m_position = XMFLOAT3(-0.822f, 2.511f, 0.156f);
 		//m_position = XMFLOAT3(-0, 0, 0);
 		ModelLoader::GetInstance()->LoadRequest(ModelLoader::Index::MODEL_ID_ROBOT_DREADNOUGHT_HAND_L);
 	}
-	else if (m_side == Arm::Index::ArmSide::RIGHT) {
+	else if (m_side == Arm::Index::ArmModelID::RIGHT) {
 		m_position = XMFLOAT3(0.822f, 2.511f, 0.156f);
 		//m_position = XMFLOAT3(0, 0, 0);
 		ModelLoader::GetInstance()->LoadRequest(ModelLoader::Index::MODEL_ID_ROBOT_DREADNOUGHT_HAND_R);

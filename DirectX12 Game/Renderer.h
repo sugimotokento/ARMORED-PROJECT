@@ -55,6 +55,10 @@ public:
 
 
 		//ここを増やすとパイプラインステートが増える
+		//name:			:enumのPIPELINE_STATE_ID_から先の名前を設定する
+		//vsFileName	:頂点シェーダーのファイル名を設定する
+		//psFileName	:ピクセルシェーダのファイル名を設定する
+		//resourceNum	:使用するRtvResourceの数を設定する
 #define PIPELINE_STATE_ID(name, vsFileName, psFileName, resourceNum)
 #define PIPELINE_STATE_ID_TABLE\
 		PIPELINE_STATE_ID(GEOMETRY,			GeometryVS.cso,		 GeometryPS.cso,		RTV_RESOURCE_INDEX_GEOMETRY_MAX)\
