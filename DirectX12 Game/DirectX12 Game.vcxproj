@@ -179,6 +179,7 @@
     <ClCompile Include="PlayerUI.cpp" />
     <ClCompile Include="PolygonDeferred.cpp" />
     <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="Save.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="ShadowCamera.cpp" />
@@ -229,6 +230,7 @@
     <ClInclude Include="PlayerUI.h" />
     <ClInclude Include="PolygonDeferred.h" />
     <ClInclude Include="Renderer.h" />
+    <ClInclude Include="Save.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="ShadowCamera.h" />
