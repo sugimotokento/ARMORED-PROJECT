@@ -159,6 +159,7 @@
     <ClCompile Include="DebugMenuScene.cpp" />
     <ClCompile Include="DebugWeaponViewerScene.cpp" />
     <ClCompile Include="Field.cpp" />
+    <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="ImguiRenderer.cpp" />
     <ClCompile Include="Imgui\imgui.cpp" />

@@ -9,12 +9,12 @@ Arm::Arm() {
 void Arm::SetSide(Index::ArmSide side) {
 	m_side = side;
 
-	if (m_side == Index::ArmSide::LEFT) {
+	if (m_side == Arm::Index::ArmSide::LEFT) {
 		m_position = XMFLOAT3(-0.822f, 2.511f, 0.156f);
 		//m_position = XMFLOAT3(-0, 0, 0);
 		ModelLoader::GetInstance()->LoadRequest(ModelLoader::Index::MODEL_ID_ROBOT_DREADNOUGHT_HAND_L);
 	}
-	else if (m_side == Index::ArmSide::RIGHT) {
+	else if (m_side == Arm::Index::ArmSide::RIGHT) {
 		m_position = XMFLOAT3(0.822f, 2.511f, 0.156f);
 		//m_position = XMFLOAT3(0, 0, 0);
 		ModelLoader::GetInstance()->LoadRequest(ModelLoader::Index::MODEL_ID_ROBOT_DREADNOUGHT_HAND_R);
@@ -30,7 +30,7 @@ void Arm::Initialize() {
 
 }
 void Arm::Update() {
-
+	GameObject::Update();
 }
 void Arm::Draw() {
 	////マトリクス設定
@@ -78,9 +78,11 @@ void Arm::Draw() {
 		ModelLoader::GetInstance()->Draw(ModelLoader::Index::MODEL_ID_ROBOT_DREADNOUGHT_HAND_L);
 	else
 		ModelLoader::GetInstance()->Draw(ModelLoader::Index::MODEL_ID_ROBOT_DREADNOUGHT_HAND_R);
+
+	GameObject::Draw();
 }
 void Arm::Finalize() {
-
+	GameObject::Finalize();
 }
 
 

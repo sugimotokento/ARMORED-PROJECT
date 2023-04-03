@@ -1,6 +1,7 @@
 #pragma once
 #include"Main.h"
 #include<vector>
+#include<memory>
 
 class GameObject {
 private:
@@ -12,19 +13,32 @@ protected:
 	XMFLOAT3 m_rotation = XMFLOAT3(0, 0, 0);
 	XMFLOAT4X4 m_worldMTX=XMFLOAT4X4(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 	GameObject* m_parent=nullptr;
+	std::vector <std::unique_ptr<GameObject>> m_child;
 
 	bool GetIsDestroy() { return m_isDestroy; }
 public:
 	GameObject() {}
-	virtual void Initialize() = 0;
-	virtual void Update() = 0;
-	virtual void Draw() = 0;
-	virtual void Finalize() = 0;
+	virtual void Initialize();
+	virtual void Update();
+	virtual void Draw();
+	virtual void Finalize();
 
 	void SetPosition(XMFLOAT3 position) { m_position = position; }
 	void SetScale(XMFLOAT3 scale) { m_scale = scale; }
 	void SetRotation(XMFLOAT3 rotation) { m_rotation = rotation; }
 	void SetParent(GameObject* parent) { m_parent = parent; }
+	void CreateWorldMTX(XMMATRIX& transMTX, XMMATRIX& scaleMTX, XMMATRIX& rotMTX) {
+		XMMATRIX world;
+		if (m_parent != nullptr) {
+			XMFLOAT4X4 parentWorldTemp = m_parent->GetWorldMTX();
+			XMMATRIX parentWorld = XMLoadFloat4x4(&parentWorldTemp);
+			world = (scaleMTX * rotMTX * transMTX) * parentWorld;
+		}
+		else {
+			world = scaleMTX * rotMTX * transMTX;
+		}
+		XMStoreFloat4x4(&m_worldMTX, world);
+	}
 
 	XMFLOAT3 GetPosition() { return m_position; }
 	XMFLOAT3 GetWorldPosition() { return XMFLOAT3(m_worldMTX._41, m_worldMTX._42, m_worldMTX._43); }
@@ -32,6 +46,7 @@ public:
 	XMFLOAT3 GetRotation() { return m_rotation; }
 	XMFLOAT4X4 GetWorldMTX() { return m_worldMTX; }
 	GameObject* GetParent() { return m_parent; }
+	GameObject* GetChild(int i) { return m_child[i].get(); }
 
 	XMFLOAT3 GetRight() {
 		XMFLOAT3 out;
@@ -73,18 +88,7 @@ public:
 		return out;
 	}
 
-	void CreateWorldMTX(XMMATRIX& transMTX, XMMATRIX& scaleMTX, XMMATRIX& rotMTX) {
-		XMMATRIX world;
-		if (m_parent != nullptr) {
-			XMFLOAT4X4 parentWorldTemp = m_parent->GetWorldMTX();
-			XMMATRIX parentWorld = XMLoadFloat4x4(&parentWorldTemp);
-			world = (scaleMTX * rotMTX * transMTX) * parentWorld;
-		}
-		else {
-			world = scaleMTX * rotMTX * transMTX;
-		}
-		XMStoreFloat4x4(&m_worldMTX, world);
-	}
+
 	void SetDestroy() { m_isDestroy = true; }
 	bool Destroy() { 
 		if (m_isDestroy) {
@@ -95,5 +99,14 @@ public:
 		else {
 			return false;
 		}
+	}
+
+	template <typename T>
+	T* AddChild() {
+		m_child.push_back(std::make_unique<T>());
+		m_child[m_child.size() - 1].get()->Initialize();
+		m_child[m_child.size() - 1].get()->SetParent(this);
+		return (T*)m_child[m_child.size() - 1].get();
+
 	}
 };

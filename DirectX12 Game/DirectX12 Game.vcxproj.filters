@@ -235,6 +235,9 @@
     <ClCompile Include="Afterburner.cpp">
       <Filter>ソース ファイル\Object\GameObject\Object3D\Effect</Filter>
     </ClCompile>
+    <ClCompile Include="GameObject.cpp">
+      <Filter>ソース ファイル\Object\GameObject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main.h">

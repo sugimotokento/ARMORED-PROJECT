@@ -21,7 +21,6 @@ public:
 	const int MAX_HP = 5;
 
 private:
-	std::unique_ptr<Arm> m_arm[Index::Side::MAX];
 	Weapon* m_lightWeapon[Index::Side::MAX];
 	Afterburner* m_afterburner;
 	ComPtr<ID3D12Resource> m_constantBuffer;

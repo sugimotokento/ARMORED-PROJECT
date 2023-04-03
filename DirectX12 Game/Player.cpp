@@ -27,32 +27,24 @@ void Player::Initialize() {
 	m_scale = XMFLOAT3(1, 1, 1);
 	m_rotation = XMFLOAT3(0, 0, 0);
 
-	//腕の初期化
-	m_arm[0] = std::make_unique<Arm>();
-	m_arm[1] = std::make_unique<Arm>();
-	m_arm[0].get()->Initialize();
-	m_arm[1].get()->Initialize();
-	m_arm[0].get()->SetSide(Arm::Index::LEFT);
-	m_arm[1].get()->SetSide(Arm::Index::RIGHT);
-	m_arm[0].get()->SetParent(this);
-	m_arm[1].get()->SetParent(this);
+	//腕を子オブジェクトとして追加
+	Arm* arm[Arm::Index::MAX];
+	arm[Index::LEFT] = AddChild<Arm>();
+	arm[Index::RIGHT] = AddChild<Arm>();
+	arm[Index::LEFT]->SetSide(Arm::Index::LEFT);
+	arm[Index::RIGHT]->SetSide(Arm::Index::RIGHT);
 
-	//武器の初期化
-	m_lightWeapon[Index::LEFT] = new Shotgun();
-	m_lightWeapon[Index::RIGHT] = new AssaultRifle();
-	m_lightWeapon[Index::LEFT]->Initialize();
-	m_lightWeapon[Index::RIGHT]->Initialize();
-	m_lightWeapon[Index::LEFT]->SetParent(m_arm[Index::LEFT].get());
-	m_lightWeapon[Index::RIGHT]->SetParent(m_arm[Index::RIGHT].get());
+	//武器を腕の子オブジェクトとして追加
+	m_lightWeapon[Index::LEFT] = arm[Index::LEFT]->AddChild<Shotgun>();
+	m_lightWeapon[Index::RIGHT] = arm[Index::RIGHT]->AddChild<AssaultRifle>();
 	m_lightWeapon[Index::LEFT]->SetPosition(XMFLOAT3(0, 0, 0.78f));
 	m_lightWeapon[Index::RIGHT]->SetPosition(XMFLOAT3(0, 0, 0.78f));
 
-	//エフェクト初期化
-	m_afterburner = new Afterburner();
-	m_afterburner->Initialize();
-	m_afterburner->SetParent(this);
+
+	//エフェクトを子オブジェクトとして追加
+	m_afterburner = AddChild<Afterburner>();
 	m_afterburner->SetPosition(XMFLOAT3(0, 2.857f, -0.143f));
-	m_afterburner->SetScale(XMFLOAT3(0.24f, 0.24f, 0.24f));
+
 
 	//モデルのロードリクエスト
 	ModelLoader::GetInstance()->LoadRequest(ModelLoader::Index::MODEL_ID_ROBOT_DREADNOUGHT_HEAD);
@@ -79,11 +71,7 @@ void Player::Update() {
 	Move();
 	Rotation();
 	Shot();
-	m_arm[0].get()->Update();
-	m_arm[1].get()->Update();
-	m_lightWeapon[Index::LEFT]->Update();
-	m_lightWeapon[Index::RIGHT]->Update();
-	m_afterburner->Update();
+	GameObject::Update();
 }
 void Player::Draw() {
 	////マトリクス設定
@@ -133,17 +121,10 @@ void Player::Draw() {
 	ModelLoader::GetInstance()->Draw(ModelLoader::Index::MODEL_ID_ROBOT_DREADNOUGHT_UPPER);
 	ModelLoader::GetInstance()->Draw(ModelLoader::Index::MODEL_ID_ROBOT_DREADNOUGHT_EYE);
 
-	m_arm[Index::LEFT].get()->Draw();
-	m_arm[Index::RIGHT].get()->Draw();
-
-	m_lightWeapon[Index::LEFT]->Draw();
-	m_lightWeapon[Index::RIGHT]->Draw();
-	m_afterburner->Draw();
+	GameObject::Draw();
 }
 void Player::Finalize() {
-	delete m_lightWeapon[Index::LEFT];
-	delete m_lightWeapon[Index::RIGHT];
-	delete m_afterburner;
+	GameObject::Finalize();
 }
 
 
