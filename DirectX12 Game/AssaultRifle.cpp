@@ -26,8 +26,8 @@ void AssaultRifle::Initialize() {
 
 
 #ifdef _DEBUG
-	/*std::function<bool()> f = std::bind(&AssaultRifle::ImguiDebug, this);
-	ImguiRenderer::GetInstance()->AddFunction(f);*/
+	std::function<bool()> f = std::bind(&AssaultRifle::ImguiDebug, this);
+	ImguiRenderer::GetInstance()->AddFunction(f);
 #endif // _DEBUG
 }
 void AssaultRifle::Update() {

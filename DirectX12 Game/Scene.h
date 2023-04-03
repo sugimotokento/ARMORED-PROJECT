@@ -6,6 +6,7 @@ class GameObject;
 class Scene {
 
 public:
+	//ÉåÉCÉÑÅ[ÇÃí«â¡ÇÕÇ±Ç±Ç≈çsÇ§
 #define LAYER_ID(name)
 #define LAYER_ID_TABLE\
 		LAYER_ID(GEOMETRY)\
