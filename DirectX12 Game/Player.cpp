@@ -32,8 +32,10 @@ void Player::Initialize() {
 	m_arm[1] = std::make_unique<Arm>();
 	m_arm[0].get()->Initialize();
 	m_arm[1].get()->Initialize();
-	m_arm[0].get()->Setting(Arm::Index::LEFT, this);
-	m_arm[1].get()->Setting(Arm::Index::RIGHT, this);
+	m_arm[0].get()->SetSide(Arm::Index::LEFT);
+	m_arm[1].get()->SetSide(Arm::Index::RIGHT);
+	m_arm[0].get()->SetParent(this);
+	m_arm[1].get()->SetParent(this);
 
 	//武器の初期化
 	m_lightWeapon[Index::LEFT] = new Shotgun();
@@ -94,8 +96,9 @@ void Player::Draw() {
 	XMMATRIX trans = XMMatrixTranslation(m_position.x, m_position.y, m_position.z);
 	XMMATRIX rot = XMMatrixRotationRollPitchYaw(m_rotation.x, m_rotation.y, m_rotation.z);
 	XMMATRIX size = XMMatrixScaling(m_scale.x, m_scale.y, m_scale.z);
-	XMMATRIX world = size * rot * trans;
-	XMStoreFloat4x4(&m_worldMTX, world);
+	CreateWorldMTX(trans, rot, size);
+	XMMATRIX world = XMLoadFloat4x4(&m_worldMTX);
+
 
 	//定数バッファ設定
 	ConstantBuffer* constant;

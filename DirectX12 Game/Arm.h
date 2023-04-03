@@ -14,7 +14,6 @@ public:
 private:
 	ComPtr<ID3D12Resource> m_constantBuffer;
 	Index::ArmSide m_side;
-	GameObject* m_parent;
 
 	
 public:
@@ -24,6 +23,6 @@ public:
 	void Draw() final override;
 	void Finalize() final override;
 
-	void Setting(Index::ArmSide side, GameObject* parent);
+	void SetSide(Index::ArmSide side);
 
 };

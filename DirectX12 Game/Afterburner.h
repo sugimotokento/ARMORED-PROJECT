@@ -4,7 +4,6 @@
 class  Afterburner :public GameObject {
 private:
 	ComPtr<ID3D12Resource> m_constantBuffer;
-	GameObject* m_parent;
 	float m_boosterRatio = 1;
 
 public:

@@ -33,15 +33,9 @@ void Afterburner::Draw() {
 	XMMATRIX trans = XMMatrixTranslation(m_position.x, m_position.y, m_position.z);
 	XMMATRIX rot = XMMatrixRotationRollPitchYaw(m_rotation.x, m_rotation.y, m_rotation.z);
 	XMMATRIX size = XMMatrixScaling(m_scale.x, m_scale.y, m_scale.z);
-	XMMATRIX world;
-	if (m_parent != nullptr) {
-		XMFLOAT4X4 parentWorldTemp = m_parent->GetWorldMTX();
-		XMMATRIX parentWorld = XMLoadFloat4x4(&parentWorldTemp);
-		world = (size * rot * trans) * parentWorld;
-	}
-	else {
-		world = size * rot * trans;
-	}
+	CreateWorldMTX(trans, rot, size);
+	XMMATRIX world = XMLoadFloat4x4(&m_worldMTX);
+
 
 	XMStoreFloat4x4(&m_worldMTX, world);
 

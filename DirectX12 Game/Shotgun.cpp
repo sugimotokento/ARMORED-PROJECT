@@ -47,16 +47,9 @@ void Shotgun::Draw() {
 	XMMATRIX trans = XMMatrixTranslation(m_position.x, m_position.y, m_position.z);
 	XMMATRIX rot = XMMatrixRotationRollPitchYaw(m_rotation.x, m_rotation.y, m_rotation.z);
 	XMMATRIX size = XMMatrixScaling(m_scale.x, m_scale.y, m_scale.z);
-	XMMATRIX world;
-	if (m_parent != nullptr) {
-		XMFLOAT4X4 parentWorldTemp = m_parent->GetWorldMTX();
-		XMMATRIX parentWorld = XMLoadFloat4x4(&parentWorldTemp);
-		world = (size * rot * trans) * parentWorld;
-	}
-	else {
-		world = size * rot * trans;
-	}
-	XMStoreFloat4x4(&m_worldMTX, world);
+	CreateWorldMTX(trans, rot, size);
+
+	XMMATRIX world = XMLoadFloat4x4(&m_worldMTX);
 
 	//定数バッファ設定
 	ConstantBuffer* constant;
@@ -109,7 +102,7 @@ void Shotgun::Shot() {
 			m_bulletSetting.moveDir = GetForward() * RANDOM_MAX + GetRight() * randomX*m_spreadRatio + GetUp() * randomY * m_spreadRatio;
 			m_bulletSetting.moveDir = XMMath::Normalize(m_bulletSetting.moveDir);
 			XMFLOAT3 offset = GetRight() * m_bulletOffset.x + GetUp() * m_bulletOffset.y + GetForward() * m_bulletOffset.z;
-			XMFLOAT3 worldPos = XMFLOAT3(m_worldMTX._41, m_worldMTX._42, m_worldMTX._43);
+			XMFLOAT3 worldPos = GetWorldPosition();
 			m_bulletSetting.position = worldPos + offset;
 			m_bulletSetting.rotation = GetRotation();
 

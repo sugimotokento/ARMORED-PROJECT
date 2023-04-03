@@ -109,7 +109,9 @@ void Ocean::Draw() {
 	XMMATRIX trans = XMMatrixTranslation(m_position.x, m_position.y, m_position.z);
 	XMMATRIX rot = XMMatrixRotationRollPitchYaw(m_rotation.x, m_rotation.y, m_rotation.z);
 	XMMATRIX size = XMMatrixScaling(m_scale.x, m_scale.y, m_scale.z);
-	XMMATRIX world = size * rot * trans;
+	CreateWorldMTX(trans, rot, size);
+	XMMATRIX world = XMLoadFloat4x4(&m_worldMTX);
+
 
 	static float waterParamW = 0;
 	waterParamW += 0.1f;

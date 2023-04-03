@@ -4,7 +4,6 @@
 
 class Weapon :public GameObject{
 protected:
-	GameObject* m_parent=nullptr;
 	float m_intervalMax = 20;
 	float m_intervalCount = 0;
 public:
@@ -18,5 +17,4 @@ public:
 	float GetIntervalMax() { return m_intervalMax; }
 	float GetIntervalCount() { return m_intervalCount; }
 
-	void SetParent(GameObject* parent) { m_parent = parent; }
 };

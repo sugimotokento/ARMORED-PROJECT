@@ -252,9 +252,6 @@
     <ClInclude Include="GameScene.h">
       <Filter>ソース ファイル\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="GameObject.h">
-      <Filter>ソース ファイル\Object\GameObject</Filter>
-    </ClInclude>
     <ClInclude Include="Cube.h">
       <Filter>ソース ファイル\Object\Polygon</Filter>
     </ClInclude>
@@ -389,6 +386,9 @@
     </ClInclude>
     <ClInclude Include="Afterburner.h">
       <Filter>ソース ファイル\Object\GameObject\Object3D\Effect</Filter>
+    </ClInclude>
+    <ClInclude Include="GameObject.h">
+      <Filter>ソース ファイル\Object\GameObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -6,9 +6,8 @@
 Arm::Arm() {
 
 }
-void Arm::Setting(Index::ArmSide side, GameObject* parent) {
+void Arm::SetSide(Index::ArmSide side) {
 	m_side = side;
-	m_parent = parent;
 
 	if (m_side == Index::ArmSide::LEFT) {
 		m_position = XMFLOAT3(-0.822f, 2.511f, 0.156f);
@@ -46,9 +45,9 @@ void Arm::Draw() {
 	XMMATRIX trans = XMMatrixTranslation(m_position.x, m_position.y, m_position.z);
 	XMMATRIX rot = XMMatrixRotationRollPitchYaw(m_rotation.x, m_rotation.y, m_rotation.z);
 	XMMATRIX size = XMMatrixScaling(m_scale.x, m_scale.y, m_scale.z);
-	XMMATRIX world = (size * rot * trans) * parentWorld;
+	CreateWorldMTX(trans, rot, size);
+	XMMATRIX world = XMLoadFloat4x4(&m_worldMTX);
 
-	XMStoreFloat4x4(&m_worldMTX, world);
 
 	//定数バッファ設定
 	ConstantBuffer* constant;
