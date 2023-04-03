@@ -6,11 +6,17 @@ class GameObject;
 class Scene {
 
 public:
+#define LAYER_ID(name)
+#define LAYER_ID_TABLE\
+		LAYER_ID(GEOMETRY)\
+		LAYER_ID(WATER)\
+		LAYER_ID(ALPHA)\
+		LAYER_ID(SPRITE)\
+
 	enum Layer {
-		GEOMETRY,	//不透明オブジェクトレイヤー
-		WATER,		//水面オブジェクトレイヤー
-		ALPHA,		//透過オブジェクトレイヤー
-		SPRITE,		//2Dオブジェクトレイヤー
+#undef LAYER_ID
+#define LAYER_ID(name) name,
+		LAYER_ID_TABLE
 		COUNT		
 	};
 
@@ -26,6 +32,7 @@ public:
 	virtual void Draw(Layer layer);
 	virtual void Finalize();
 
+	std::list<GameObject*> GetAllObject(Layer layer) { return m_gameObject[layer]; }
 
 	template <typename T>
 	T* AddGameObject(Layer layer=GEOMETRY) {
