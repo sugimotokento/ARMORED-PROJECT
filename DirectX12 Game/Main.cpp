@@ -8,9 +8,11 @@
 #include"SceneManager.h"
 #include"Call.h"
 #include"ModelLoader.h"
+#include"Save.h"
 #include <iostream>     
 #include <ctime>        
 #include <cstdlib>      
+
 
 #ifdef _DEBUG
 #include"ImguiRenderer.h"
@@ -77,6 +79,8 @@ int APIENTRY WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance
 
 	// ‰Šú‰»
 	Renderer renderer;
+	Save::Create();
+	Save::GetInstance()->Load();
 #ifdef _DEBUG
 	ImguiRenderer imguiRenderer;
 	ImguiRenderer::GetInstance()->Initiaize();
@@ -151,7 +155,8 @@ int APIENTRY WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance
 	Input::Destroy();
 	SceneManager::Destroy();
 	ModelLoader::Destroy();
-	
+	Save::GetInstance()->Write();
+	Save::Destroy();
 
 	return (int)msg.wParam;
 }

@@ -2,13 +2,7 @@
 #include"Save.h"
 #include<string>
 
-std::vector<DataFloat> Save::dataFloat;
-std::vector<DataInt>   Save::dataInt;
-std::vector<DataBool>  Save::dataBool;
-
-unsigned int Save::dataSizeFloat;
-unsigned int Save::dataSizeBool;
-unsigned int Save::dataSizeInt;
+Save* Save::m_instance = nullptr;
 
 void Save::Write() {
 	FILE* fp;
@@ -23,7 +17,7 @@ void Save::Write() {
 	fwrite(&dataSizeInt, sizeof(int), 1, fp);
 	fwrite(&dataSizeBool, sizeof(int), 1, fp);
 
-	for (int i = 0; i < 0; i++) {
+	for (int i = 0; i < (int)dataSizeFloat; i++) {
 		float value = dataFloat[i].value;
 
 		fwrite(&value, sizeof(int), 1, fp);
@@ -300,4 +294,18 @@ bool  Save::GetBool(std::string name) {
 	}
 
 	return value;
+}
+
+
+void Save::Create() {
+	if (!m_instance) {
+		m_instance = new Save();
+	}
+}
+void Save::Destroy() {
+	delete m_instance;
+	m_instance = nullptr;
+}
+Save* Save::GetInstance() {
+	return m_instance;
 }
