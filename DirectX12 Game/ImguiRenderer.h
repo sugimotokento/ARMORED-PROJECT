@@ -27,7 +27,7 @@ private:
 
 	bool isImguiEnd = false;
 	bool ImguiObjectView();
-	void ImguiViewChild(GameObject* obj, std::string& strspace);
+	void ImguiViewChild(GameObject* obj);
 
 	std::string GetObjectClassName(GameObject* obj);
 public:

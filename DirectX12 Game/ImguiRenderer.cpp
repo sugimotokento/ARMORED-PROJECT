@@ -96,7 +96,7 @@ std::string ImguiRenderer::GetObjectClassName(GameObject* obj) {
 /// </summary>
 /// <param name="obj"></param>
 /// <param name="strspace"></param>
-void ImguiRenderer::ImguiViewChild(GameObject* obj, std::string& strspace) {
+void ImguiRenderer::ImguiViewChild(GameObject* obj) {
 	std::string name = GetObjectClassName(obj).c_str();
 	name.erase(0, 6);
 	std::string str = name;
@@ -108,7 +108,7 @@ void ImguiRenderer::ImguiViewChild(GameObject* obj, std::string& strspace) {
 		}
 
 		for (int i = 0; i < obj->GetChildCount(); i++) {
-			ImguiViewChild(obj->GetChild(i), strspace);
+			ImguiViewChild(obj->GetChild(i));
 		}
 		ImGui::TreePop();
 	}
@@ -139,9 +139,8 @@ bool ImguiRenderer::ImguiObjectView() {
 					//子オブジェクトを表示
 
 					for (int i = 0; i < obj->GetChildCount(); i++) {
-						std::string childSpace = "   ";
 
-						ImguiViewChild(obj->GetChild(i), childSpace);
+						ImguiViewChild(obj->GetChild(i));
 					}
 					ImGui::TreePop();
 				}
