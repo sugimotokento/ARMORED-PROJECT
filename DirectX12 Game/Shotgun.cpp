@@ -30,7 +30,7 @@ void Shotgun::Initialize() {
 
 #ifdef _DEBUG
 	std::function<bool()> f = std::bind(&Shotgun::ImguiDebug, this);
-	ImguiRenderer::GetInstance()->AddFunction(f);
+	ImguiRenderer::GetInstance()->AddFunction(f, "Shotgun");
 #endif // _DEBUG
 }
 void Shotgun::Update() {

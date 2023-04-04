@@ -5,7 +5,7 @@
 
 void DebugBattleMenu::Initialize() {
 	std::function<bool()> f = std::bind(&DebugBattleMenu::ImguiDebug, this);
-	ImguiRenderer::GetInstance()->AddFunction(f);
+	ImguiRenderer::GetInstance()->AddFunction(f, "DebugBattleMenu", true);
 }
 
 void DebugBattleMenu::Update() {

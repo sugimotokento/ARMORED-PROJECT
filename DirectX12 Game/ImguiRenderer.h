@@ -7,6 +7,7 @@
 
 #include<functional>
 #include<vector>
+#include<string>
 
 //-------------ImguiRendererに関数を登録する方法------------------------//
 // クラスにImguiを記述する関数を書く{bool 関数名()}
@@ -20,13 +21,15 @@ private:
 private:
 	static ImguiRenderer* m_instance;
 	std::vector <std::function<bool()>> m_function;
+	std::vector<std::string> m_label;
+	std::vector<bool> m_isVisible;
 
 public:
 	ImguiRenderer() { m_instance = this; }
 	void Initiaize();
 	void Finalize();
 	void Draw();
-	void AddFunction(const std::function<bool()>& func);
+	void AddFunction(const std::function<bool()>& func, std::string label = "None", bool isDefaultVisible=false);
 	static ImguiRenderer* GetInstance() { return m_instance; }
 };
 

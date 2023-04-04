@@ -60,7 +60,7 @@ void Player::Initialize() {
 
 #ifdef _DEBUG
 	std::function<bool()> f = std::bind(&Player::ImguiDebug, this);
-	ImguiRenderer::GetInstance()->AddFunction(f);
+	ImguiRenderer::GetInstance()->AddFunction(f, "Player");
 #endif // _DEBUG
 }
 
@@ -163,15 +163,9 @@ void Player::Shot() {
 
 #ifdef _DEBUG
 bool Player::ImguiDebug() {
-	//ImGui::Begin("Player");
-	//static float pos[3];
-	//static float scale = 1;
-	//ImGui::SliderFloat3("AfterburnerOffset", pos, -5, 5);
-	//m_afterburner->SetPosition(XMFLOAT3(pos[0], pos[1], pos[2]));
+	ImGui::Begin("Player");
 
-	//ImGui::SliderFloat("Scale", &scale, 0, 5);
-	//m_afterburner->SetScale(XMFLOAT3(scale, scale, scale));
-	//ImGui::End();
+	ImGui::End();
 	return GetIsDestroy();
 }
 #endif // _DEBUG

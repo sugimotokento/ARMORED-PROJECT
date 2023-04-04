@@ -14,7 +14,7 @@ DebugMenuScene::DebugMenuScene() {
 }
 void DebugMenuScene::Initialize() {
 	std::function<bool()> f = std::bind(&DebugMenuScene::ImguiDebug, this);
-	ImguiRenderer::GetInstance()->AddFunction(f);
+	ImguiRenderer::GetInstance()->AddFunction(f, "DebugMenu", true);
 
 	CameraManager::GetInstance()->SetMainCamera(CameraManager::Index::CAMERA_DEBUG);
 }

@@ -41,8 +41,22 @@ void ImguiRenderer::Draw() {
 		ImGui::NewFrame();
 	}
 
+	ImGui::Begin("ImguiList");
 	for (int i = 0; i < static_cast<int>(m_function.size()); i++) {
-		if (m_function[i]()) m_function.erase(m_function.begin() + i);
+		bool temp = m_isVisible[i];
+		ImGui::Checkbox(m_label[i].c_str(), &temp);
+		m_isVisible[i] = temp;
+	}
+	ImGui::End();
+
+	for (int i = 0; i < static_cast<int>(m_function.size()); i++) {
+		if (m_isVisible[i] == true) {
+			if (m_function[i]()) {
+				m_function.erase(m_function.begin() + i);
+				m_label.erase(m_label.begin() + i);
+				m_isVisible.erase(m_isVisible.begin() + i);
+			}
+		}
 	}
 
 	ImGui::Render();
@@ -50,8 +64,17 @@ void ImguiRenderer::Draw() {
 
 }
 
-void ImguiRenderer::AddFunction(const std::function<bool()>& func) {
+void ImguiRenderer::AddFunction(const std::function<bool()>& func, std::string label, bool isDefaultVisible) {
 	m_function.push_back(func);
+	m_isVisible.push_back(isDefaultVisible);
+
+	if (label == "None") {
+		int num = (int)m_label.size();
+		m_label.push_back("None" + std::to_string(num));
+	}
+	else {
+		m_label.push_back(label);
+	}
 }
 
 #endif // _DEBUG

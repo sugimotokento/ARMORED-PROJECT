@@ -93,8 +93,6 @@ int APIENTRY WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance
 
 
 
-	
-
 	// ウインドウの表示
 	ShowWindow(g_window, nCmdShow);
 	UpdateWindow(g_window);

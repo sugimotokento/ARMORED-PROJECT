@@ -11,8 +11,8 @@ Ocean::Ocean() {
 	m_scale = XMFLOAT3(300, 1, 300);
 
 #ifdef _DEBUG
-	//std::function<bool()> f = std::bind(&Ocean::ImguiDebug, this);
-	//ImguiRenderer::GetInstance()->AddFunction(f);
+	std::function<bool()> f = std::bind(&Ocean::ImguiDebug, this);
+	ImguiRenderer::GetInstance()->AddFunction(f, "Ocean");
 #endif // _DEBUG
 }
 void Ocean::Initialize() {

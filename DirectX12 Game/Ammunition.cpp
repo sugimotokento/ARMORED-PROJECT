@@ -15,8 +15,8 @@ void Ammunition::Initialize() {
 	XMStoreFloat4(&m_quaternion, quat);
 
 #ifdef _DEBUG
-	//std::function<bool()> f = std::bind(&Ammunition::ImguiDebug, this);
-	//ImguiRenderer::GetInstance()->AddFunction(f);
+	std::function<bool()> f = std::bind(&Ammunition::ImguiDebug, this);
+	ImguiRenderer::GetInstance()->AddFunction(f, "Ammunition");
 #endif // _DEBUG
 }
 void Ammunition::Update() {
