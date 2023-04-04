@@ -47,6 +47,7 @@ public:
 	XMFLOAT4X4 GetWorldMTX() { return m_worldMTX; }
 	GameObject* GetParent() { return m_parent; }
 	GameObject* GetChild(int i) { return m_child[i].get(); }
+	int GetChildCount() { return (int)m_child.size(); }
 
 	XMFLOAT3 GetRight() {
 		XMFLOAT3 out;

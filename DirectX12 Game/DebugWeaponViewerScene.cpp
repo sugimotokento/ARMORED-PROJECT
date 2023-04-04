@@ -14,6 +14,8 @@ DebugWeaponViewerScene::DebugWeaponViewerScene() {
 
 }
 void DebugWeaponViewerScene::Initialize() {
+	Scene::Initialize();
+
 	AddGameObject<SkyDome>(Layer::GEOMETRY);
 	AddGameObject<WeaponViewer>(Layer::GEOMETRY);
 	AddGameObject<Ocean>(Layer::WATER);

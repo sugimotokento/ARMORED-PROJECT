@@ -3,6 +3,11 @@
 #include<stdio.h>
 #include"Call.h"
 #include"Renderer.h"
+#include"ImguiRenderer.h"
+
+void Scene::Initialize() {
+
+}
 
 void Scene::Update() {
 	for (int i = 0; i < Layer::COUNT; i++) {

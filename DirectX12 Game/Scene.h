@@ -2,6 +2,8 @@
 #include<list>
 #include <functional>
 #include<vector>
+#include<string>
+
 class GameObject;
 class Scene {
 
@@ -24,14 +26,14 @@ public:
 private:
 	std::list<GameObject*> m_gameObject[Layer::COUNT];
 
-	
 public:
 	Scene(){}
 	~Scene(){}
-	virtual void Initialize() {};
+	virtual void Initialize();
 	virtual void Update();
 	virtual void Draw(Layer layer);
 	virtual void Finalize();
+
 
 	std::list<GameObject*> GetAllObject(Layer layer) { return m_gameObject[layer]; }
 

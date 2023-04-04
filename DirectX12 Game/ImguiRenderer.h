@@ -15,6 +15,7 @@
 //	ImguiRenderer::GetInstance()->AddFunction(f);
 //‚±‚ê‚ÅImguiRenderer‚ÉŠÖ”‚ğ“o˜^‚µ‚ÄImgui‚ğ•\¦‚Å‚«‚é
 //--------------------------------------------------------------------//
+class GameObject;
 class ImguiRenderer {
 private:
 
@@ -24,6 +25,11 @@ private:
 	std::vector<std::string> m_label;
 	std::vector<bool> m_isVisible;
 
+	bool isImguiEnd = false;
+	bool ImguiObjectView();
+	void ImguiViewChild(GameObject* obj, std::string& strspace);
+
+	std::string GetObjectClassName(GameObject* obj);
 public:
 	ImguiRenderer() { m_instance = this; }
 	void Initiaize();

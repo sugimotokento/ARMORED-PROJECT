@@ -13,6 +13,8 @@ DebugMenuScene::DebugMenuScene() {
 	
 }
 void DebugMenuScene::Initialize() {
+	Scene::Initialize();
+
 	std::function<bool()> f = std::bind(&DebugMenuScene::ImguiDebug, this);
 	ImguiRenderer::GetInstance()->AddFunction(f, "DebugMenu", true);
 

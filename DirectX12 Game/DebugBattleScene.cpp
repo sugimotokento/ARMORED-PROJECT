@@ -10,6 +10,7 @@ DebugBattleScene::DebugBattleScene() {
 
 }
 void DebugBattleScene::Initialize() {
+	
 	AddGameObject<Field>(Layer::GEOMETRY);
 	AddGameObject<Ocean>(Layer::WATER);
 	AddGameObject<SkyDome>(Layer::GEOMETRY);
@@ -25,6 +26,8 @@ void DebugBattleScene::Initialize() {
 	//AddGameObject<TestObj>(Layer::ALPHA);
 
 	CameraManager::GetInstance()->SetMainCamera(CameraManager::Index::CAMERA_PLAYER);
+
+	Scene::Initialize();
 }
 void DebugBattleScene::Update() {
 	Scene::Update();

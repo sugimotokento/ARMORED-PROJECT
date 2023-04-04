@@ -14,10 +14,7 @@ void Ammunition::Initialize() {
 	XMVECTOR quat = XMQuaternionIdentity();
 	XMStoreFloat4(&m_quaternion, quat);
 
-#ifdef _DEBUG
-	std::function<bool()> f = std::bind(&Ammunition::ImguiDebug, this);
-	ImguiRenderer::GetInstance()->AddFunction(f, "Ammunition");
-#endif // _DEBUG
+
 }
 void Ammunition::Update() {
 	m_position += m_moveDir * m_speed;
@@ -96,16 +93,3 @@ void Ammunition::SetSettingItem(SettingItem item) {
 	m_quaternion = XMMath::QuaternionRotateAxis(m_quaternion, axis, angle);
 }
 
-
-
-#ifdef _DEBUG
-bool Ammunition::ImguiDebug() {
-	XMFLOAT3 dist;
-	dist = m_startPosition - m_position;
-	ImGui::Begin("Ammunition");
-	ImGui::Text("dist:%lf,", XMMath::Length(dist));
-
-	ImGui::End();
-	return GetIsDestroy();
-}
-#endif // _DEBUG

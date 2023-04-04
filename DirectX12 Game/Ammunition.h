@@ -31,7 +31,5 @@ public:
 
 	void SetSettingItem(SettingItem item);
 
-#ifdef _DEBUG
-	bool ImguiDebug();
-#endif // _DEBUG
+
 };
