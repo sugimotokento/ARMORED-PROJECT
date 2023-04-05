@@ -19,8 +19,8 @@ void Building::Draw() {
 	XMMATRIX trans = XMMatrixTranslation(m_position.x, m_position.y, m_position.z);
 	XMMATRIX rot = XMMatrixRotationRollPitchYaw(m_rotation.x, m_rotation.y, m_rotation.z);
 	XMMATRIX size = XMMatrixScaling(m_scale.x, m_scale.y, m_scale.z);
-	CreateWorldMTX(trans, rot, size);
-	XMMATRIX world = XMLoadFloat4x4(&m_worldMTX);
+	XMMATRIX world = size * rot * trans;
+	XMStoreFloat4x4(&m_worldMTX, world);
 
 
 	//定数バッファ設定
@@ -51,5 +51,11 @@ void Building::Draw() {
 	ModelLoader::GetInstance()->Draw(static_cast<ModelLoader::Index::ModelID>(m_modelID));
 }
 void Building::Finalize() {
+
+}
+
+void Building::SetModelID(Index::BuildingModelID id) {
+	m_modelID = id; 
+	ModelLoader::GetInstance()->LoadRequest(static_cast<ModelLoader::Index::ModelID>(m_modelID));
 
 }

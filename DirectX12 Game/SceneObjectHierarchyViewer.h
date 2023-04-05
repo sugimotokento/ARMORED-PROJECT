@@ -3,7 +3,8 @@
 
 class SceneObjectHierarchyViewer :public GameObject {
 private:
-	bool ImguiDebug();
+	bool isImguiEnd = false;
+	bool ImguiDebug(bool isVisible);
 	void ImguiViewChild(GameObject* obj);
 
 	std::string GetObjectClassName(GameObject* obj);

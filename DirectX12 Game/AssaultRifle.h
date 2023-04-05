@@ -19,6 +19,6 @@ public:
 	void Shot()final override;
 
 #ifdef _DEBUG
-	bool ImguiDebug();
+	bool ImguiDebug(bool isVisible);
 #endif // _DEBUG
 };

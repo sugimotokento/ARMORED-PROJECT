@@ -26,5 +26,5 @@ public:
 	void Draw() final override;
 	void Finalize() final override;
 
-	void SetModelID(Index::BuildingModelID id) { m_modelID = id; }
+	void SetModelID(Index::BuildingModelID id);
 };

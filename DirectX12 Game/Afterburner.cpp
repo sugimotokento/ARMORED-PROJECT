@@ -28,12 +28,7 @@ void Afterburner::Draw() {
 	XMMATRIX view = CameraManager::GetInstance()->GetMainViewMatrix();
 	XMMATRIX projection = CameraManager::GetInstance()->GetMainProjectionMatrix();
 
-	XMFLOAT4X4 parentWorldTemp = m_parent->GetWorldMTX();
-	XMMATRIX parentWorld = XMLoadFloat4x4(&parentWorldTemp);
-	XMMATRIX trans = XMMatrixTranslation(m_position.x, m_position.y, m_position.z);
-	XMMATRIX rot = XMMatrixRotationRollPitchYaw(m_rotation.x, m_rotation.y, m_rotation.z);
-	XMMATRIX size = XMMatrixScaling(m_scale.x, m_scale.y, m_scale.z);
-	CreateWorldMTX(trans, rot, size);
+	CreateWorldMTX(m_scale, m_position, m_rotation);
 	XMMATRIX world = XMLoadFloat4x4(&m_worldMTX);
 
 

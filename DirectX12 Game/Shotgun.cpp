@@ -29,7 +29,7 @@ void Shotgun::Initialize() {
 
 
 #ifdef _DEBUG
-	std::function<bool()> f = std::bind(&Shotgun::ImguiDebug, this);
+	std::function<bool(bool isVisible)> f = std::bind(&Shotgun::ImguiDebug, this, std::placeholders::_1);
 	ImguiRenderer::GetInstance()->AddFunction(f, "Shotgun");
 #endif // _DEBUG
 }
@@ -44,10 +44,7 @@ void Shotgun::Draw() {
 	XMMATRIX view = CameraManager::GetInstance()->GetMainViewMatrix();
 	XMMATRIX projection = CameraManager::GetInstance()->GetMainProjectionMatrix();
 
-	XMMATRIX trans = XMMatrixTranslation(m_position.x, m_position.y, m_position.z);
-	XMMATRIX rot = XMMatrixRotationRollPitchYaw(m_rotation.x, m_rotation.y, m_rotation.z);
-	XMMATRIX size = XMMatrixScaling(m_scale.x, m_scale.y, m_scale.z);
-	CreateWorldMTX(trans, rot, size);
+	CreateWorldMTX(m_scale, m_position, m_rotation);
 
 	XMMATRIX world = XMLoadFloat4x4(&m_worldMTX);
 
@@ -115,15 +112,17 @@ void Shotgun::Shot() {
 
 
 #ifdef _DEBUG
-bool Shotgun::ImguiDebug() {
-	ImGui::Begin("Shotgun");
-	ImGui::Text("  x:%lf, y:%lf, z:%lf", m_bulletOffset.x, m_bulletOffset.y, m_bulletOffset.z);
-	ImGui::SliderFloat("x", &m_bulletOffset.x, -2, 2);
-	ImGui::SliderFloat("y", &m_bulletOffset.y, -2, 2);
-	ImGui::SliderFloat("z", &m_bulletOffset.z, -2, 2);
-	ImGui::Text("SpreadValue");
-	ImGui::SliderFloat("spreadRatio", &m_spreadRatio, 0, 1);
-	ImGui::End();
+bool Shotgun::ImguiDebug(bool isVisible) {
+	if (isVisible) {
+		ImGui::Begin("Shotgun");
+		ImGui::Text("  x:%lf, y:%lf, z:%lf", m_bulletOffset.x, m_bulletOffset.y, m_bulletOffset.z);
+		ImGui::SliderFloat("x", &m_bulletOffset.x, -2, 2);
+		ImGui::SliderFloat("y", &m_bulletOffset.y, -2, 2);
+		ImGui::SliderFloat("z", &m_bulletOffset.z, -2, 2);
+		ImGui::Text("SpreadValue");
+		ImGui::SliderFloat("spreadRatio", &m_spreadRatio, 0, 1);
+		ImGui::End();
+	}
 	return GetIsDestroy();
 }
 #endif // _DEBUG

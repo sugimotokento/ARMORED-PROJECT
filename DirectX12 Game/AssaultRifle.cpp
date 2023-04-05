@@ -26,7 +26,7 @@ void AssaultRifle::Initialize() {
 
 
 #ifdef _DEBUG
-	std::function<bool()> f = std::bind(&AssaultRifle::ImguiDebug, this);
+	std::function<bool(bool isVisible)> f = std::bind(&AssaultRifle::ImguiDebug, this, std::placeholders::_1);
 	ImguiRenderer::GetInstance()->AddFunction(f, "AssaultRifle");
 #endif // _DEBUG
 }
@@ -41,10 +41,7 @@ void AssaultRifle::Draw() {
 	XMMATRIX view = CameraManager::GetInstance()->GetMainViewMatrix();
 	XMMATRIX projection = CameraManager::GetInstance()->GetMainProjectionMatrix();
 
-	XMMATRIX trans = XMMatrixTranslation(m_position.x, m_position.y, m_position.z);
-	XMMATRIX rot = XMMatrixRotationRollPitchYaw(m_rotation.x, m_rotation.y, m_rotation.z);
-	XMMATRIX size = XMMatrixScaling(m_scale.x, m_scale.y, m_scale.z);
-	CreateWorldMTX(trans, rot, size);
+	CreateWorldMTX(m_scale, m_position, m_rotation);
 	XMMATRIX world = XMLoadFloat4x4(&m_worldMTX);
 
 	//定数バッファ設定
@@ -98,13 +95,16 @@ void AssaultRifle::Shot() {
 
 
 #ifdef _DEBUG
-bool AssaultRifle::ImguiDebug() {
-	ImGui::Begin("AssaultRifle");
-	ImGui::Text("  x:%lf, y:%lf, z:%lf", m_bulletOffset.x, m_bulletOffset.y, m_bulletOffset.z);
-	ImGui::SliderFloat("x", &m_bulletOffset.x, -2, 2);
-	ImGui::SliderFloat("y", &m_bulletOffset.y, -2, 2);
-	ImGui::SliderFloat("z", &m_bulletOffset.z, -2, 2);
-	ImGui::End();
+bool AssaultRifle::ImguiDebug(bool isVisible) {
+	if (isVisible) {
+		ImGui::Begin("AssaultRifle");
+		ImGui::Text("  x:%lf, y:%lf, z:%lf", m_bulletOffset.x, m_bulletOffset.y, m_bulletOffset.z);
+		ImGui::SliderFloat("x", &m_bulletOffset.x, -2, 2);
+		ImGui::SliderFloat("y", &m_bulletOffset.y, -2, 2);
+		ImGui::SliderFloat("z", &m_bulletOffset.z, -2, 2);
+		ImGui::End();
+
+	}
 	return GetIsDestroy();
 }
 #endif // _DEBUG

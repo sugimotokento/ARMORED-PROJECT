@@ -31,7 +31,7 @@ private:
 	void Rotation();
 
 #ifdef _DEBUG
-	bool ImguiDebug();
+	bool ImguiDebug(bool isVisible);
 #endif // _DEBUG
 public:
 	Player();

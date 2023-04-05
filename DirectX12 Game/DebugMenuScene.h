@@ -4,7 +4,7 @@
 
 class DebugMenuScene :public Scene {
 private:
-	bool ImguiDebug();
+	bool ImguiDebug(bool isVisible);
 
 public:
 	DebugMenuScene();

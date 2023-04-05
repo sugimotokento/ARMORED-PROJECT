@@ -9,6 +9,6 @@ public:
 	void Draw() final override;
 	void Finalize() final override;
 
-	bool ImguiDebug();
+	bool ImguiDebug(bool isVisible);
 };
 #endif

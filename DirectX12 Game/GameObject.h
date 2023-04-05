@@ -27,15 +27,36 @@ public:
 	void SetScale(XMFLOAT3 scale) { m_scale = scale; }
 	void SetRotation(XMFLOAT3 rotation) { m_rotation = rotation; }
 	void SetParent(GameObject* parent) { m_parent = parent; }
-	void CreateWorldMTX(XMMATRIX& transMTX, XMMATRIX& scaleMTX, XMMATRIX& rotMTX) {
+	void CreateWorldMTX(XMFLOAT3 scale, XMFLOAT3 position, XMFLOAT3 rotation) {
 		XMMATRIX world;
+		XMMATRIX trans = XMMatrixTranslation(m_position.x, m_position.y, m_position.z);
+		XMMATRIX rot = XMMatrixRotationRollPitchYaw(m_rotation.x, m_rotation.y, m_rotation.z);
+		XMMATRIX size = XMMatrixScaling(m_scale.x, m_scale.y, m_scale.z);
 		if (m_parent != nullptr) {
 			XMFLOAT4X4 parentWorldTemp = m_parent->GetWorldMTX();
 			XMMATRIX parentWorld = XMLoadFloat4x4(&parentWorldTemp);
-			world = (scaleMTX * rotMTX * transMTX) * parentWorld;
+			world = (size * rot * trans) * parentWorld;
 		}
 		else {
-			world = scaleMTX * rotMTX * transMTX;
+			world = size * rot * trans;
+		}
+		XMStoreFloat4x4(&m_worldMTX, world);
+	}
+	void CreateWorldMTX(XMFLOAT3 scale, XMFLOAT3 position, XMFLOAT4 quaternion) {
+		XMVECTOR quat;
+		quat=XMLoadFloat4(&quaternion);
+
+		XMMATRIX world;
+		XMMATRIX trans = XMMatrixTranslation(m_position.x, m_position.y, m_position.z);
+		XMMATRIX rot = XMMatrixRotationQuaternion(quat);
+		XMMATRIX size = XMMatrixScaling(m_scale.x, m_scale.y, m_scale.z);
+		if (m_parent != nullptr) {
+			XMFLOAT4X4 parentWorldTemp = m_parent->GetWorldMTX();
+			XMMATRIX parentWorld = XMLoadFloat4x4(&parentWorldTemp);
+			world = (size * rot * trans) * parentWorld;
+		}
+		else {
+			world = size * rot * trans;
 		}
 		XMStoreFloat4x4(&m_worldMTX, world);
 	}

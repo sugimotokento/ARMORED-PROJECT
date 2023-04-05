@@ -21,7 +21,7 @@ private:
 
 private:
 	static ImguiRenderer* m_instance;
-	std::vector <std::function<bool()>> m_function;
+	std::vector <std::function<bool(bool isVisible)>> m_function;
 	std::vector<std::string> m_label;
 	std::vector<bool> m_isVisible;
 
@@ -30,7 +30,7 @@ public:
 	void Initiaize();
 	void Finalize();
 	void Draw();
-	void AddFunction(const std::function<bool()>& func, std::string label = "None", bool isDefaultVisible=false);
+	void AddFunction(const std::function<bool(bool isVisible)>& func, std::string label = "None", bool isDefaultVisible=false);
 	static ImguiRenderer* GetInstance() { return m_instance; }
 };
 

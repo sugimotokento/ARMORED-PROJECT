@@ -11,7 +11,7 @@ Ocean::Ocean() {
 	m_scale = XMFLOAT3(300, 1, 300);
 
 #ifdef _DEBUG
-	std::function<bool()> f = std::bind(&Ocean::ImguiDebug, this);
+	std::function<bool(bool isVisible)> f = std::bind(&Ocean::ImguiDebug, this, std::placeholders::_1);
 	ImguiRenderer::GetInstance()->AddFunction(f, "Ocean");
 #endif // _DEBUG
 }
@@ -106,10 +106,7 @@ void Ocean::Draw() {
 	XMMATRIX view = CameraManager::GetInstance()->GetMainViewMatrix();
 	XMMATRIX projection = CameraManager::GetInstance()->GetMainProjectionMatrix();
 
-	XMMATRIX trans = XMMatrixTranslation(m_position.x, m_position.y, m_position.z);
-	XMMATRIX rot = XMMatrixRotationRollPitchYaw(m_rotation.x, m_rotation.y, m_rotation.z);
-	XMMATRIX size = XMMatrixScaling(m_scale.x, m_scale.y, m_scale.z);
-	CreateWorldMTX(trans, rot, size);
+	CreateWorldMTX(m_scale, m_position, m_rotation);
 	XMMATRIX world = XMLoadFloat4x4(&m_worldMTX);
 
 
@@ -184,17 +181,19 @@ void Ocean::Finalize() {
 
 
 #ifdef _DEBUG
-bool Ocean::ImguiDebug() {
-	ImGui::Begin("Ocean");
-	static float param[2]{ m_waterParam.x, m_waterParam.y };
-	ImGui::SliderFloat2("OceanParam", param, 0, 1);
-	m_waterParam.x = param[0];
-	m_waterParam.y = param[1];
+bool Ocean::ImguiDebug(bool isVisible) {
+	if (isVisible) {
+		ImGui::Begin("Ocean");
+		static float param[2]{ m_waterParam.x, m_waterParam.y };
+		ImGui::SliderFloat2("OceanParam", param, 0, 1);
+		m_waterParam.x = param[0];
+		m_waterParam.y = param[1];
 
-	static float w = 0;
-	ImGui::SliderFloat("ParamW", &w, 0, 1);
-	m_waterParam.z = w;
-	ImGui::End();
+		static float w = 0;
+		ImGui::SliderFloat("ParamW", &w, 0, 1);
+		m_waterParam.z = w;
+		ImGui::End();
+	}
 	return GetIsDestroy();
 }
 #endif // _DEBUG

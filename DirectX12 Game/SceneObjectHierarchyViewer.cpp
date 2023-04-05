@@ -5,9 +5,9 @@
 #include"SceneManager.h"
 
 void SceneObjectHierarchyViewer::Initialize() {
-
-	std::function<bool()> f = std::bind(&SceneObjectHierarchyViewer::ImguiDebug, this);
-	ImguiRenderer::GetInstance()->AddFunction(f, "SceneObjectHierarchyViewer");
+	isImguiEnd = false;
+	std::function<bool(bool isVisible)> f = std::bind(&SceneObjectHierarchyViewer::ImguiDebug, this, std::placeholders::_1);
+	ImguiRenderer::GetInstance()->AddFunction(f, "ObjectHierarchyViewer");
 }
 void SceneObjectHierarchyViewer::Update() {
 
@@ -16,7 +16,7 @@ void SceneObjectHierarchyViewer::Draw() {
 
 }
 void SceneObjectHierarchyViewer::Finalize() {
-
+	isImguiEnd = true;
 }
 
 
@@ -56,45 +56,46 @@ void SceneObjectHierarchyViewer::ImguiViewChild(GameObject* obj) {
 	}
 }
 
-bool SceneObjectHierarchyViewer::ImguiDebug() {
-	const type_info& id = typeid(*SceneManager::GetInstance()->GetScene());
-	const char* name = id.name();
-	std::string className = name;
-	className.erase(0, 6);
-	className += "ObjectHierarchyViewer";
-	ImGui::Begin(className.c_str());
+bool SceneObjectHierarchyViewer::ImguiDebug(bool isVisible) {
+	if (isVisible) {
+		const type_info& id = typeid(*SceneManager::GetInstance()->GetScene());
+		const char* name = id.name();
+		std::string className = name;
+		className.erase(0, 6);
+		className += "ObjectHierarchyViewer";
+		ImGui::Begin(className.c_str());
 
-	//SceneのLayer名を取得
-	const char* layerName[]{
-#undef LAYER_ID
-#define LAYER_ID(name) #name,
-		LAYER_ID_TABLE
-	};
+		//SceneのLayer名を取得
+		const char* layerName[]{
+	#undef LAYER_ID
+	#define LAYER_ID(name) #name,
+			LAYER_ID_TABLE
+		};
 
-	//各オブジェクトの階層を表示していく
-	for (int i = 0; i < Scene::Layer::COUNT; i++) {
-		if (ImGui::CollapsingHeader(layerName[i], ImGuiTreeNodeFlags_DefaultOpen)) {
+		//各オブジェクトの階層を表示していく
+		for (int i = 0; i < Scene::Layer::COUNT; i++) {
+			if (ImGui::CollapsingHeader(layerName[i], ImGuiTreeNodeFlags_DefaultOpen)) {
 
-			for (GameObject* obj : SceneManager::GetInstance()->GetScene()->GetAllObject(static_cast<Scene::Layer>(i))) {
+				for (GameObject* obj : SceneManager::GetInstance()->GetScene()->GetAllObject(static_cast<Scene::Layer>(i))) {
 
-				//一番上の親オブジェクト名を表示
-				std::string name = GetObjectClassName(obj).c_str();
-				name.erase(0, 6);
-				if (ImGui::TreeNodeEx(name.c_str(), ImGuiTreeNodeFlags_DefaultOpen)) {
-					//子オブジェクトを表示
-					for (int i = 0; i < obj->GetChildCount(); i++) {
-						ImguiViewChild(obj->GetChild(i));
+					//一番上の親オブジェクト名を表示
+					std::string name = GetObjectClassName(obj).c_str();
+					name.erase(0, 6);
+					if (ImGui::TreeNodeEx(name.c_str(), ImGuiTreeNodeFlags_DefaultOpen)) {
+						//子オブジェクトを表示
+						for (int i = 0; i < obj->GetChildCount(); i++) {
+							ImguiViewChild(obj->GetChild(i));
+						}
+						ImGui::TreePop();
 					}
-					ImGui::TreePop();
+					ImGui::Spacing();
 				}
-				ImGui::Spacing();
 			}
+
 		}
-
+		ImGui::End();
 	}
-	ImGui::End();
-
-	return GetIsDestroy();
+	return isImguiEnd;
 }
 
 

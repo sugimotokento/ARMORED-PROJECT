@@ -577,13 +577,12 @@ void ImguiRenderer::Draw() {
 
 	//“o˜^‚µ‚½Imgui‚ð•\Ž¦
 	for (int i = 0; i < static_cast<int>(m_function.size()); i++) {
-		if (m_isVisible[i] == true) {
-			if (m_function[i]()) {
-				m_function.erase(m_function.begin() + i);
-				m_label.erase(m_label.begin() + i);
-				m_isVisible.erase(m_isVisible.begin() + i);
-			}
+		if (m_function[i](m_isVisible[i])) {
+			m_function.erase(m_function.begin() + i);
+			m_label.erase(m_label.begin() + i);
+			m_isVisible.erase(m_isVisible.begin() + i);
 		}
+
 	}
 
 	ImGui::Render();
@@ -591,7 +590,7 @@ void ImguiRenderer::Draw() {
 
 }
 
-void ImguiRenderer::AddFunction(const std::function<bool()>& func, std::string label, bool isDefaultVisible) {
+void ImguiRenderer::AddFunction(const std::function<bool(bool isVisible)>& func, std::string label, bool isDefaultVisible) {
 	m_function.push_back(func);
 	m_isVisible.push_back(isDefaultVisible);
 

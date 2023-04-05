@@ -7,7 +7,7 @@ private:
 	XMFLOAT4 m_quaternion;
 
 #ifdef _DEBUG
-	bool ImguiDebug();
+	bool ImguiDebug(bool isVisible);
 #endif // _DEBUG
 public:
 	DebugCamera();
