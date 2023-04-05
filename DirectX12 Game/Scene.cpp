@@ -4,9 +4,12 @@
 #include"Call.h"
 #include"Renderer.h"
 #include"ImguiRenderer.h"
+#include"SceneObjectHierarchyViewer.h"
 
 void Scene::Initialize() {
-
+#ifdef _DEBUG
+	AddGameObject<SceneObjectHierarchyViewer>();
+#endif // DEBUG
 }
 
 void Scene::Update() {

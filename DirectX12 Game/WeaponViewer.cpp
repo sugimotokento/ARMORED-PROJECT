@@ -50,7 +50,7 @@ bool WeaponViewer::ImguiDebug() {
 		//•ŠíØ‚è‘Ö‚¦
 		if (ImGui::Button("ReloadWeapon")) {
 			m_weapon->SetDestroy();
-			m_weapon->Destroy();
+			m_weapon->Destroy();//‚±‚Ì’†‚Ådelete‚µ‚Ä‚é
 			m_weapon = CreateWeapon(static_cast<WeaponID>(weaponID));
 			m_weapon->Initialize();
 			m_weapon->SetPosition({ 0,1,0 });

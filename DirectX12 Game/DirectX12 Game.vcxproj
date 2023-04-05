@@ -182,6 +182,7 @@
     <ClCompile Include="Save.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="SceneObjectHierarchyViewer.cpp" />
     <ClCompile Include="ShadowCamera.cpp" />
     <ClCompile Include="Shotgun.cpp" />
     <ClCompile Include="SkyDome.cpp" />
@@ -233,6 +234,7 @@
     <ClInclude Include="Save.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneManager.h" />
+    <ClInclude Include="SceneObjectHierarchyViewer.h" />
     <ClInclude Include="ShadowCamera.h" />
     <ClInclude Include="Shotgun.h" />
     <ClInclude Include="SkyDome.h" />

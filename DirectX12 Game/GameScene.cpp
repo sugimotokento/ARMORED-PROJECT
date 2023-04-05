@@ -10,6 +10,7 @@ GameScene::GameScene() {
 
 }
 void GameScene::Initialize() {
+	Scene::Initialize();
 	AddGameObject<SkyDome>(Layer::GEOMETRY);
 	AddGameObject<Ocean>(Layer::WATER);
 	AddGameObject<Player>(Layer::GEOMETRY);
