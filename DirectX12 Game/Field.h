@@ -1,11 +1,11 @@
 #pragma once
 #include"GameObject.h"
-#include"Building.h"
+#include"FieldObject.h"
 
 class Field :public GameObject {
 private:
 	enum { BUILDING_MAX = 9 };
-	std::unique_ptr<Building> m_building[BUILDING_MAX];
+	std::unique_ptr<FieldObject> m_building[BUILDING_MAX];
 
 public:
 	void Initialize() final override;

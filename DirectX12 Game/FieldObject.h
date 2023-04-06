@@ -4,10 +4,10 @@
 #include<memory>
 
 //建物オブジェクト
-class Building :public GameObject {
+class FieldObject :public GameObject {
 public:
 	struct Index {
-		enum BuildingModelID {
+		enum FieldModelID {
 			MODEL_ID_START = ModelLoader::Index::MODEL_ID_FIELD_SKYDOME - 1,
 			//フィールドモデルID
 #undef MODEL_FIELD_ID
@@ -18,7 +18,7 @@ public:
 	};
 
 private:
-	Index::BuildingModelID m_modelID = Index::MODEL_ID_BUILDING1;
+	Index::FieldModelID m_modelID = Index::MODEL_ID_BUILDING1;
 	ComPtr<ID3D12Resource> m_constantBuffer;
 public:
 	void Initialize() final override;
@@ -26,5 +26,5 @@ public:
 	void Draw() final override;
 	void Finalize() final override;
 
-	void SetModelID(Index::BuildingModelID id);
+	void SetModelID(Index::FieldModelID id);
 };

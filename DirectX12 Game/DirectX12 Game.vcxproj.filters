@@ -226,7 +226,7 @@
     <ClCompile Include="LoadUI.cpp">
       <Filter>ソース ファイル\Object\GameObject\Object2D</Filter>
     </ClCompile>
-    <ClCompile Include="Building.cpp">
+    <ClCompile Include="FieldObject.cpp">
       <Filter>ソース ファイル\Object\GameObject\Object3D\Field</Filter>
     </ClCompile>
     <ClCompile Include="Field.cpp">
@@ -242,6 +242,9 @@
       <Filter>ソース ファイル\System</Filter>
     </ClCompile>
     <ClCompile Include="SceneObjectHierarchyViewer.cpp">
+      <Filter>ソース ファイル\Object\GameObject\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="StageEditor.cpp">
       <Filter>ソース ファイル\Object\GameObject\Debug</Filter>
     </ClCompile>
   </ItemGroup>
@@ -387,7 +390,7 @@
     <ClInclude Include="LoadUI.h">
       <Filter>ソース ファイル\Object\GameObject\Object2D</Filter>
     </ClInclude>
-    <ClInclude Include="Building.h">
+    <ClInclude Include="FieldObject.h">
       <Filter>ソース ファイル\Object\GameObject\Object3D\Field</Filter>
     </ClInclude>
     <ClInclude Include="Field.h">
@@ -403,6 +406,9 @@
       <Filter>ソース ファイル\System</Filter>
     </ClInclude>
     <ClInclude Include="SceneObjectHierarchyViewer.h">
+      <Filter>ソース ファイル\Object\GameObject\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="StageEditor.h">
       <Filter>ソース ファイル\Object\GameObject\Debug</Filter>
     </ClInclude>
   </ItemGroup>

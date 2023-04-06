@@ -30,7 +30,7 @@ private:
 	unsigned int m_meshNum = 0;
 public:
 	void LoadMesh(const char* fileName);
-	void Draw();
+	void Draw(D3D_PRIMITIVE_TOPOLOGY primitiveTopology= D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	void Finalize();
 
 	XMFLOAT3 GetPosition() { return m_position; }

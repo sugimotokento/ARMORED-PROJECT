@@ -147,7 +147,7 @@
     <ClCompile Include="Ammunition.cpp" />
     <ClCompile Include="Arm.cpp" />
     <ClCompile Include="AssaultRifle.cpp" />
-    <ClCompile Include="Building.cpp" />
+    <ClCompile Include="FieldObject.cpp" />
     <ClCompile Include="Call.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CameraManager.cpp" />
@@ -187,6 +187,7 @@
     <ClCompile Include="Shotgun.cpp" />
     <ClCompile Include="SkyDome.cpp" />
     <ClCompile Include="Sprite.cpp" />
+    <ClCompile Include="StageEditor.cpp" />
     <ClCompile Include="texture.cpp" />
     <ClCompile Include="TextureGeometry.cpp" />
     <ClCompile Include="WeaponViewer.cpp" />
@@ -197,7 +198,7 @@
     <ClInclude Include="Ammunition.h" />
     <ClInclude Include="Arm.h" />
     <ClInclude Include="AssaultRifle.h" />
-    <ClInclude Include="Building.h" />
+    <ClInclude Include="FieldObject.h" />
     <ClInclude Include="Call.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CameraManager.h" />
@@ -239,6 +240,7 @@
     <ClInclude Include="Shotgun.h" />
     <ClInclude Include="SkyDome.h" />
     <ClInclude Include="Sprite.h" />
+    <ClInclude Include="StageEditor.h" />
     <ClInclude Include="texture.h" />
     <ClInclude Include="TextureGeometry.h" />
     <ClInclude Include="DebugWeaponViewerScene.h" />

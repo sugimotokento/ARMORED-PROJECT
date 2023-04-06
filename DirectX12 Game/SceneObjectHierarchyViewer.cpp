@@ -62,7 +62,7 @@ bool SceneObjectHierarchyViewer::ImguiDebug(bool isVisible) {
 		const char* name = id.name();
 		std::string className = name;
 		className.erase(0, 6);
-		className += "ObjectHierarchyViewer";
+		className += "SceneObjectHierarchyViewer";
 		ImGui::Begin(className.c_str());
 
 		//Scene‚ÌLayer–¼‚ðŽæ“¾

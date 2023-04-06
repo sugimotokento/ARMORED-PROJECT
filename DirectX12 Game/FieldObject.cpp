@@ -1,14 +1,14 @@
-#include"Building.h"
+#include"FieldObject.h"
 #include"Renderer.h"
 
-void Building::Initialize() {
+void FieldObject::Initialize() {
 	ModelLoader::GetInstance()->LoadRequest(static_cast<ModelLoader::Index::ModelID>(m_modelID));
 	Renderer::GetInstance()->CreateConstantBuffer(m_constantBuffer);
 }
-void Building::Update() {
+void FieldObject::Update() {
 
 }
-void Building::Draw() {
+void FieldObject::Draw() {
 	////マトリクス設定
 	XMMATRIX lightView = CameraManager::GetInstance()->GetViewMatrix(CameraManager::Index::CAMERA_SHADOW);
 	XMMATRIX lightProjection = CameraManager::GetInstance()->GetProjectionMatrix(CameraManager::Index::CAMERA_SHADOW);
@@ -50,11 +50,11 @@ void Building::Draw() {
 
 	ModelLoader::GetInstance()->Draw(static_cast<ModelLoader::Index::ModelID>(m_modelID));
 }
-void Building::Finalize() {
+void FieldObject::Finalize() {
 
 }
 
-void Building::SetModelID(Index::BuildingModelID id) {
+void FieldObject::SetModelID(Index::FieldModelID id) {
 	m_modelID = id; 
 	ModelLoader::GetInstance()->LoadRequest(static_cast<ModelLoader::Index::ModelID>(m_modelID));
 

@@ -116,7 +116,7 @@ void Model::LoadMesh(const char* fileName) {
 
 }
 
-void Model::Draw() {
+void Model::Draw(D3D_PRIMITIVE_TOPOLOGY primitiveTopology) {
 
 
 
@@ -137,7 +137,7 @@ void Model::Draw() {
 		Renderer::GetInstance()->GetCommandList().Get()->IASetIndexBuffer(&indexView);	
 
 		//ƒgƒ|ƒƒWÝ’è
-		Renderer::GetInstance()->GetCommandList().Get()->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+		Renderer::GetInstance()->GetCommandList().Get()->IASetPrimitiveTopology(primitiveTopology);
 
 		//•`‰æ
 		Renderer::GetInstance()->GetCommandList().Get()->DrawIndexedInstanced(m_modelResource[i].m_indexNum*3, 1, 0, 0, 0);
