@@ -27,4 +27,5 @@ public:
 	void Finalize() final override;
 
 	void SetModelID(Index::FieldModelID id);
+	Index::FieldModelID GetModelID() { return m_modelID; }
 };

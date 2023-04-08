@@ -24,6 +24,7 @@ void Field::Update() {
 }
 void Field::Draw() {
 	GameObject::Draw();
+	CreateWorldMTX(m_scale, m_position, m_rotation);
 }
 void Field::Finalize() {
 	GameObject::Finalize();

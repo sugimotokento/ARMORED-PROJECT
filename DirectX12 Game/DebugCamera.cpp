@@ -63,24 +63,24 @@ void DebugCamera::Update() {
 	
 
 	if (fabsf(XInput::GetInstance()->GetRightThumb().x) > 0.01f) {
-		m_quaternion=XMMath::QuaternionRotateAxis(m_quaternion, up, XInput::GetInstance()->GetRightThumb().x * 0.04f);
+		m_quaternion=XMMath::QuaternionRotateAxis(m_quaternion, up, XInput::GetInstance()->GetRightThumb().x * 0.15f);
 	}
 	if (fabsf(XInput::GetInstance()->GetRightThumb().y) > 0.01f) {
-		m_quaternion=XMMath::QuaternionRotateAxis(m_quaternion, right, -XInput::GetInstance()->GetRightThumb().y * 0.04f);
+		m_quaternion=XMMath::QuaternionRotateAxis(m_quaternion, right, -XInput::GetInstance()->GetRightThumb().y * 0.15f);
 	}
 
 
 	if (fabsf(XInput::GetInstance()->GetLeftThumb().x) > 0.01f) {
-		m_position += right * 0.08f* XInput::GetInstance()->GetLeftThumb().x;
+		m_position += right * 0.3f* XInput::GetInstance()->GetLeftThumb().x;
 	}
 	if (fabsf(XInput::GetInstance()->GetLeftThumb().y) > 0.01f) {
-		m_position += forward * 0.08f* XInput::GetInstance()->GetLeftThumb().y;
+		m_position += forward * 0.3f * XInput::GetInstance()->GetLeftThumb().y;
 	}
 	if (XInput::GetInstance()->GetPadPress(XINPUT_GAMEPAD_DPAD_UP)) {
-		m_position += up * 0.08f;
+		m_position += up * 0.3f;
 	}
 	if (XInput::GetInstance()->GetPadPress(XINPUT_GAMEPAD_DPAD_DOWN)) {
-		m_position += -up * 0.08f;
+		m_position += -up * 0.3f;
 	}
 
 	m_target = m_position+  forward*5;

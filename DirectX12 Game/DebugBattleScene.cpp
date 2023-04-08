@@ -5,6 +5,7 @@
 #include"SkyDome.h"
 #include"DebugBattleMenu.h"
 #include"Field.h"
+#include"StageEditor.h"
 
 DebugBattleScene::DebugBattleScene() {
 
@@ -14,6 +15,7 @@ void DebugBattleScene::Initialize() {
 
 #ifdef  _DEBUG
 	AddGameObject<DebugBattleMenu>(Layer::GEOMETRY);
+	AddGameObject<StageEditor>(Layer::GEOMETRY);
 #endif //  _DEBUG
 
 	AddGameObject<Field>(Layer::GEOMETRY);

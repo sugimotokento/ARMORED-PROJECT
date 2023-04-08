@@ -11,7 +11,7 @@
 
 //-------------ImguiRendererに関数を登録する方法------------------------//
 // クラスにImguiを記述する関数を書く{bool 関数名()}
-//	std::function<bool()> f = std::bind(&クラス名::関数名, this);
+//	std::function<bool(bool isVisible)> f = std::bind(&クラス名::関数名, this, std::placeholders::_1);
 //	ImguiRenderer::GetInstance()->AddFunction(f);
 //これでImguiRendererに関数を登録してImguiを表示できる
 //--------------------------------------------------------------------//

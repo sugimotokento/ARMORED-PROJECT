@@ -10,7 +10,7 @@ class SceneManager {
 private:
 	Scene* m_scene;
 	LoadUI* m_loadUI;
-	bool isGameEnd;
+	bool m_isGameEnd;
 
 	static SceneManager* instance;
 

@@ -10,7 +10,7 @@ void WeaponViewer::Initialize() {
 
 #ifdef _DEBUG
 	std::function<bool(bool isVisible)> f = std::bind(&WeaponViewer::ImguiDebug, this, std::placeholders::_1);
-	ImguiRenderer::GetInstance()->AddFunction(f);
+	ImguiRenderer::GetInstance()->AddFunction(f, "WeaponViewer");
 #endif // _DEBUG
 }
 void WeaponViewer::Update() {

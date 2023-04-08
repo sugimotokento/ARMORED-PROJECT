@@ -17,7 +17,7 @@
 SceneManager* SceneManager::instance = nullptr;
 
 SceneManager::SceneManager() {
-	isGameEnd = false;
+	m_isGameEnd = false;
 	CameraManager::Create();
 	CameraManager::GetInstance()->Initialize();
 
@@ -91,10 +91,10 @@ Scene* SceneManager::GetScene() {
 	return m_scene;
 }
 void SceneManager::GameEnd() {
-	isGameEnd = true;
+	m_isGameEnd = true;
 }
 bool SceneManager::GetIsGameEnd() {
-	return isGameEnd;
+	return m_isGameEnd;
 }
 
 

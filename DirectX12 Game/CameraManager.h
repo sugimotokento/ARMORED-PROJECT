@@ -86,6 +86,7 @@ public:
 	void SetMainCameraPosition(XMFLOAT3 pos) { m_camera[m_mainCamera]->SetPosition(pos); }
 
 	//Œ»ÝŽg‚Á‚Ä‚¢‚éƒJƒƒ‰‚ðŽæ“¾
+	Camera* GetMainCamera() { return m_camera[m_mainCamera]; }
 	XMMATRIX GetMainViewMatrix() { return m_camera[m_mainCamera]->GetViewMatrix(); }
 	XMMATRIX GetMainProjectionMatrix() { return m_camera[m_mainCamera]->GetProjectionMatrix(); }
 	XMFLOAT3 GetMainPosition() { return m_camera[m_mainCamera]->GetPosition(); }
