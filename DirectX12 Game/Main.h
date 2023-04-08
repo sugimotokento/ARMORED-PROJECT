@@ -15,6 +15,12 @@
 #include<DirectXTex.h>
 
 
+
+
+
+
+
+
 using namespace DirectX;
 using namespace Microsoft::WRL;
 

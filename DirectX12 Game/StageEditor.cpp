@@ -1,13 +1,17 @@
+#ifdef _DEBUG
 #include"StageEditor.h"
 #include"ImguiRenderer.h"
 #include"CameraManager.h"
 #include"DebugCamera.h"
+#include"Input.h"
+#include"XMMath.h"
+#include<math.h>
 
 void StageEditor::Initialize() {
-#ifdef _DEBUG
+	m_editObject.reset(nullptr);
 	std::function<bool(bool isVisible)> f = std::bind(&StageEditor::ImguiStageEditor, this, std::placeholders::_1);
 	ImguiRenderer::GetInstance()->AddFunction(f, "StageEditor");
-#endif // _DEBUG
+
 }
 void StageEditor::Update() {
 	//追加したオブジェクトのUpdate
@@ -18,6 +22,7 @@ void StageEditor::Update() {
 	//編集中のオブジェクトのUpdate
 	if (m_editObject.get()) {
 		m_editObject.get()->Update();
+		EditObject();
 	}
 }
 void StageEditor::Draw() {
@@ -44,6 +49,92 @@ void StageEditor::Finalize() {
 }
 
 
+
+
+//-----------------------------------
+//コントローラー入力でオブジェクトを編集する機能
+//----------------------------------
+void StageEditor::EditObject() {
+	if (m_editObject.get() == nullptr)return;
+	if (m_isEditObjectMode == false)return;
+
+	EditPosition();
+	EditScale();
+	EditRotation();
+}
+void StageEditor::EditPosition() {
+	DebugCamera* camera = dynamic_cast<DebugCamera*>(CameraManager::GetInstance()->GetCamera(CameraManager::Index::CAMERA_DEBUG));
+	XMFLOAT2 inputLeftThumb = XInput::GetInstance()->GetLeftThumb();
+
+	//編集オブジェクトを動かす
+	XMFLOAT3 forward = camera->GetForward();
+	XMFLOAT3 right = camera->GetRight();
+	XMFLOAT3 up = XMFLOAT3(0, 1, 0);
+
+	//平行移動させたいのでup以外のｙ軸を0にする
+	forward.y = 0;
+	right.y = 0;
+	forward = XMMath::Normalize(forward);
+	right = XMMath::Normalize(right);
+
+	//カメラから見たｚ軸移動
+	if (fabsf(inputLeftThumb.y) > 0.01f) {
+		XMFLOAT3 pos = m_editObject.get()->GetPosition();
+		pos += forward * inputLeftThumb.y * 0.4f;
+		m_editObject.get()->SetPosition(pos);
+	}
+
+	//カメラから見たｘ軸移動
+	if (fabsf(inputLeftThumb.x) > 0.01f) {
+		XMFLOAT3 pos = m_editObject.get()->GetPosition();
+		pos += right * inputLeftThumb.x * 0.4f;
+		m_editObject.get()->SetPosition(pos);
+	}
+
+	//world座標のｙ軸移動
+	if (XInput::GetInstance()->GetPadPress(XINPUT_GAMEPAD_DPAD_UP)) {
+		XMFLOAT3 pos = m_editObject.get()->GetPosition();
+		pos += up * 0.4f;
+		m_editObject.get()->SetPosition(pos);
+	}
+	else if (XInput::GetInstance()->GetPadPress(XINPUT_GAMEPAD_DPAD_DOWN)) {
+		XMFLOAT3 pos = m_editObject.get()->GetPosition();
+		pos += -up * 0.4f;
+		m_editObject.get()->SetPosition(pos);
+	}
+}
+void StageEditor::EditScale() {
+	if (XInput::GetInstance()->GetPadPress(XINPUT_GAMEPAD_RIGHT_SHOULDER)) {
+		XMFLOAT3 scale = m_editObject.get()->GetScale();
+		scale *= 1.01f;
+		m_editObject.get()->SetScale(scale);
+	}
+	else if (XInput::GetInstance()->GetPadPress(XINPUT_GAMEPAD_LEFT_SHOULDER)) {
+		XMFLOAT3 scale = m_editObject.get()->GetScale();
+		scale *= 0.99f;
+		m_editObject.get()->SetScale(scale);
+	}
+
+}
+void StageEditor::EditRotation() {
+	XMFLOAT2 inputRightThumb = XInput::GetInstance()->GetRightThumb();
+
+	if (fabsf(inputRightThumb.y) > 0.01f) {
+		XMFLOAT3 rotation = m_editObject.get()->GetRotation();
+		rotation.x += inputRightThumb.y*0.05f;
+		m_editObject.get()->SetRotation(rotation);
+	}
+	if (fabsf(inputRightThumb.x) > 0.01f) {
+		XMFLOAT3 rotation = m_editObject.get()->GetRotation();
+		rotation.y += inputRightThumb.x*0.05f;
+		m_editObject.get()->SetRotation(rotation);
+	}
+
+}
+
+//---------------------
+//ImGui周り
+//---------------------
 bool StageEditor::ImguiStageEditor(bool isVisible) {
 	if (isVisible) {
 		ImguiEditWindow();
@@ -57,7 +148,7 @@ void StageEditor::ImguiEditWindow() {
 	static CameraManager::Index::CameraIndex defaultCameraID = CameraManager::GetInstance()->GetMainCameraIndex();
 
 
-	//エディットモードにする
+	//モード変更
 	{
 		ImGui::Checkbox("isEditMode", &m_isEditMode);
 
@@ -67,6 +158,11 @@ void StageEditor::ImguiEditWindow() {
 		}
 		else {
 			CameraManager::GetInstance()->SetMainCamera(defaultCameraID);
+		}
+
+		if (m_editObject.get()) {
+			ImGui::SameLine();
+			ImGui::Checkbox("isEditObjectMode", &m_isEditObjectMode);
 		}
 	}
 
@@ -82,7 +178,7 @@ void StageEditor::ImguiEditWindow() {
 			};
 
 			int indexNum = FieldObject::Index::MODEL_ID_MAX - FieldObject::Index::MODEL_ID_START;
-			ImGui::Combo("SelectWeapon", &modelId, modelName, indexNum - 1);
+			ImGui::Combo("SelectObject", &modelId, modelName, indexNum - 1);
 			if (ImGui::Button("SponModel")) {
 				//ここで生成
 				m_editObject.reset(new FieldObject());
@@ -92,7 +188,7 @@ void StageEditor::ImguiEditWindow() {
 			}
 		}
 
-
+		 
 		//オブジェクトの追加を適用する	
 		{
 			if (m_editObject.get()) {
@@ -101,6 +197,7 @@ void StageEditor::ImguiEditWindow() {
 					m_objectList.push_back(std::move(m_editObject));
 					m_editObject.reset(nullptr);
 					modelId = -1;
+					m_isEditObjectMode = false;
 				}
 			}
 		}
@@ -108,8 +205,6 @@ void StageEditor::ImguiEditWindow() {
 	ImGui::End();
 
 }
-
-
 void StageEditor::ImguiSetObjectWindow() {
 	ImGui::Begin("ObjectList");
 	std::string objectIdName[]{
@@ -117,12 +212,14 @@ void StageEditor::ImguiSetObjectWindow() {
 #define MODEL_FIELD_ID(name, modelName, albedoTex, normalTex, occlusionTex, metalTex, emmisionTex)#name,
 			MODEL_FIELD_ID_TABLE
 	};
-	
+
 	for (int i = 0; i < m_objectList.size(); i++) {
-		int index = m_objectList[i].get()->GetModelID()-FieldObject::Index::MODEL_ID_START;
+		int index = m_objectList[i].get()->GetModelID() - FieldObject::Index::MODEL_ID_START;
 		std::string name = std::to_string(i) + ":" + objectIdName[index - 1];
 		ImGui::Text(name.c_str());
 	}
 
 	ImGui::End();
 }
+
+#endif // _DEBUG

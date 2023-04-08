@@ -3,6 +3,9 @@
 #include"Input.h"
 #include"XMMath.h"
 #include"ImguiRenderer.h"
+#include"StageEditor.h"
+#include"SceneManager.h"
+#include"Scene.h"
 #include<math.h>
 
 DebugCamera::DebugCamera() {
@@ -18,12 +21,11 @@ DebugCamera::DebugCamera() {
 	XMMATRIX trans = XMMatrixTranslation(m_position.x, m_position.y, m_position.z);
 	XMMATRIX rot = XMMatrixRotationQuaternion(quat);
 	XMMATRIX w = rot * trans;
-	XMFLOAT4X4 world;
-	XMStoreFloat4x4(&world, w);
+	XMStoreFloat4x4(&m_worldMTX, w);
 
-	XMFLOAT3 right = { world._11, world._12, world._13 };
-	XMFLOAT3 up = { world._21, world._22, world._23 };
-	XMFLOAT3 forward = { world._31, world._32, world._33 };
+	XMFLOAT3 right = { m_worldMTX._11, m_worldMTX._12, m_worldMTX._13 };
+	XMFLOAT3 up = { m_worldMTX._21, m_worldMTX._22, m_worldMTX._23 };
+	XMFLOAT3 forward = { m_worldMTX._31, m_worldMTX._32, m_worldMTX._33 };
 	right = XMMath::Normalize(right);
 	up = XMMath::Normalize(up);
 	forward = XMMath::Normalize(forward);
@@ -49,19 +51,23 @@ void DebugCamera::Update() {
 	XMMATRIX trans = XMMatrixTranslation(m_position.x, m_position.y, m_position.z);
 	XMMATRIX rot = XMMatrixRotationQuaternion(quat);
 	XMMATRIX w = rot * trans;
-	XMFLOAT4X4 world;
-	XMStoreFloat4x4(&world, w);
+	XMStoreFloat4x4(&m_worldMTX, w);
 
-	XMFLOAT3 right = { world._11, world._12, world._13 };
-	XMFLOAT3 up = { world._21, world._22, world._23 };
-	XMFLOAT3 forward = { world._31, world._32, world._33 };
-	right=XMMath::Normalize(right);
-	up =XMMath::Normalize(up);
-	forward =XMMath::Normalize(forward);
+	XMFLOAT3 right = GetRight();
+	XMFLOAT3 up = GetUp();
+	XMFLOAT3 forward = GetForward();
 
+	bool canMove = true;
+	StageEditor* stageEditor = SceneManager::GetInstance()->GetScene()->GetGameObject<StageEditor>();
+	if (stageEditor) {
+		if (stageEditor->GetIsEditObjectMode()) {
+			//ステージエディタがオブジェクト編集モードだったら入力を受け付けなくする
+			canMove = false;
+		}
+	}
 
 	
-
+	if (canMove == false)return;
 	if (fabsf(XInput::GetInstance()->GetRightThumb().x) > 0.01f) {
 		m_quaternion=XMMath::QuaternionRotateAxis(m_quaternion, up, XInput::GetInstance()->GetRightThumb().x * 0.15f);
 	}

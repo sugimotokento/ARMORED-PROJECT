@@ -92,9 +92,11 @@ public:
 	XMFLOAT3 GetMainPosition() { return m_camera[m_mainCamera]->GetPosition(); }
 	XMFLOAT3 GetMainTarget() { return m_camera[m_mainCamera]->GetTarget(); }
 
+	//index‚©‚çƒJƒƒ‰‚ğæ“¾‚·‚é
+	Camera* GetCamera(Index::CameraIndex index)					{ return m_camera[index]; }
 	XMMATRIX GetViewMatrix(Index::CameraIndex index)			{ return m_camera[index]->GetViewMatrix();}
-	XMMATRIX GetProjectionMatrix(Index::CameraIndex index)	{ return m_camera[index]->GetProjectionMatrix(); }
-	XMFLOAT3 GetPosition(Index::CameraIndex index)			{ return m_camera[index]->GetPosition(); }
+	XMMATRIX GetProjectionMatrix(Index::CameraIndex index)		{ return m_camera[index]->GetProjectionMatrix(); }
+	XMFLOAT3 GetPosition(Index::CameraIndex index)				{ return m_camera[index]->GetPosition(); }
 	XMFLOAT3 GetTarget(Index::CameraIndex index)				{ return m_camera[index]->GetTarget(); }
 
 	static void Create();

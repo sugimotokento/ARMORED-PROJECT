@@ -11,7 +11,7 @@ protected:
 	XMFLOAT3 m_position=XMFLOAT3(0,0,0);
 	XMFLOAT3 m_scale=XMFLOAT3(1,1,1);
 	XMFLOAT3 m_rotation = XMFLOAT3(0, 0, 0);
-	XMFLOAT4X4 m_worldMTX=XMFLOAT4X4(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
+	XMFLOAT4X4 m_worldMTX=XMFLOAT4X4(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);//äÓñ{ìIÇ…CreateWorldMTX()Ç©ÇÁê›íËÇ∑ÇÈÅI
 	GameObject* m_parent=nullptr;
 	std::vector <std::unique_ptr<GameObject>> m_child;
 

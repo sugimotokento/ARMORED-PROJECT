@@ -4,21 +4,36 @@
 #include<memory>
 #include"FieldObject.h"
 
-//csvファイルに建物とかのStageに設置するオブジェクトを情報を書き込んだり読み込んだり
+
 class StageEditor :public GameObject {
-	struct EditData {
-		XMFLOAT3 position = XMFLOAT3(0, 0, 0);
-		XMFLOAT3 scale = XMFLOAT3(1, 1, 1);
+private:
+	struct EditParam {
+		float objectMoveSpeed = 0.5f;
+		float objectRotationSpeed = 0.1f;
+		float objectChangeScaleSpeed = 0.99f;
 	};
+
 private:
 	std::unique_ptr<FieldObject> m_editObject;
 	std::vector<std::unique_ptr<FieldObject>> m_objectList;
-	EditData editData;
 	bool m_isEditMode = false;
+	bool m_isEditObjectMode = false;
 
-	bool ImguiStageEditor(bool isVisible);
-	void ImguiEditWindow();
-	void ImguiSetObjectWindow();
+	//-----------------------------------
+	//コントローラー入力でオブジェクトを編集する機能
+	//----------------------------------
+	void EditObject();
+	void EditPosition();
+	void EditScale();
+	void EditRotation();
+
+	//---------------------
+	//ImGui周り
+	//---------------------
+	bool ImguiStageEditor(bool isVisible);	//ImguiRendererに追加する関数
+	void ImguiEditWindow();					//オブジェクトの生成、追加、編集のオンオフ
+	void ImguiSetObjectWindow();			//設定済みオブジェクトの表示
+
 public:
 	void Initialize() final override;
 	void Update() final override;
@@ -26,6 +41,7 @@ public:
 	void Finalize() final override;
 
 	bool GetIsEditMode() { return m_isEditMode; }
+	bool GetIsEditObjectMode() { return m_isEditObjectMode; }
 };
 
 #endif
