@@ -46,7 +46,10 @@ void FieldObject::Draw() {
 	Renderer::GetInstance()->GetCommandList().Get()->SetGraphicsRootConstantBufferView(0,
 		m_constantBuffer->GetGPUVirtualAddress());
 
-	ModelLoader::GetInstance()->Draw(static_cast<ModelLoader::Index::ModelID>(m_modelID));
+	if(m_isDrawLineMode)
+		ModelLoader::GetInstance()->Draw(static_cast<ModelLoader::Index::ModelID>(m_modelID), D3D_PRIMITIVE_TOPOLOGY_LINESTRIP);
+	else
+		ModelLoader::GetInstance()->Draw(static_cast<ModelLoader::Index::ModelID>(m_modelID));
 }
 void FieldObject::Finalize() {
 

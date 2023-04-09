@@ -263,7 +263,7 @@ private:
 public:
 	void LoadRequest(Index::ModelID id);
 	void UnloadRequest(Index::ModelID id);
-	void Draw(Index::ModelID id);
+	void Draw(Index::ModelID id, D3D_PRIMITIVE_TOPOLOGY primitiveTopology = D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	void Finalize();
 
 

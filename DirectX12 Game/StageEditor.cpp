@@ -38,7 +38,11 @@ void StageEditor::Update() {
 void StageEditor::Draw() {
 	//追加したオブジェクトのDraw
 	for (int i = 0; i < m_objectList.size(); i++) {
+		if (i == m_removeIndex) {
+			m_objectList[i].get()->SetIsDrawLineMode(true);
+		}
 		m_objectList[i].get()->Draw();
+		m_objectList[i].get()->SetIsDrawLineMode(false);
 	}
 
 	//編集中のオブジェクトのDraw
@@ -89,28 +93,24 @@ void StageEditor::EditPosition() {
 
 	//カメラから見たｚ軸移動
 	if (fabsf(inputLeftThumb.y) > 0.01f) {
-		XMFLOAT3 pos = m_editObject.get()->GetPosition();
-		pos += forward * inputLeftThumb.y * 0.4f;
-		m_editObject.get()->SetPosition(pos);
+		m_spownPosition += forward * inputLeftThumb.y * 0.4f;
+		m_editObject.get()->SetPosition(m_spownPosition);
 	}
 
 	//カメラから見たｘ軸移動
 	if (fabsf(inputLeftThumb.x) > 0.01f) {
-		XMFLOAT3 pos = m_editObject.get()->GetPosition();
-		pos += right * inputLeftThumb.x * 0.4f;
-		m_editObject.get()->SetPosition(pos);
+		m_spownPosition += right * inputLeftThumb.x * 0.4f;
+		m_editObject.get()->SetPosition(m_spownPosition);
 	}
 
 	//world座標のｙ軸移動
 	if (XInput::GetInstance()->GetPadPress(XINPUT_GAMEPAD_DPAD_UP)) {
-		XMFLOAT3 pos = m_editObject.get()->GetPosition();
-		pos += up * 0.4f;
-		m_editObject.get()->SetPosition(pos);
+		m_spownPosition += up * 0.4f;
+		m_editObject.get()->SetPosition(m_spownPosition);
 	}
 	else if (XInput::GetInstance()->GetPadPress(XINPUT_GAMEPAD_DPAD_DOWN)) {
-		XMFLOAT3 pos = m_editObject.get()->GetPosition();
-		pos += -up * 0.4f;
-		m_editObject.get()->SetPosition(pos);
+		m_spownPosition += -up * 0.4f;
+		m_editObject.get()->SetPosition(m_spownPosition);
 	}
 }
 void StageEditor::EditScale() {
@@ -148,7 +148,7 @@ void StageEditor::EditRotation() {
 bool StageEditor::ImguiStageEditor(bool isVisible) {
 	if (isVisible) {
 		ImguiEditWindow();
-		ImguiSetObjectWindow();
+		ImguiObjectListWindow();
 	}
 
 	return GetIsDestroy();
@@ -194,6 +194,7 @@ void StageEditor::ImguiEditWindow() {
 				m_editObject.reset(new FieldObject());
 				m_editObject.get()->SetModelID(static_cast<FieldObject::Index::FieldModelID>(modelId + 1 + FieldObject::Index::MODEL_ID_START));
 				m_editObject.get()->Initialize();
+				m_editObject.get()->SetPosition(m_spownPosition);
 				m_editObject.get()->CreateWorldMTX(m_editObject.get()->GetScale(), m_editObject.get()->GetPosition(), m_editObject.get()->GetRotation());
 			}
 		}
@@ -215,7 +216,7 @@ void StageEditor::ImguiEditWindow() {
 	ImGui::End();
 
 }
-void StageEditor::ImguiSetObjectWindow() {
+void StageEditor::ImguiObjectListWindow() {
 	ImGui::Begin("ObjectList");
 	std::string objectIdName[]{
 #undef MODEL_FIELD_ID
@@ -223,13 +224,28 @@ void StageEditor::ImguiSetObjectWindow() {
 			MODEL_FIELD_ID_TABLE
 	};
 
-	if (ImGui::CollapsingHeader("RemoveObject", ImGuiTreeNodeFlags_DefaultOpen)) {
-		ImGui::InputInt("RemoveIndex", &m_removeIndex);//削除するオブジェクトを選択する
+	if (ImGui::CollapsingHeader("SelectObjectList", ImGuiTreeNodeFlags_DefaultOpen)) {
+		ImGui::InputInt("SelectIndex", &m_removeIndex);//削除するオブジェクトを選択する
 
 		//削除
 		if (ImGui::Button("Remove")) {
 			m_isRemove = true;
 		}
+
+		ImGui::SameLine();
+
+		//編集
+		if (ImGui::Button("Edit")) {
+			if (m_objectList.size() > m_removeIndex) {
+				m_editObject.get()->Finalize();
+				m_editObject.reset(nullptr);
+				m_editObject=std::move(m_objectList[m_removeIndex]);
+				m_objectList[m_removeIndex].get()->Finalize();
+				m_objectList.erase(m_objectList.begin() + m_removeIndex);
+				m_removeIndex = -1;
+			}
+		}
+
 	}
 
 	//追加されたオブコントを表示

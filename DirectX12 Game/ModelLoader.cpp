@@ -28,7 +28,7 @@ void ModelLoader::UnloadRequest(Index::ModelID id) {
 		m_loadModel.erase(id);
 	}
 }
-void ModelLoader::Draw(Index::ModelID id) {
+void ModelLoader::Draw(Index::ModelID id, D3D_PRIMITIVE_TOPOLOGY primitiveTopology) {
 	if (CheckLoadedModel(id)) {
 		//テクスチャ設定
 		ID3D12DescriptorHeap* dh[] = {m_loadModel[id].texture.get()->GetDescriptorHeap().Get()};
@@ -37,7 +37,7 @@ void ModelLoader::Draw(Index::ModelID id) {
 			dh[0]->GetGPUDescriptorHandleForHeapStart()
 		);
 
-		m_loadModel[id].model.get()->Draw();
+		m_loadModel[id].model.get()->Draw(primitiveTopology);
 	}
 }
 void ModelLoader::Finalize() {

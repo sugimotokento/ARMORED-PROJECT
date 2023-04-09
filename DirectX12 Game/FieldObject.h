@@ -20,12 +20,17 @@ public:
 private:
 	Index::FieldModelID m_modelID = Index::MODEL_ID_BUILDING1;
 	ComPtr<ID3D12Resource> m_constantBuffer;
+	bool m_isDrawLineMode = false;
 public:
 	void Initialize() final override;
 	void Update() final override;
 	void Draw() final override;
 	void Finalize() final override;
 
+
 	void SetModelID(Index::FieldModelID id);
 	Index::FieldModelID GetModelID() { return m_modelID; }
+
+	//ƒ‚ƒfƒ‹‚ðD3D_PRIMITIVE_TOPOLOGY_LINESTRIP‚Å•\Ž¦‚·‚é
+	void SetIsDrawLineMode(bool flag) { m_isDrawLineMode = flag; }
 };

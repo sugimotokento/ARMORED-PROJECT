@@ -16,12 +16,13 @@ private:
 private:
 	std::unique_ptr<FieldObject> m_editObject;
 	std::vector<std::unique_ptr<FieldObject>> m_objectList;
+	XMFLOAT3 m_spownPosition = XMFLOAT3(0, 0, 0);
 	bool m_isEditMode = false;
 	bool m_isEditObjectMode = false;
 
 
 	//オブジェクトリストから削除する用
-	int m_removeIndex = 0;
+	int m_removeIndex = -1;
 	bool m_isRemove = false;
 
 
@@ -38,7 +39,7 @@ private:
 	//---------------------
 	bool ImguiStageEditor(bool isVisible);	//ImguiRendererに追加する関数
 	void ImguiEditWindow();					//オブジェクトの生成、追加、編集のオンオフ
-	void ImguiSetObjectWindow();			//設定済みオブジェクトの表示
+	void ImguiObjectListWindow();			//設定済みオブジェクトの表示
 
 public:
 	void Initialize() final override;
