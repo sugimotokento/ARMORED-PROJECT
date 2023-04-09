@@ -53,8 +53,6 @@ XInput::~XInput() {
 }
 void XInput::Update() {
 	
-	ZeroMemory(&m_inputState, sizeof(XINPUT_STATE));
-	ZeroMemory(&m_oldInputState, sizeof(XINPUT_STATE));
 
 	memcpy(&m_oldInputState, &m_inputState, sizeof(XINPUT_STATE));
 
