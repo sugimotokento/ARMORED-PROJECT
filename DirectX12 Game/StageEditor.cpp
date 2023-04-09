@@ -24,6 +24,16 @@ void StageEditor::Update() {
 		m_editObject.get()->Update();
 		EditObject();
 	}
+
+
+	//サブジェクト削除
+	if (m_isRemove == true) {
+		if (m_objectList.size() > m_removeIndex) {
+			m_objectList[m_removeIndex].get()->Finalize();
+			m_objectList.erase(m_objectList.begin() + m_removeIndex);
+		}
+		m_isRemove = false;
+	}
 }
 void StageEditor::Draw() {
 	//追加したオブジェクトのDraw
@@ -213,10 +223,24 @@ void StageEditor::ImguiSetObjectWindow() {
 			MODEL_FIELD_ID_TABLE
 	};
 
-	for (int i = 0; i < m_objectList.size(); i++) {
-		int index = m_objectList[i].get()->GetModelID() - FieldObject::Index::MODEL_ID_START;
-		std::string name = std::to_string(i) + ":" + objectIdName[index - 1];
-		ImGui::Text(name.c_str());
+	if (ImGui::CollapsingHeader("RemoveObject", ImGuiTreeNodeFlags_DefaultOpen)) {
+		ImGui::InputInt("RemoveIndex", &m_removeIndex);//削除するオブジェクトを選択する
+
+		//削除
+		if (ImGui::Button("Remove")) {
+			m_isRemove = true;
+		}
+	}
+
+	//追加されたオブコントを表示
+	if (ImGui::CollapsingHeader("List", ImGuiTreeNodeFlags_DefaultOpen)) {
+		for (int i = 0; i < m_objectList.size(); i++) {
+			int index = m_objectList[i].get()->GetModelID() - FieldObject::Index::MODEL_ID_START;
+			std::string name = std::to_string(i) + ":" + objectIdName[index - 1];
+			ImVec4 color(1, 1, 1, 1);
+			if (i == m_removeIndex)color = ImVec4(1, 0, 0, 1);
+			ImGui::TextColored(color, name.c_str());
+		}
 	}
 
 	ImGui::End();

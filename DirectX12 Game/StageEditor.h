@@ -19,6 +19,12 @@ private:
 	bool m_isEditMode = false;
 	bool m_isEditObjectMode = false;
 
+
+	//オブジェクトリストから削除する用
+	int m_removeIndex = 0;
+	bool m_isRemove = false;
+
+
 	//-----------------------------------
 	//コントローラー入力でオブジェクトを編集する機能
 	//----------------------------------
