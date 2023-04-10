@@ -23,52 +23,21 @@ public:
 	virtual void Draw();
 	virtual void Finalize();
 
+
+	//--------------------------
+	//基本的なパラメーターの設定
+	//--------------------------
 	void SetPosition(XMFLOAT3 position) { m_position = position; }
-	void SetScale(XMFLOAT3 scale) { m_scale = scale; }
+	void SetScale(XMFLOAT3 scale)		{ m_scale = scale; }
 	void SetRotation(XMFLOAT3 rotation) { m_rotation = rotation; }
-	void SetParent(GameObject* parent) { m_parent = parent; }
-	void CreateWorldMTX(XMFLOAT3 scale, XMFLOAT3 position, XMFLOAT3 rotation) {
-		XMMATRIX world;
-		XMMATRIX trans = XMMatrixTranslation(m_position.x, m_position.y, m_position.z);
-		XMMATRIX rot = XMMatrixRotationRollPitchYaw(m_rotation.x, m_rotation.y, m_rotation.z);
-		XMMATRIX size = XMMatrixScaling(m_scale.x, m_scale.y, m_scale.z);
-		if (m_parent != nullptr) {
-			XMFLOAT4X4 parentWorldTemp = m_parent->GetWorldMTX();
-			XMMATRIX parentWorld = XMLoadFloat4x4(&parentWorldTemp);
-			world = (size * rot * trans) * parentWorld;
-		}
-		else {
-			world = size * rot * trans;
-		}
-		XMStoreFloat4x4(&m_worldMTX, world);
-	}
-	void CreateWorldMTX(XMFLOAT3 scale, XMFLOAT3 position, XMFLOAT4 quaternion) {
-		XMVECTOR quat;
-		quat=XMLoadFloat4(&quaternion);
 
-		XMMATRIX world;
-		XMMATRIX trans = XMMatrixTranslation(m_position.x, m_position.y, m_position.z);
-		XMMATRIX rot = XMMatrixRotationQuaternion(quat);
-		XMMATRIX size = XMMatrixScaling(m_scale.x, m_scale.y, m_scale.z);
-		if (m_parent != nullptr) {
-			XMFLOAT4X4 parentWorldTemp = m_parent->GetWorldMTX();
-			XMMATRIX parentWorld = XMLoadFloat4x4(&parentWorldTemp);
-			world = (size * rot * trans) * parentWorld;
-		}
-		else {
-			world = size * rot * trans;
-		}
-		XMStoreFloat4x4(&m_worldMTX, world);
-	}
-
-	XMFLOAT3 GetPosition() { return m_position; }
-	XMFLOAT3 GetWorldPosition() { return XMFLOAT3(m_worldMTX._41, m_worldMTX._42, m_worldMTX._43); }
-	XMFLOAT3 GetScale() { return m_scale; }
-	XMFLOAT3 GetRotation() { return m_rotation; }
-	XMFLOAT4X4 GetWorldMTX() { return m_worldMTX; }
-	GameObject* GetParent() { return m_parent; }
-	GameObject* GetChild(int i) { return m_child[i].get(); }
-	int GetChildCount() { return (int)m_child.size(); }
+	//--------------------------
+	//基本的なパラメーターの取得
+	//--------------------------
+	XMFLOAT3 GetPosition()		{ return m_position; }
+	XMFLOAT3 GetScale()			{ return m_scale; }
+	XMFLOAT3 GetRotation()		{ return m_rotation; }
+	XMFLOAT4X4 GetWorldMTX()	{ return m_worldMTX; }
 
 	XMFLOAT3 GetRight() {
 		XMFLOAT3 out;
@@ -109,8 +78,47 @@ public:
 
 		return out;
 	}
+	XMFLOAT3 GetWorldPosition() { return XMFLOAT3(m_worldMTX._41, m_worldMTX._42, m_worldMTX._43); }
 
 
+	//WorldMatrixを計算する
+	void CreateWorldMTX(XMFLOAT3 scale, XMFLOAT3 position, XMFLOAT3 rotation) {
+		XMMATRIX world;
+		XMMATRIX trans = XMMatrixTranslation(m_position.x, m_position.y, m_position.z);
+		XMMATRIX rot = XMMatrixRotationRollPitchYaw(m_rotation.x, m_rotation.y, m_rotation.z);
+		XMMATRIX size = XMMatrixScaling(m_scale.x, m_scale.y, m_scale.z);
+		if (m_parent != nullptr) {
+			XMFLOAT4X4 parentWorldTemp = m_parent->GetWorldMTX();
+			XMMATRIX parentWorld = XMLoadFloat4x4(&parentWorldTemp);
+			world = (size * rot * trans) * parentWorld;
+		}
+		else {
+			world = size * rot * trans;
+		}
+		XMStoreFloat4x4(&m_worldMTX, world);
+	}
+	void CreateWorldMTX(XMFLOAT3 scale, XMFLOAT3 position, XMFLOAT4 quaternion) {
+		XMVECTOR quat;
+		quat = XMLoadFloat4(&quaternion);
+
+		XMMATRIX world;
+		XMMATRIX trans = XMMatrixTranslation(m_position.x, m_position.y, m_position.z);
+		XMMATRIX rot = XMMatrixRotationQuaternion(quat);
+		XMMATRIX size = XMMatrixScaling(m_scale.x, m_scale.y, m_scale.z);
+		if (m_parent != nullptr) {
+			XMFLOAT4X4 parentWorldTemp = m_parent->GetWorldMTX();
+			XMMATRIX parentWorld = XMLoadFloat4x4(&parentWorldTemp);
+			world = (size * rot * trans) * parentWorld;
+		}
+		else {
+			world = size * rot * trans;
+		}
+		XMStoreFloat4x4(&m_worldMTX, world);
+	}
+
+	//-----------------
+	//削除関連
+	//-----------------
 	void SetDestroy() { m_isDestroy = true; }
 	bool Destroy() { 
 		if (m_isDestroy) {
@@ -123,6 +131,18 @@ public:
 		}
 	}
 
+	//--------------------
+	//親子関係周り
+	//--------------------
+	//親オブジェクトの設定
+	void SetParent(GameObject* parent) { m_parent = parent; }
+	//親オブジェクトを取得
+	GameObject* GetParent() { return m_parent; }
+	//子オブジェクトを取得
+	GameObject* GetChild(int i) { return m_child[i].get(); }
+	//子オブジェクトの数を取得
+	int GetChildCount() { return (int)m_child.size(); }
+	//子オブジェクトを追加
 	template <typename T>
 	T* AddChild() {
 		m_child.push_back(std::make_unique<T>());
