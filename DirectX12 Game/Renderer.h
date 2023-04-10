@@ -20,7 +20,7 @@ struct Vertex3DBuffer
 
 };
 
-struct ConstantBuffer
+struct Constant3DBuffer
 {
 	XMFLOAT4X4 wvp;
 	XMFLOAT4X4 wvpLight;

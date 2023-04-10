@@ -35,7 +35,7 @@ void Afterburner::Draw() {
 	XMStoreFloat4x4(&m_worldMTX, world);
 
 	//定数バッファ設定
-	ConstantBuffer* constant;
+	Constant3DBuffer* constant;
 	m_constantBuffer->Map(0, nullptr, (void**)&constant);
 
 	XMFLOAT4X4 matrix;
