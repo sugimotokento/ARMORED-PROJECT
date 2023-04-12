@@ -14,6 +14,18 @@
 //	std::function<bool(bool isVisible)> f = std::bind(&クラス名::関数名, this, std::placeholders::_1);
 //	ImguiRenderer::GetInstance()->AddFunction(f);
 //これでImguiRendererに関数を登録してImguiを表示できる
+/*関数の中身の書き方
+#ifdef _DEBUG
+bool Player::ImguiDebug(bool isVisible) {
+	if (isVisible) {
+		ImGui::Begin("Player");
+
+		ImGui::End();
+	}
+	return GetIsDestroy();
+}
+#endif // _DEBUG
+*/
 //--------------------------------------------------------------------//
 class GameObject;
 class ImguiRenderer {
