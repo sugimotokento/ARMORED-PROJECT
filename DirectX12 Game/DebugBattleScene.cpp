@@ -1,6 +1,7 @@
 #include"DebugBattleScene.h"
 #include"CameraManager.h"
 #include"Player.h"
+#include"PlayerUI.h"
 #include"Ocean.h"
 #include"SkyDome.h"
 #include"DebugBattleMenu.h"
@@ -24,7 +25,6 @@ void DebugBattleScene::Initialize() {
 
 	AddGameObject<Player>(Layer::GEOMETRY);
 	CameraManager::GetInstance()->SetMainCamera(CameraManager::Index::CAMERA_PLAYER);
-
 
 
 }

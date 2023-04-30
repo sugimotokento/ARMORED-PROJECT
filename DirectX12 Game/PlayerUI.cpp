@@ -2,67 +2,52 @@
 #include"Sprite.h"
 #include"Texture.h"
 #include"Player.h"
+#include"ImguiRenderer.h"
+#include<math.h>
 
 PlayerUI::PlayerUI() {
-	m_player = nullptr;
+	m_rotSprite = new Sprite(L"asset/Texture/White.png");
+	m_rotSprite->SetPosition(XMFLOAT3(SCREEN_WIDTH - 130, SCREEN_HEIGHT - 150, 0));
+	m_rotSprite->SetScale(XMFLOAT3(100, 100, 100));
 
-
+#ifdef _DEBUG
+	std::function<bool(bool isVisible)> f = std::bind(&PlayerUI::ImguiDebug, this, std::placeholders::_1);
+	ImguiRenderer::GetInstance()->AddFunction(f, "PlayerUI", true);
+#endif // _DEBUG
 }
 void PlayerUI::Update() {
 
 }
 void PlayerUI::Draw() {	
-	//m_frame->Draw();
-
-	//int i = 0;
-	//for (Sprite* sprite : m_stock) {
-	//	if (i < m_player->GetHP()) {
-	//		sprite->Draw();
-	//	}
-	//	i++;
-	//}
-	
+	m_rotSprite->Draw();
 }
 void PlayerUI::Finalize() {
-	for (Sprite* sprite : m_stock) {
-		sprite->Finalize();
-		delete sprite;
-	}
-	m_stock.clear();
-
-
-	//m_frame->Finalize();
-	//delete m_frame;
+	m_rotSprite->Finalize();
+	delete m_rotSprite;
 }
 
 
 void PlayerUI::SetPlayer(Player* player) {
-	m_player = player;
 
-	float x = 75;
-	float y = 75;
-	//for (int i = 0; i < m_player->MAX_HP; i++) {
-	//	Sprite* stock = new Sprite(L"asset/Teemo_samune.png");
+}
 
-	//	stock->SetPosition(XMFLOAT3(x+60*i, y, 0));
-	//	stock->SetScale(XMFLOAT3(50, 50, 1));
-	//	stock->SetColor(XMFLOAT4(1, 1, 1, 1));
-
-	//	m_stock.push_back(stock);
-	//}
-
-	Sprite* stock = new Sprite(L"asset/field004.jpg");
-
-	stock->SetPosition(XMFLOAT3(75 + 60, 150, 0));
-	stock->SetScale(XMFLOAT3(200, 200, 1));
-	stock->SetColor(XMFLOAT4(1, 1, 1, 1));
-
-	m_stock.push_back(stock);
+#ifdef _DEBUG
+bool PlayerUI::ImguiDebug(bool isVisible) {
+	if (isVisible) {
+		ImGui::Begin("PlayerUI");
+		static float radialRatio = 1;
+		ImGui::SliderFloat("Ratio", &radialRatio, 0, 1);
 	
 
-	//m_frame = new Sprite(L"asset/HPFrame.dds");
+		static float startAngle = 0;
+		ImGui::SliderFloat("StartAngle", &startAngle, 0, 6.28f);
 
-	//m_frame->SetPosition(XMFLOAT3(200, 75, 0));
-	//m_frame->SetScale(XMFLOAT3(350, 150, 1));
-	//m_frame->SetColor(XMFLOAT4(1, 1, 1, 1));
+		static bool isInvers = false;
+		ImGui::Checkbox("Invers", &isInvers);
+
+		m_rotSprite->SetRadialParam(radialRatio, startAngle, isInvers);
+		ImGui::End();
+	}
+	return GetIsDestroy();
 }
+#endif // _DEBUG

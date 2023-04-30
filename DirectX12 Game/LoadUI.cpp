@@ -12,7 +12,7 @@ void LoadUI::Initialize() {
 }
 void LoadUI::Update() {
 	static float rot = 0;
-	rot += 0.1f;
+	rot += 0.01f;
 
 	m_rotSprite->SetRotation(XMFLOAT3(0, 0, rot));
 }

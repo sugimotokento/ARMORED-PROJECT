@@ -7,10 +7,11 @@ class Texture;
 class Player;
 class PlayerUI :public GameObject {
 private:
-	Player* m_player;
-	std::list<Sprite*> m_stock;
-	Sprite* m_frame;
+	Sprite* m_rotSprite;
 
+#ifdef _DEBUG
+	bool ImguiDebug(bool isVisible);
+#endif // _DEBUG
 public:
 	PlayerUI();
 	void Initialize() final override {}

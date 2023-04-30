@@ -48,10 +48,10 @@ Sprite::Sprite(std::wstring textureName) {
 	buffer[1].normal = { 0.0f,1.0f,0.0f };
 	buffer[2].normal = { 0.0f,1.0f,0.0f };
 	buffer[3].normal = { 0.0f,1.0f,0.0f };
-	buffer[0].texCoord = { 0.0f,0.0f };
-	buffer[1].texCoord = { 1.0f,0.0f };
-	buffer[2].texCoord = { 0.0f,1.0f };
-	buffer[3].texCoord = { 1.0f,1.0f };
+	buffer[0].texCoord = { 1.0f,1.0f };
+	buffer[1].texCoord = { 0.0f,1.0f };
+	buffer[2].texCoord = { 1.0f,0.0f };
+	buffer[3].texCoord = { 0.0f,0.0f };
 	buffer[0].diffuse = { 1.0f,1.0f,1.0f,1.0f };
 	buffer[1].diffuse = { 1.0f,1.0f,1.0f,1.0f };
 	buffer[2].diffuse = { 1.0f,1.0f,1.0f,1.0f };
@@ -68,7 +68,6 @@ Sprite::Sprite(std::wstring textureName) {
 
 
 void Sprite::Draw() {
-
 	//マトリクス設定
 	XMMATRIX view = XMMatrixIdentity();
 	XMMATRIX projection = XMMatrixOrthographicOffCenterLH(0.0f, SCREEN_WIDTH,
@@ -81,21 +80,20 @@ void Sprite::Draw() {
 
 
 	//定数バッファ設定
-	Constant3DBuffer* constant;
+	Constant2DBuffer* constant;
 	m_constantBuffer->Map(0, nullptr, (void**)&constant);
 
 	XMFLOAT4X4 matrix;
 	XMStoreFloat4x4(&matrix, XMMatrixTranspose(world * view * projection));
 	constant->wvp = matrix;
 
-	XMStoreFloat4x4(&matrix, XMMatrixTranspose(world * view * projection));
-	constant->wvpLight = matrix;
-
-
 	XMStoreFloat4x4(&matrix, XMMatrixTranspose(world));
 	constant->world = matrix;
-	constant->cameraPosition = CameraManager::GetInstance()->GetPosition(CameraManager::Index::CAMERA_PLAYER);
 
+
+	constant->radialRatio = m_radialRatio;
+	constant->radialStartAngle = m_radialStartAngle;
+	constant->isRadialInvers = m_isRadialInvers;
 
 	m_constantBuffer->Unmap(0, nullptr);
 

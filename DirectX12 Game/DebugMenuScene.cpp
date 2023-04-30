@@ -7,8 +7,9 @@
 #include"ImguiRenderer.h"
 #include"Input.h"
 #include"CameraManager.h"
-
-
+#include"XMMath.h"
+#include<math.h>
+#include"PlayerUI.h"
 DebugMenuScene::DebugMenuScene() {
 	
 }
@@ -18,7 +19,7 @@ void DebugMenuScene::Initialize() {
 	std::function<bool(bool isVisible)> f = std::bind(&DebugMenuScene::ImguiDebug, this, std::placeholders::_1);
 	ImguiRenderer::GetInstance()->AddFunction(f, "DebugMenu", true);
 
-	CameraManager::GetInstance()->SetMainCamera(CameraManager::Index::CAMERA_DEBUG);
+	CameraManager::GetInstance()->SetMainCamera(CameraManager::Index::CAMERA_DEBUG); 
 }
 void DebugMenuScene::Update() {
 	Scene::Update();

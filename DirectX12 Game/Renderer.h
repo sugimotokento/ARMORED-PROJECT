@@ -9,8 +9,7 @@ using namespace DirectX;
 using namespace Microsoft::WRL;
 
 
-struct Vertex3DBuffer
-{
+struct Vertex3DBuffer{
 	XMFLOAT3 position;
 	XMFLOAT3 normal;
 	XMFLOAT3 tangent;
@@ -20,8 +19,7 @@ struct Vertex3DBuffer
 
 };
 
-struct Constant3DBuffer
-{
+struct Constant3DBuffer{
 	XMFLOAT4X4 wvp;
 	XMFLOAT4X4 wvpLight;
 	XMFLOAT4X4 vp;
@@ -31,10 +29,18 @@ struct Constant3DBuffer
 	bool Dammy=false;
 	XMFLOAT4 waterParam;
 };
+struct Constant2DBuffer {
+	XMFLOAT4X4 wvp;
+	XMFLOAT4X4 world;
+	XMFLOAT3 RadialDir;
+	float radialRatio;
+	float radialStartAngle;
+	bool isRadialInvers;
+	XMFLOAT2 dammy;
 
+};
 
-class Renderer
-{
+class Renderer{
 public:
 	struct Index {
 		enum MODEL_TEX_RESOURCE_NUM {
