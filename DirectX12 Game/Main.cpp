@@ -1,6 +1,7 @@
 #include "imgui/imgui.h"
 #include "imgui/imgui_impl_win32.h"
 #include "imgui/imgui_impl_dx12.h"
+#include "JsonManager.h"
 
 #include "main.h"
 #include"Input.h"
@@ -9,9 +10,9 @@
 #include"Call.h"
 #include"ModelLoader.h"
 #include"Save.h"
-#include <iostream>     
-#include <ctime>        
-#include <cstdlib>      
+#include <iostream>
+#include <ctime>
+#include <cstdlib>
 
 
 #ifdef _DEBUG
@@ -90,6 +91,7 @@ int APIENTRY WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance
 	SceneManager::Create();
 	Input::Create();
 	XInput::Create();
+	JsonManager::Create();
 
 
 
@@ -155,6 +157,7 @@ int APIENTRY WinMain(_In_ HINSTANCE hInstance, _In_opt_  HINSTANCE hPrevInstance
 	ModelLoader::Destroy();
 	Save::GetInstance()->Write();
 	Save::Destroy();
+	JsonManager::Destroy();
 
 	return (int)msg.wParam;
 }

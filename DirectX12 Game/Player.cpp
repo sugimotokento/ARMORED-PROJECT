@@ -15,6 +15,7 @@
 #include"Afterburner.h"
 #ifdef _DEBUG
 #include"ImguiRenderer.h"
+#include"JsonManager.h"
 #endif // _DEBUG
 
 
@@ -162,6 +163,14 @@ bool Player::ImguiDebug(bool isVisible) {
 	if (isVisible) {
 		ImGui::Begin("Player");
 
+		ptree data = JsonManager::GetInstance()->GetData(JsonManager::Index::JSON_ID_DATA_TEST);
+		if (boost::optional<std::string> str = data.get_optional<std::string>("Data.str")) {
+			ImGui::Text(str.get().c_str());
+		}
+
+		data.put("Data.str", "•½ŠÔƒAƒz");
+
+		JsonManager::GetInstance()->SetData(JsonManager::Index::JSON_ID_DATA_TEST, data);
 		ImGui::End();
 	}
 	return GetIsDestroy();
