@@ -247,6 +247,9 @@
     <ClCompile Include="StageEditor.cpp">
       <Filter>ソース ファイル\Object\GameObject\Debug</Filter>
     </ClCompile>
+    <ClCompile Include="JsonManager.cpp">
+      <Filter>ソース ファイル\FileLoad</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Main.h">
@@ -410,6 +413,9 @@
     </ClInclude>
     <ClInclude Include="StageEditor.h">
       <Filter>ソース ファイル\Object\GameObject\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="JsonManager.h">
+      <Filter>ソース ファイル\FileLoad</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
